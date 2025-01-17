@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+{% block title %}{{ "Home" if lang == "nl" else "Home" if lang == "en" }}{% endblock %}
+{% block content %}
+<div class="title">
+    <h1>{% if lang == "en" %}
+        Hello!
+        {% elif lang == "nl" %}
+        Hallo!
+      {% endif %} <i class="fa-solid fa-face-smile-beam"></i>
+    </h1>
+    <h2>{% if lang == "en" %}
+        Welcome!
+        {% elif lang == "nl" %}
+        Welkom!
+        {% endif %}
+    </h2>
+  
+</div>
+
+<div id="link-section-uno" class="links-section">
+    <div class="section-title">
+        <i class="fa-solid fa-circle-user"></i>
+        <h2>{% if lang == "en" %}
+            Sites you can view some of my code
+            {% elif lang == "nl" %}
+            Websites waar je mijn code kunt bekijken
+            {% endif %}
+        </h2>
+    </div>
+    <div class="linklist">
+        {% for item in socialsites %}
+        <a href="{{ item.link }}" class="block" descript="{{ item.popupdescript[lang] }}" id="link-section-uno-blok">
+            <div class="txt">{{ item.title[lang] }}</div>
+            <i class="{{ item.fa_icon_class if item.fa_icon_class else "fa-solid fa-arrow-up-right-from-square" }}"></i>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
