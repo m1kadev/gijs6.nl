@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang=nl>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klok</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='clock.ico') }}">
+    <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            transition: 500ms all ease;
+            background: black;
+        }
+
+        #control-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #ffffff21;
+            padding: 10px;
+            z-index: 2;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #969696;
+            animation: 0.5s fadeENzoom;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            animation-delay: 0.5s;
+            transition: 400ms all ease;
+            width: 2.5%;
+            text-align: center;
+            height: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* border: 2px solid blue; */
+        }
+
+        h3 {
+            margin: 0;
+            /* color: #fff; */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            padding: 2.5%;
+            width: 100%;
+            font-weight: 300;
+            transition: font-weight 100ms ease;
+        }
+
+        .blok-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            position: relative;
+            user-select: none;
+            app-region: no-drag;
+        }
+
+        .blok {
+            display: block;
+            width: 100%;
+            height: 20%;
+            transition: .5s;
+            z-index: 1;
+            animation: 0.5s fadeENzoom;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            animation-delay: 0.3s;
+        }
+
+        .internetekst {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: clamp(25px, 7vw, 100px);
+            z-index: 2;
+            pointer-events: none;
+            user-select: none;
+            animation: 0.5s fadeENzoom;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            animation-delay: 0.5s;
+            transition: 250ms all ease;
+        }
+
+        .blok:hover~.internetekst {
+            font-weight: 900 !important;
+            /* border: solid; */
+        }
+
+        .blok.jaar,
+        .blok.uur {
+            background-image: linear-gradient(to top, #e65039, #ff8f2e);
+        }
+
+        .blok.maand,
+        .blok.minuut {
+            background-image: linear-gradient(to top, #06c749, #1fcb8e);
+        }
+
+        .blok.dag,
+        .blok.seconde {
+            background-image: linear-gradient(to top, #0f95b0, #4f9ddd);
+        }
+
+        @keyframes fadeENzoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.75);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #ababab;
+            outline: none;
+            /* opacity: 0.7; */
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            border-radius: 20px;
+            padding: 4px;
+            transition: 500ms all ease;
+        }
+
+        .slider:hover {
+            /* opacity: 1; */
+            background: white;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #0f95b0;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #04AA6D;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .number-input {
+            width: 30px;
+            padding: 5px;
+            font-size: 16px;
+            text-align: center;
+            border: 2px solid #0f95b0;
+            border-radius: 20px;
+            background: transparent;
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: monospace;
+        }
+
+        .number-input:focus {
+            border-color: #04a777;
+            /* box-shadow: 0 0 5px rgba(4, 170, 109, 0.5); */
+        }
+
+        .settings {
+            display: none;
+            animation: 0.5s fadeENzoom;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            animation-delay: 0.2s;
+            font-weight: 500;
+        }
+
+        #control-panel:hover>.settings {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #control-panel:hover {
+            color: white;
+            background: black;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            align-content: flex-start;
+            gap: 10px;
+            width: 25%;
+            height: 25%;
+            border: 1px solid white;
+
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        #instellingentekst {
+            display: none;
+        }
+
+        #control-panel h3 i,
+        #control-panel h3 span {
+            animation: 0.5s fadeENzoom;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            animation-delay: 0.2s;
+        }
+
+        #control-panel:hover h3 i {
+            display: none;
+        }
+
+        #control-panel:hover h3 span {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="control-panel">
+        <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Instellingen</span></h3>
+        <div class="settings padding">
+            <label for="padding-slider">Padding container</label>
+            <input type="range" id="padding-slider" min="0" max="15" step="1" class="slider">
+            <input type="number" id="padding-number" min="0" max="15" step="1" class="number-input">
+        </div>
+        <div class="settings minh">
+            <label for="minh-slider">Min hoogte stroken</label>
+            <input type="range" id="hoogte-slider" min="0" max="40" step="1" class="slider">
+            <input type="number" id="hoogte-number" min="0" max="40" step="1" class="number-input">
+        </div>
+        <div class="settings font">
+            <label for="font-slider">Font</label>
+            <input type="range" id="font-slider" min="1" max="9" step="1" class="slider">
+            <input type="number" id="font-number" min="1" max="9" step="1" class="number-input">
+        </div>
+    </div>
+    <div class="container">
+        <div class="blok-container">
+            <div class="blok dag" id="dagblok"></div>
+            <div class="internetekst dag" id="dagbloktekst"></div>
+        </div>
+        <div class="blok-container">
+            <div class="blok maand" id="maandblok"></div>
+            <div class="internetekst maand" id="maandbloktekst"></div>
+        </div>
+        <div class="blok-container">
+            <div class="blok jaar" id="jaarblok"></div>
+            <div class="internetekst jaar" id="jaarbloktekst"></div>
+        </div>
+        <div class="blok-container">
+            <div class="blok leeg"></div>
+        </div>
+        <div class="blok-container">
+            <div class="blok uur" id="uurblok"></div>
+            <div class="internetekst uur" id="uurbloktekst"></div>
+        </div>
+        <div class="blok-container">
+            <div class="blok minuut" id="minuutblok"></div>
+            <div class="internetekst minuut" id="minuutbloktekst"></div>
+        </div>
+        <div class="blok-container">
+            <div class="blok seconde" id="secondeblok"></div>
+            <div class="internetekst seconde" id="secondebloktekst"></div>
+        </div>
+    </div>
+</body>
+<script>
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+
+    const tijdBlokken = [{
+            element: "uurblok",
+            tekst: "uurbloktekst",
+            max: 24
+        },
+        {
+            element: "minuutblok",
+            tekst: "minuutbloktekst",
+            max: 60
+        },
+        {
+            element: "secondeblok",
+            tekst: "secondebloktekst",
+            max: 60
+        },
+        {
+            element: "dagblok",
+            tekst: "dagbloktekst",
+            max: daysInMonth
+        },
+        {
+            element: "maandblok",
+            tekst: "maandbloktekst",
+            max: 12
+        },
+        {
+            element: "jaarblok",
+            tekst: "jaarbloktekst",
+            max: 100
+        }
+    ];
+
+    function padZero(number) {
+        return number.toString().padStart(2, "0");
+    }
+
+    function playTone(freq) {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        oscillator.connect(audioCtx.destination);
+        oscillator.start();
+        setTimeout(() => oscillator.stop(), 50);
+    }
+
+
+    function updateBlokken() {
+        const now = new Date();
+
+        const minH = parseInt(localStorage.getItem("minh"));
+
+
+
+        const tijdswaarden = [
+            now.getHours(),
+            now.getMinutes(),
+            now.getSeconds(),
+            now.getDate(),
+            now.getMonth() + 1,
+            now.getFullYear() % 100
+        ];
+
+        tijdBlokken.forEach((blok, index) => {
+
+            const waarde = tijdswaarden[index];
+            const hoogte = ((waarde / blok.max) * (100-minH)) + minH;
+
+            blokding = document.getElementById(blok.element);
+            blokding.style.height = `${hoogte}%`;
+            bloktekstding = document.getElementById(blok.tekst);
+            if (bloktekstding.innerHTML != padZero(waarde)) {
+                bloktekstding.innerHTML = padZero(waarde);
+            }
+        });
+
+        const dag = padZero(now.getDate());
+        const maand = padZero(now.getMonth() + 1);
+        const jaar = now.getFullYear();
+        const uur = padZero(now.getHours());
+        const minuut = padZero(now.getMinutes());
+        const seconde = padZero(now.getSeconds());
+
+        const nieuweTitel = `${dag}-${maand}-${jaar} ${uur}:${minuut}:${seconde}`
+        if (document.title != nieuweTitel) {
+            document.title = nieuweTitel;
+        }
+        const red = (now.getMinutes() / 60 ) * 25
+        const green = (now.getMinutes() / 60 ) * 50
+        const blue = (now.getMinutes() / 60 ) * 50
+        document.body.style.background = `rgb(${red}, ${green}, ${blue})`
+    }
+
+    setTimeout(() => {
+        setInterval(updateBlokken, 500);
+        updateBlokken();
+    }, 500);
+</script>
+<script>
+    const paddingSlider = document.getElementById("padding-slider");
+    const paddingNumber = document.getElementById("padding-number");
+    const minhSlider = document.getElementById("hoogte-slider");
+    const minhNumber = document.getElementById("hoogte-number");
+    const fontSlider = document.getElementById("font-slider");
+    const fontNumber = document.getElementById("font-number");
+    const container = document.querySelector(".container");
+
+    function applySettings() { // Bij laden doc
+        const paddingValue = localStorage.getItem("containerPadding") || "2.5";
+        const minh = localStorage.getItem("minh") || "20";
+        const font = localStorage.getItem("font")|| "3";
+
+        updatePadding(paddingValue);
+        updateMinh(minh);
+        updateFont(font);
+    }
+
+    function updatePadding(value) {
+        container.style.padding = `${value}%`;
+        localStorage.setItem("containerPadding", value);
+        paddingSlider.value = value;
+        paddingNumber.value = value;
+    }
+
+    paddingSlider.addEventListener("input", () => {
+        updatePadding(paddingSlider.value);
+    });
+
+    paddingNumber.addEventListener("input", () => {
+        const value = Math.min(Math.max(paddingNumber.value, 0), 15);
+        updatePadding(value);
+    });
+
+    function updateMinh(value) {
+        localStorage.setItem("minh", value);
+        minhSlider.value = value;
+        minhNumber.value = value;
+    }
+
+    minhSlider.addEventListener("input", () => {
+        updateMinh(minhSlider.value);
+    });
+
+    minhNumber.addEventListener("input", () => {
+        const value = Math.min(Math.max(minhSlider.value, 0), 40);
+        updateMinh(value);
+    });
+
+
+    function updateFont(value) {
+        container.style.fontWeight = `${(value*100)}`;
+        localStorage.setItem("font", value);
+        fontSlider.value = value;
+        fontNumber.value = value;
+    }
+
+    fontSlider.addEventListener("input", () => {
+        updateFont(fontSlider.value);
+    });
+
+    fontNumber.addEventListener("input", () => {
+        const value = Math.min(Math.max(fontNumber.value, 1), 9);
+        updateFont(value);
+    });
+
+
+
+    window.addEventListener("DOMContentLoaded", applySettings);
+</script>
+
+</html>
