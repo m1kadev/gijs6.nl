@@ -76,12 +76,8 @@ def school():
     with open("samenvattingen.pkl", "rb") as bestand:
         data = pickle.load(bestand)
     laatst_bijgewerkt = read_file("laatst_samva_data_bijgewerkt.txt")
-    verschil = abs((datetime.now() - datetime.strptime(laatst_bijgewerkt, "%a %d %b %Y om %H:%M:%S")).total_seconds())
-    verschil_format = f"{int(verschil // 60)}:{int(verschil % 60):02}"
 
-    legenda_blokken_en_tekst_tonen = True
-
-    return render_template("school.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt, verschil=verschil_format, legenda_tonen=legenda_blokken_en_tekst_tonen)
+    return render_template("school.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt)
 
 
 # OVERIG
@@ -100,8 +96,7 @@ def klok():
 
 @app.errorhandler(404)
 def not_found(e):
-    lang = request.args.get('lang', 'en')
-    return render_template("404.html", lang=lang, e=e), 404
+    return render_template("404.html", e=e), 404
 
 
 @app.errorhandler(500)
