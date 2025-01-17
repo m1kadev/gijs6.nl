@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang=nl>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,18 +36,16 @@
             animation-fill-mode: forwards;
             animation-delay: 0.5s;
             transition: 400ms all ease;
-            width: 2.5%;
+            width: 1em;
             text-align: center;
-            height: 5%;
+            height: 1em;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* border: 2px solid blue; */
         }
 
         h3 {
             margin: 0;
-            /* color: #fff; */
         }
 
         .container {
@@ -81,6 +80,7 @@
             opacity: 0;
             animation-fill-mode: forwards;
             animation-delay: 0.3s;
+            transition: 200ms all ease-in-out;
         }
 
         .internetekst {
@@ -94,13 +94,12 @@
             animation: 0.5s fadeENzoom;
             opacity: 0;
             animation-fill-mode: forwards;
-            animation-delay: 0.5s;
+            animation-delay: 0.7s;
             transition: 250ms all ease;
         }
 
-        .blok:hover~.internetekst {
-            font-weight: 900 !important;
-            /* border: solid; */
+        .blok:hover ~ .internetekst {
+            font-size: clamp(35px, 9vw, 125px);
         }
 
         .blok.jaar,
@@ -132,11 +131,10 @@
 
         .slider {
             -webkit-appearance: none;
-            width: 100%;
             height: 25px;
+            flex-grow: 1;
             background: #ababab;
             outline: none;
-            /* opacity: 0.7; */
             -webkit-transition: .2s;
             transition: opacity .2s;
             border-radius: 20px;
@@ -145,7 +143,6 @@
         }
 
         .slider:hover {
-            /* opacity: 1; */
             background: white;
         }
 
@@ -157,6 +154,8 @@
             background: #0f95b0;
             cursor: pointer;
             border-radius: 50%;
+            opacity: 0.75;
+            transition: 500ms all ease;
         }
 
         .slider::-moz-range-thumb {
@@ -183,7 +182,6 @@
 
         .number-input:focus {
             border-color: #04a777;
-            /* box-shadow: 0 0 5px rgba(4, 170, 109, 0.5); */
         }
 
         .settings {
@@ -213,7 +211,7 @@
             justify-content: center;
             align-content: flex-start;
             gap: 10px;
-            width: 25%;
+            width: clamp(300px,35%,1000px);
             height: 25%;
             border: 1px solid white;
 
@@ -243,25 +241,35 @@
 
         #control-panel:hover h3 i {
             display: none;
+            font-size: 0.75em;
         }
 
         #control-panel:hover h3 span {
             display: block;
         }
+        .slider::-webkit-slider-thumb:active {
+            opacity: 1;
+        }
+
+        label {
+            min-width: 25%;
+        }
     </style>
+    <meta name="robots" content="noindex">
 </head>
+
 <body>
     <div id="control-panel">
         <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Instellingen</span></h3>
         <div class="settings padding">
             <label for="padding-slider">Padding container</label>
-            <input type="range" id="padding-slider" min="0" max="15" step="1" class="slider">
-            <input type="number" id="padding-number" min="0" max="15" step="1" class="number-input">
+            <input type="range" id="padding-slider" min="0" max="25" step="1" class="slider">
+            <input type="number" id="padding-number" min="0" max="25" step="1" class="number-input">
         </div>
         <div class="settings minh">
             <label for="minh-slider">Min hoogte stroken</label>
-            <input type="range" id="hoogte-slider" min="0" max="40" step="1" class="slider">
-            <input type="number" id="hoogte-number" min="0" max="40" step="1" class="number-input">
+            <input type="range" id="hoogte-slider" min="0" max="50" step="1" class="slider">
+            <input type="number" id="hoogte-number" min="0" max="50" step="1" class="number-input">
         </div>
         <div class="settings font">
             <label for="font-slider">Font</label>
@@ -309,17 +317,17 @@
     const tijdBlokken = [{
             element: "uurblok",
             tekst: "uurbloktekst",
-            max: 24
+            max: 23
         },
         {
             element: "minuutblok",
             tekst: "minuutbloktekst",
-            max: 60
+            max: 59
         },
         {
             element: "secondeblok",
             tekst: "secondebloktekst",
-            max: 60
+            max: 59
         },
         {
             element: "dagblok",
@@ -334,7 +342,7 @@
         {
             element: "jaarblok",
             tekst: "jaarbloktekst",
-            max: 100
+            max: 99
         }
     ];
 
@@ -435,7 +443,7 @@
     });
 
     paddingNumber.addEventListener("input", () => {
-        const value = Math.min(Math.max(paddingNumber.value, 0), 15);
+        const value = Math.min(Math.max(paddingNumber.value, 0), 25);
         updatePadding(value);
     });
 
@@ -450,7 +458,7 @@
     });
 
     minhNumber.addEventListener("input", () => {
-        const value = Math.min(Math.max(minhSlider.value, 0), 40);
+        const value = Math.min(Math.max(minhSlider.value, 0), 50);
         updateMinh(value);
     });
 
