@@ -98,7 +98,7 @@
         }
 
         .blok:hover ~ .internetekst {
-            font-size: 125%;
+            font-size: 140%;
         }
 
         .blok.jaar,
@@ -427,12 +427,12 @@
         }
 
 
-        const rs = parseInt(localStorage.getItem("rs") || 25);
-        const gs = parseInt(localStorage.getItem("gs") || 25);
-        const bs = parseInt(localStorage.getItem("bs") || 25);
+        const rs = parseInt(localStorage.getItem("rs") || 0);
+        const gs = parseInt(localStorage.getItem("gs") || 0);
+        const bs = parseInt(localStorage.getItem("bs") || 0);
         const re = parseInt(localStorage.getItem("re") || 25);
-        const ge = parseInt(localStorage.getItem("ge") || 25);
-        const be = parseInt(localStorage.getItem("be") || 25);
+        const ge = parseInt(localStorage.getItem("ge") || 50);
+        const be = parseInt(localStorage.getItem("be") || 50);
 
 
         const factor = now.getMinutes() / 59;
@@ -471,13 +471,13 @@
         const fontSize = localStorage.getItem("fontSize") || "7";
 
 
-        const rs = localStorage.getItem("rs") || 25;
-        const gs = localStorage.getItem("gs") || 25;
-        const bs = localStorage.getItem("bs") || 25;
+        const rs = localStorage.getItem("rs") || 0;
+        const gs = localStorage.getItem("gs") || 0;
+        const bs = localStorage.getItem("bs") || 0;
 
         const re = localStorage.getItem("re") || 25;
-        const ge = localStorage.getItem("ge") || 25;
-        const be = localStorage.getItem("be") || 25;
+        const ge = localStorage.getItem("ge") || 50;
+        const be = localStorage.getItem("be") || 50;
 
         const startColor = `#${parseInt(rs).toString(16).padStart(2, '0')}${parseInt(gs).toString(16).padStart(2, '0')}${parseInt(bs).toString(16).padStart(2, '0')}`;
         const endColor = `#${parseInt(re).toString(16).padStart(2, '0')}${parseInt(ge).toString(16).padStart(2, '0')}${parseInt(be).toString(16).padStart(2, '0')}`;
