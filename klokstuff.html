@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang=nl>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +26,7 @@
             right: 10px;
             background: #ffffff21;
             padding: 10px;
-            z-index: 2;
+            z-index: 10;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             color: #969696;
@@ -56,6 +55,7 @@
             padding: 2.5%;
             width: 100%;
             font-weight: 300;
+            font-size: clamp(25px, 7em, 100px);
             transition: font-weight 100ms ease;
         }
 
@@ -87,7 +87,6 @@
             position: absolute;
             transform: translate(-50%, -50%);
             color: #fff;
-            font-size: clamp(25px, 7vw, 100px);
             z-index: 2;
             pointer-events: none;
             user-select: none;
@@ -99,7 +98,7 @@
         }
 
         .blok:hover ~ .internetekst {
-            font-size: clamp(35px, 9vw, 125px);
+            font-size: 125%;
         }
 
         .blok.jaar,
@@ -212,9 +211,18 @@
             align-content: flex-start;
             gap: 10px;
             width: clamp(300px,35%,1000px);
-            height: 25%;
+            height: clamp(300px,35%,1000px);
             border: 1px solid white;
 
+        }
+
+        #colorsettings {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: center;
+            align-content: flex-start;
+            gap: 10px;
         }
 
         input::-webkit-outer-spin-button,
@@ -229,6 +237,7 @@
 
         #instellingentekst {
             display: none;
+            font-size: 1.25em;
         }
 
         #control-panel h3 i,
@@ -251,30 +260,40 @@
             opacity: 1;
         }
 
-        label {
-            min-width: 25%;
-        }
     </style>
     <meta name="robots" content="noindex">
 </head>
 
 <body>
     <div id="control-panel">
-        <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Instellingen</span></h3>
+        <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Settings</span></h3>
         <div class="settings padding">
             <label for="padding-slider">Padding container</label>
             <input type="range" id="padding-slider" min="0" max="25" step="1" class="slider">
             <input type="number" id="padding-number" min="0" max="25" step="1" class="number-input">
         </div>
         <div class="settings minh">
-            <label for="minh-slider">Min hoogte stroken</label>
+            <label for="minh-slider">Min height blocks</label>
             <input type="range" id="hoogte-slider" min="0" max="50" step="1" class="slider">
             <input type="number" id="hoogte-number" min="0" max="50" step="1" class="number-input">
         </div>
-        <div class="settings font">
-            <label for="font-slider">Font</label>
-            <input type="range" id="font-slider" min="1" max="9" step="1" class="slider">
-            <input type="number" id="font-number" min="1" max="9" step="1" class="number-input">
+        <div class="settings fontWeight">
+            <label for="fontWeight-slider">Font weight</label>
+            <input type="range" id="fontWeight-slider" min="1" max="9" step="1" class="slider">
+            <input type="number" id="fontWeight-number" min="1" max="9" step="1" class="number-input">
+        </div>
+        <div class="settings fontSize">
+            <label for="fontSize-slider">Font size</label>
+            <input type="range" id="fontSize-slider" min="1" max="15" step="1" class="slider">
+            <input type="number" id="fontSize-number" min="1" max="15" step="1" class="number-input">
+        </div>
+        <div class="settings backgroundStart">
+            <label for="backgroundStart-color">Background start (0 minutes)</label>
+            <input type="color" id="backgroundStart-color" class="color">
+        </div>
+        <div class="settings backgroundEnd">
+            <label for="backgroundEnd-color">Background end  (59 minutes)</label>
+            <input type="color" id="backgroundEnd-color" class="color">
         </div>
     </div>
     <div class="container">
@@ -401,10 +420,27 @@
         if (document.title != nieuweTitel) {
             document.title = nieuweTitel;
         }
-        const red = (now.getMinutes() / 60 ) * 25
-        const green = (now.getMinutes() / 60 ) * 50
-        const blue = (now.getMinutes() / 60 ) * 50
-        document.body.style.background = `rgb(${red}, ${green}, ${blue})`
+
+
+        function kleurwaarde(start, end, factor) {
+            return Math.round(start + (end - start) * factor);
+        }
+
+
+        const rs = parseInt(localStorage.getItem("rs") || 25);
+        const gs = parseInt(localStorage.getItem("gs") || 25);
+        const bs = parseInt(localStorage.getItem("bs") || 25);
+        const re = parseInt(localStorage.getItem("re") || 25);
+        const ge = parseInt(localStorage.getItem("ge") || 25);
+        const be = parseInt(localStorage.getItem("be") || 25);
+
+
+        const factor = now.getMinutes() / 59;
+        const red = kleurwaarde(rs, re, factor);
+        const green = kleurwaarde(gs, ge, factor);
+        const blue = kleurwaarde(bs, be, factor);
+
+        document.body.style.background = `rgb(${red}, ${green}, ${blue})`;
     }
 
     setTimeout(() => {
@@ -412,23 +448,48 @@
         updateBlokken();
     }, 500);
 </script>
+
+
+
 <script>
     const paddingSlider = document.getElementById("padding-slider");
     const paddingNumber = document.getElementById("padding-number");
     const minhSlider = document.getElementById("hoogte-slider");
     const minhNumber = document.getElementById("hoogte-number");
-    const fontSlider = document.getElementById("font-slider");
-    const fontNumber = document.getElementById("font-number");
+    const fontWeightSlider = document.getElementById("fontWeight-slider");
+    const fontWeightNumber = document.getElementById("fontWeight-number");
+    const fontSizeSlider = document.getElementById("fontSize-slider");
+    const fontSizeNumber = document.getElementById("fontSize-number");
+    const backgroundStartNum = document.getElementById("backgroundStart-color");
+    const backgroundEndNum = document.getElementById("backgroundEnd-color");
     const container = document.querySelector(".container");
 
     function applySettings() { // Bij laden doc
         const paddingValue = localStorage.getItem("containerPadding") || "2.5";
         const minh = localStorage.getItem("minh") || "20";
-        const font = localStorage.getItem("font")|| "3";
+        const fontWeight = localStorage.getItem("fontWeight")|| "3";
+        const fontSize = localStorage.getItem("fontSize") || "7";
+
+
+        const rs = localStorage.getItem("rs") || 25;
+        const gs = localStorage.getItem("gs") || 25;
+        const bs = localStorage.getItem("bs") || 25;
+
+        const re = localStorage.getItem("re") || 25;
+        const ge = localStorage.getItem("ge") || 25;
+        const be = localStorage.getItem("be") || 25;
+
+        const startColor = `#${parseInt(rs).toString(16).padStart(2, '0')}${parseInt(gs).toString(16).padStart(2, '0')}${parseInt(bs).toString(16).padStart(2, '0')}`;
+        const endColor = `#${parseInt(re).toString(16).padStart(2, '0')}${parseInt(ge).toString(16).padStart(2, '0')}${parseInt(be).toString(16).padStart(2, '0')}`;
+
+        backgroundStartNum.value = startColor;
+        backgroundEndNum.value = endColor;
+
 
         updatePadding(paddingValue);
         updateMinh(minh);
-        updateFont(font);
+        updateFontWeight(fontWeight);
+        updateFontSize(fontSize);
     }
 
     function updatePadding(value) {
@@ -463,23 +524,59 @@
     });
 
 
-    function updateFont(value) {
+    function updateFontWeight(value) {
         container.style.fontWeight = `${(value*100)}`;
-        localStorage.setItem("font", value);
-        fontSlider.value = value;
-        fontNumber.value = value;
+        localStorage.setItem("fontWeight", value);
+        fontWeightSlider.value = value;
+        fontWeightNumber.value = value;
     }
 
-    fontSlider.addEventListener("input", () => {
-        updateFont(fontSlider.value);
+    fontWeightSlider.addEventListener("input", () => {
+        updateFontWeight(fontWeightSlider.value);
     });
 
-    fontNumber.addEventListener("input", () => {
-        const value = Math.min(Math.max(fontNumber.value, 1), 9);
-        updateFont(value);
+    fontWeightNumber.addEventListener("input", () => {
+        const value = Math.min(Math.max(fontWeightNumber.value, 1), 9);
+        updateFontWeight(value);
     });
 
 
+    function updateFontSize(value) {
+        container.style.fontSize = `${value}em`;
+        localStorage.setItem("fontSize", value);
+        fontSizeSlider.value = value;
+        fontSizeNumber.value = value;
+    }
+
+    fontSizeSlider.addEventListener("input", () => {
+        updateFontSize(fontSizeSlider.value);
+    });
+
+    fontSizeNumber.addEventListener("input", () => {
+        const value = Math.min(Math.max(fontSizeNumber.value, 1), 15);
+        updateFontSize(value);
+    });
+
+
+
+    backgroundStartNum.addEventListener("input", () => {
+        const rs = parseInt(backgroundStartNum.value.slice(1, 3), 16);
+        const gs = parseInt(backgroundStartNum.value.slice(3, 5), 16);
+        const bs = parseInt(backgroundStartNum.value.slice(5, 7), 16);
+        localStorage.setItem("rs", rs);
+        localStorage.setItem("gs", gs);
+        localStorage.setItem("bs", bs);
+    });
+
+
+    backgroundEndNum.addEventListener("input", () => {
+        const re = parseInt(backgroundEndNum.value.slice(1, 3), 16);
+        const ge = parseInt(backgroundEndNum.value.slice(3, 5), 16);
+        const be = parseInt(backgroundEndNum.value.slice(5, 7), 16);
+        localStorage.setItem("re", re);
+        localStorage.setItem("ge", ge);
+        localStorage.setItem("be", be);
+    });
 
     window.addEventListener("DOMContentLoaded", applySettings);
 </script>
