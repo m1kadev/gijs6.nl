@@ -2,6 +2,6 @@
 
 My own site. It doesn't really have a purpose, but it looks quite good!
 
-It also includes the stuff for mine school site
+It also includes the stuff my [school page](https://www.gijs6.nl/school)
 
 Have fun looking around :D
