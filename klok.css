@@ -15,20 +15,18 @@ body {
     position: fixed;
     top: 10px;
     right: 10px;
-    background: #ffffff21;
+    background: #ffffff1c;
     padding: 10px;
     z-index: 10;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: #969696;
     animation: 0.5s fadeENzoom;
-    opacity: 0;
     animation-fill-mode: forwards;
     animation-delay: 0.5s;
     transition: 400ms all ease;
-    width: 1em;
+    width: 0.9em;
     text-align: center;
-    height: 1em;
+    height: 0.9em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,87 +34,6 @@ body {
 
 h3 {
     margin: 0;
-}
-
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-    padding: 2.5%;
-    width: 100%;
-    font-weight: 300;
-    font-size: clamp(25px, 7em, 100px);
-    transition: font-weight 100ms ease;
-}
-
-.blok-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    position: relative;
-    user-select: none;
-    app-region: no-drag;
-}
-
-.blok {
-    display: block;
-    width: 100%;
-    height: 20%;
-    transition: .5s;
-    z-index: 1;
-    animation: 0.5s fadeENzoom;
-    opacity: 0;
-    animation-fill-mode: forwards;
-    animation-delay: 0.3s;
-    transition: 200ms all ease-in-out;
-}
-
-.internetekst {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    z-index: 2;
-    pointer-events: none;
-    user-select: none;
-    animation: 0.5s fadeENzoom;
-    opacity: 0;
-    animation-fill-mode: forwards;
-    animation-delay: 0.7s;
-    transition: 250ms all ease;
-}
-
-.blok:hover~.internetekst {
-    font-size: var(--hover-font-size, 130%);
-}
-
-.blok.jaar,
-.blok.uur {
-    background-image: linear-gradient(to top, #e65039, #ff8f2e);
-}
-
-.blok.maand,
-.blok.minuut {
-    background-image: linear-gradient(to top, #06c749, #1fcb8e);
-}
-
-.blok.dag,
-.blok.seconde {
-    background-image: linear-gradient(to top, #0f95b0, #4f9ddd);
-}
-
-@keyframes fadeENzoom {
-    0% {
-        opacity: 0;
-        transform: scale(0.75);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
 }
 
 .slider {
@@ -215,8 +132,7 @@ h3 {
     gap: 10px;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -230,8 +146,7 @@ input[type=number] {
     font-size: 1.25em;
 }
 
-#control-panel h3 i,
-#control-panel h3 span {
+#control-panel h3 i, #control-panel h3 span {
     animation: 0.5s fadeENzoom;
     opacity: 0;
     animation-fill-mode: forwards;
@@ -240,6 +155,9 @@ input[type=number] {
 
 #control-panel:hover h3 i {
     display: none;
+}
+
+#control-panel h3 i {
     font-size: 0.75em;
 }
 
@@ -250,13 +168,13 @@ input[type=number] {
 
 .slider::-webkit-slider-thumb:active {
     opacity: 1;
+    background: #0fb081;
 }
 
 label {
     text-align: right;
     width: 10em;
 }
-
 
 .color {
     width: 6em;
@@ -267,11 +185,86 @@ label {
     outline: none;
 }
 
-
 input[type="color" i]::-webkit-color-swatch {
     border-radius: 5em;
     border: 2px solid #0f95b0;
 }
 
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    padding: 2.5%;
+    width: 100%;
+    font-weight: 300;
+    font-size: clamp(25px, 7em, 100px);
+    transition: font-weight 100ms ease;
+}
 
+.blok-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    position: relative;
+    user-select: none;
+    app-region: no-drag;
+}
+
+.blok {
+    display: block;
+    width: 100%;
+    height: 20%;
+    transition: .5s;
+    z-index: 1;
+    animation: 0.5s fadeENzoom;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-delay: 0.3s;
+    transition: 200ms all ease-in-out;
+}
+
+.internetekst {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+    animation: 0.5s fadeENzoom;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-delay: 0.7s;
+    transition: 250ms all ease;
+}
+
+.blok:hover~.internetekst {
+    font-size: var(--hover-font-size, 130%);
+}
+
+.blok.jaar, .blok.uur {
+    background-image: linear-gradient(to top, #e65039, #ff8f2e);
+}
+
+.blok.maand, .blok.minuut {
+    background-image: linear-gradient(to top, #06c749, #1fcb8e);
+}
+
+.blok.dag, .blok.seconde {
+    background-image: linear-gradient(to top, #0f95b0, #4f9ddd);
+}
+
+@keyframes fadeENzoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.75);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
