@@ -11,71 +11,71 @@
 </head>
 
 <body>
-    <div id="control-panel">
-        <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Settings</span></h3>
-        <div class="settings padding">
-            <label for="padding-slider">Padding container (%)</label>
-            <input type="range" id="padding-slider" min="0" max="20" step="0.5" class="slider">
-            <input type="number" id="padding-number" min="0" max="20" step="0.5" class="number-input">
-        </div>
-        <div class="settings minh">
-            <label for="hoogte-slider">Min height blocks (%)</label>
-            <input type="range" id="hoogte-slider" min="0" max="50" step="1" class="slider">
-            <input type="number" id="hoogte-number" min="0" max="50" step="1" class="number-input">
-        </div>
-        <div class="settings fontWeight">
-            <label for="fontWeight-slider">Font weight</label>
-            <input type="range" id="fontWeight-slider" min="1" max="9" step="1" class="slider">
-            <input type="number" id="fontWeight-number" min="0" max="9" step="1" class="number-input">
-        </div>
-        <div class="settings fontSize">
-            <label for="fontSize-slider">Font size (em)</label>
-            <input type="range" id="fontSize-slider" min="1" max="15" step="0.5" class="slider">
-            <input type="number" id="fontSize-number" min="0" max="15" step="0.5" class="number-input">
-        </div>
-        <div class="settings fontSizeHover">
-            <label for="hoverFontSize-slider">Hover font size (%)</label>
-            <input type="range" id="hoverFontSize-slider" min="50" max="250" step="1" class="slider">
-            <input type="number" id="hoverFontSize-number" min="0" max="250" step="1" class="number-input">
-        </div>
-        <div class="settings backgroundStart">
-            <label for="backgroundStart-color">Background start (0 minutes)</label>
-            <input type="color" id="backgroundStart-color" class="color">
-        </div>
-        <div class="settings backgroundEnd">
-            <label for="backgroundEnd-color">Background end  (59 minutes)</label>
-            <input type="color" id="backgroundEnd-color" class="color">
-        </div>
+<div id="control-panel">
+    <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Settings</span></h3>
+    <div class="settings padding">
+        <label for="padding-slider">Padding container (%)</label>
+        <input type="range" id="padding-slider" min="0" max="20" step="0.5" class="slider">
+        <input type="number" id="padding-number" min="0" max="20" step="0.5" class="number-input">
     </div>
-    <div class="container">
-        <div class="blok-container">
-            <div class="blok dag" id="dagblok"></div>
-            <div class="internetekst dag" id="dagbloktekst"></div>
-        </div>
-        <div class="blok-container">
-            <div class="blok maand" id="maandblok"></div>
-            <div class="internetekst maand" id="maandbloktekst"></div>
-        </div>
-        <div class="blok-container">
-            <div class="blok jaar" id="jaarblok"></div>
-            <div class="internetekst jaar" id="jaarbloktekst"></div>
-        </div>
-        <div class="blok-container">
-            <div class="blok leeg"></div>
-        </div>
-        <div class="blok-container">
-            <div class="blok uur" id="uurblok"></div>
-            <div class="internetekst uur" id="uurbloktekst"></div>
-        </div>
-        <div class="blok-container">
-            <div class="blok minuut" id="minuutblok"></div>
-            <div class="internetekst minuut" id="minuutbloktekst"></div>
-        </div>
-        <div class="blok-container">
-            <div class="blok seconde" id="secondeblok"></div>
-            <div class="internetekst seconde" id="secondebloktekst"></div>
-        </div>
+    <div class="settings minh">
+        <label for="hoogte-slider">Min height blocks (%)</label>
+        <input type="range" id="hoogte-slider" min="0" max="50" step="1" class="slider">
+        <input type="number" id="hoogte-number" min="0" max="50" step="1" class="number-input">
     </div>
+    <div class="settings fontWeight">
+        <label for="fontWeight-slider">Font weight</label>
+        <input type="range" id="fontWeight-slider" min="1" max="9" step="1" class="slider">
+        <input type="number" id="fontWeight-number" min="0" max="9" step="1" class="number-input">
+    </div>
+    <div class="settings fontSize">
+        <label for="fontSize-slider">Font size (em)</label>
+        <input type="range" id="fontSize-slider" min="1" max="15" step="0.5" class="slider">
+        <input type="number" id="fontSize-number" min="0" max="15" step="0.5" class="number-input">
+    </div>
+    <div class="settings fontSizeHover">
+        <label for="hoverFontSize-slider">Hover font size (%)</label>
+        <input type="range" id="hoverFontSize-slider" min="50" max="250" step="1" class="slider">
+        <input type="number" id="hoverFontSize-number" min="0" max="250" step="1" class="number-input">
+    </div>
+    <div class="settings backgroundStart">
+        <label for="backgroundStart-color">Background start (0 minutes)</label>
+        <input type="color" id="backgroundStart-color" class="color">
+    </div>
+    <div class="settings backgroundEnd">
+        <label for="backgroundEnd-color">Background end (59 minutes)</label>
+        <input type="color" id="backgroundEnd-color" class="color">
+    </div>
+</div>
+<div class="container">
+    <div class="blok-container">
+        <div class="blok dag" id="dagblok"></div>
+        <div class="internetekst dag" id="dagbloktekst"></div>
+    </div>
+    <div class="blok-container">
+        <div class="blok maand" id="maandblok"></div>
+        <div class="internetekst maand" id="maandbloktekst"></div>
+    </div>
+    <div class="blok-container">
+        <div class="blok jaar" id="jaarblok"></div>
+        <div class="internetekst jaar" id="jaarbloktekst"></div>
+    </div>
+    <div class="blok-container">
+        <div class="blok leeg"></div>
+    </div>
+    <div class="blok-container">
+        <div class="blok uur" id="uurblok"></div>
+        <div class="internetekst uur" id="uurbloktekst"></div>
+    </div>
+    <div class="blok-container">
+        <div class="blok minuut" id="minuutblok"></div>
+        <div class="internetekst minuut" id="minuutbloktekst"></div>
+    </div>
+    <div class="blok-container">
+        <div class="blok seconde" id="secondeblok"></div>
+        <div class="internetekst seconde" id="secondebloktekst"></div>
+    </div>
+</div>
 <script>
     const today = new Date();
     const currentMonth = today.getMonth();
@@ -198,7 +198,6 @@
         updateBlokken();
     }, 500);
 </script>
-
 
 
 <script>
