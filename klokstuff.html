@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=nl>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clock</title>
+    <title>Klok</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='clock.ico') }}">
     <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='klok.css') }}">
     <meta name="robots" content="noindex">
 </head>
+
 <body>
     <div id="control-panel">
-        <h3><i class="fa-solid fa-sliders"></i><span id="settingstext">Settings</span></h3>
-        <div class="settings padstuff">
-            <label for="padstuff-slider">Padstuff container (%)</label>
-            <input type="range" id="padstuff-slider" min="0" max="20" step="0.5" class="slider">
-            <input type="number" id="padstuff-number" min="0" max="20" step="0.5" class="number-input">
+        <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Settings</span></h3>
+        <div class="settings padding">
+            <label for="padding-slider">Padding container (%)</label>
+            <input type="range" id="padding-slider" min="0" max="20" step="0.5" class="slider">
+            <input type="number" id="padding-number" min="0" max="20" step="0.5" class="number-input">
         </div>
         <div class="settings minh">
-            <label for="height-slider">Min height blocks (%)</label>
-            <input type="range" id="height-slider" min="0" max="50" step="1" class="slider">
-            <input type="number" id="height-number" min="0" max="50" step="1" class="number-input">
+            <label for="hoogte-slider">Min height blocks (%)</label>
+            <input type="range" id="hoogte-slider" min="0" max="50" step="1" class="slider">
+            <input type="number" id="hoogte-number" min="0" max="50" step="1" class="number-input">
         </div>
         <div class="settings fontWeight">
             <label for="fontWeight-slider">Font weight</label>
@@ -42,37 +43,37 @@
             <input type="color" id="backgroundStart-color" class="color">
         </div>
         <div class="settings backgroundEnd">
-            <label for="backgroundEnd-color">Background end (59 minutes)</label>
+            <label for="backgroundEnd-color">Background end  (59 minutes)</label>
             <input type="color" id="backgroundEnd-color" class="color">
         </div>
     </div>
     <div class="container">
-        <div class="block-container">
-            <div class="block day" id="dayblock"></div>
-            <div class="blockText day" id="dayblocktext"></div>
+        <div class="blok-container">
+            <div class="blok dag" id="dagblok"></div>
+            <div class="internetekst dag" id="dagbloktekst"></div>
         </div>
-        <div class="block-container">
-            <div class="block month" id="monthblock"></div>
-            <div class="blockText month" id="monthblocktext"></div>
+        <div class="blok-container">
+            <div class="blok maand" id="maandblok"></div>
+            <div class="internetekst maand" id="maandbloktekst"></div>
         </div>
-        <div class="block-container">
-            <div class="block year" id="yearblock"></div>
-            <div class="blockText year" id="yearblocktext"></div>
+        <div class="blok-container">
+            <div class="blok jaar" id="jaarblok"></div>
+            <div class="internetekst jaar" id="jaarbloktekst"></div>
         </div>
-        <div class="block-container">
-            <div class="block empty"></div>
+        <div class="blok-container">
+            <div class="blok leeg"></div>
         </div>
-        <div class="block-container">
-            <div class="block hour" id="hourblock"></div>
-            <div class="blockText hour" id="hourblocktext"></div>
+        <div class="blok-container">
+            <div class="blok uur" id="uurblok"></div>
+            <div class="internetekst uur" id="uurbloktekst"></div>
         </div>
-        <div class="block-container">
-            <div class="block minute" id="minuteblock"></div>
-            <div class="blockText minute" id="minuteblocktext"></div>
+        <div class="blok-container">
+            <div class="blok minuut" id="minuutblok"></div>
+            <div class="internetekst minuut" id="minuutbloktekst"></div>
         </div>
-        <div class="block-container">
-            <div class="block second" id="secondblock"></div>
-            <div class="blockText second" id="secondblocktext"></div>
+        <div class="blok-container">
+            <div class="blok seconde" id="secondeblok"></div>
+            <div class="internetekst seconde" id="secondebloktekst"></div>
         </div>
     </div>
 <script>
@@ -82,34 +83,34 @@
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
 
-    const timeBlocks = [{
-            element: "hourblock",
-            text: "hourblocktext",
+    const tijdBlokken = [{
+            element: "uurblok",
+            tekst: "uurbloktekst",
             max: 23
         },
         {
-            element: "minuteblock",
-            text: "minuteblocktext",
+            element: "minuutblok",
+            tekst: "minuutbloktekst",
             max: 59
         },
         {
-            element: "secondblock",
-            text: "secondblocktext",
+            element: "secondeblok",
+            tekst: "secondebloktekst",
             max: 59
         },
         {
-            element: "dayblock",
-            text: "dayblocktext",
+            element: "dagblok",
+            tekst: "dagbloktekst",
             max: daysInMonth
         },
         {
-            element: "monthblock",
-            text: "monthblocktext",
+            element: "maandblok",
+            tekst: "maandbloktekst",
             max: 12
         },
         {
-            element: "yearblock",
-            text: "yearblocktext",
+            element: "jaarblok",
+            tekst: "jaarbloktekst",
             max: 99
         }
     ];
@@ -129,12 +130,14 @@
     }
 
 
-    function updateBlocks() {
+    function updateBlokken() {
         const now = new Date();
 
         const minH = parseInt(localStorage.getItem("minh"));
 
-        const timeValues = [
+
+
+        const tijdswaarden = [
             now.getHours(),
             now.getMinutes(),
             now.getSeconds(),
@@ -143,33 +146,33 @@
             now.getFullYear() % 100
         ];
 
-        timeBlocks.forEach((block, index) => {
+        tijdBlokken.forEach((blok, index) => {
 
-            const value = timeValues[index];
-            const height = ((value / block.max) * (100-minH)) + minH;
+            const waarde = tijdswaarden[index];
+            const hoogte = ((waarde / blok.max) * (100-minH)) + minH;
 
-            blockstuff = document.getElementById(block.element);
-            blockstuff.style.height = `${height}%`;
-            blocktextstuff = document.getElementById(block.text);
-            if (blocktextstuff.innerHTML != padZero(value)) {
-                blocktextstuff.innerHTML = padZero(value);
+            blokding = document.getElementById(blok.element);
+            blokding.style.height = `${hoogte}%`;
+            bloktekstding = document.getElementById(blok.tekst);
+            if (bloktekstding.innerHTML != padZero(waarde)) {
+                bloktekstding.innerHTML = padZero(waarde);
             }
         });
 
-        const day = padZero(now.getDate());
-        const month = padZero(now.getMonth() + 1);
-        const year = now.getFullYear();
-        const hour = padZero(now.getHours());
-        const minute = padZero(now.getMinutes());
-        const second = padZero(now.getSeconds());
+        const dag = padZero(now.getDate());
+        const maand = padZero(now.getMonth() + 1);
+        const jaar = now.getFullYear();
+        const uur = padZero(now.getHours());
+        const minuut = padZero(now.getMinutes());
+        const seconde = padZero(now.getSeconds());
 
-        const titleNew = `${day}-${month}-${year} ${hour}:${minute}:${second}`
-        if (document.title != titleNew) {
-            document.title = titleNew;
+        const nieuweTitel = `${dag}-${maand}-${jaar} ${uur}:${minuut}:${seconde}`
+        if (document.title != nieuweTitel) {
+            document.title = nieuweTitel;
         }
 
 
-        function kleurvalue(start, end, factor) {
+        function kleurwaarde(start, end, factor) {
             return Math.round(start + (end - start) * factor);
         }
 
@@ -183,26 +186,26 @@
 
 
         const factor = now.getMinutes() / 59;
-        const red = kleurvalue(rs, re, factor);
-        const green = kleurvalue(gs, ge, factor);
-        const blue = kleurvalue(bs, be, factor);
+        const red = kleurwaarde(rs, re, factor);
+        const green = kleurwaarde(gs, ge, factor);
+        const blue = kleurwaarde(bs, be, factor);
 
         document.body.style.background = `rgb(${red}, ${green}, ${blue})`;
     }
 
     setTimeout(() => {
-        setInterval(updateBlocks, 500);
-        updateBlocks();
+        setInterval(updateBlokken, 500);
+        updateBlokken();
     }, 500);
 </script>
 
 
 
 <script>
-    const padstuffSlider = document.getElementById("padstuff-slider");
-    const padstuffNumber = document.getElementById("padstuff-number");
-    const minhSlider = document.getElementById("height-slider");
-    const minhNumber = document.getElementById("height-number");
+    const paddingSlider = document.getElementById("padding-slider");
+    const paddingNumber = document.getElementById("padding-number");
+    const minhSlider = document.getElementById("hoogte-slider");
+    const minhNumber = document.getElementById("hoogte-number");
     const fontWeightSlider = document.getElementById("fontWeight-slider");
     const fontWeightNumber = document.getElementById("fontWeight-number");
     const fontSizeSlider = document.getElementById("fontSize-slider");
@@ -213,8 +216,8 @@
     const hoverFontSizeSlider = document.getElementById("hoverFontSize-slider");
     const hoverFontSizeNumber = document.getElementById("hoverFontSize-number");
 
-    function applySettings() { // Loading doc
-        const padstuffValue = localStorage.getItem("containerPadstuff") || "4";
+    function applySettings() { // Bij laden doc
+        const paddingValue = localStorage.getItem("containerPadding") || "4";
         const minh = localStorage.getItem("minh") || "20";
         const fontWeight = localStorage.getItem("fontWeight")|| "2";
         const fontSize = localStorage.getItem("fontSize") || "7,5";
@@ -236,27 +239,27 @@
         backgroundEndNum.value = endColor;
 
 
-        updatePadstuff(padstuffValue);
+        updatePadding(paddingValue);
         updateMinh(minh);
         updateFontWeight(fontWeight);
         updateFontSize(fontSize);
         updateHoverFontSize(savedHoverFontSize);
     }
 
-    function updatePadstuff(value) {
-        container.style.padstuff = `${value}%`;
-        localStorage.setItem("containerPadstuff", value);
-        padstuffSlider.value = value;
-        padstuffNumber.value = value;
+    function updatePadding(value) {
+        container.style.padding = `${value}%`;
+        localStorage.setItem("containerPadding", value);
+        paddingSlider.value = value;
+        paddingNumber.value = value;
     }
 
-    padstuffSlider.addEventListener("input", () => {
-        updatePadstuff(padstuffSlider.value);
+    paddingSlider.addEventListener("input", () => {
+        updatePadding(paddingSlider.value);
     });
 
-    padstuffNumber.addEventListener("input", () => {
-        const value = Math.min(Math.max(padstuffNumber.value, 0), 20);
-        updatePadstuff(value);
+    paddingNumber.addEventListener("input", () => {
+        const value = Math.min(Math.max(paddingNumber.value, 0), 20);
+        updatePadding(value);
     });
 
     function updateMinh(value) {
@@ -346,6 +349,10 @@
         const value = Math.min(Math.max(hoverFontSizeNumber.value, 0), 250);
         updateHoverFontSize(value);
     });
+
+
+
+
 
     window.addEventListener("DOMContentLoaded", applySettings);
 </script>
