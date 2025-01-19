@@ -98,7 +98,7 @@
         }
 
         .blok:hover ~ .internetekst {
-            font-size: 140%;
+            font-size: var(--hover-font-size, 130%);
         }
 
         .blok.jaar,
@@ -137,7 +137,7 @@
             -webkit-transition: .2s;
             transition: opacity .2s;
             border-radius: 20px;
-            padding: 4px;
+            padding: 0.5em;
             transition: 500ms all ease;
         }
 
@@ -166,7 +166,7 @@
         }
 
         .number-input {
-            width: 30px;
+            width: 3em;
             padding: 5px;
             font-size: 16px;
             text-align: center;
@@ -188,7 +188,7 @@
             animation: 0.5s fadeENzoom;
             opacity: 0;
             animation-fill-mode: forwards;
-            animation-delay: 0.2s;
+            animation-delay: 0.35s;
             font-weight: 500;
         }
 
@@ -210,10 +210,9 @@
             justify-content: center;
             align-content: flex-start;
             gap: 10px;
-            width: clamp(300px,35%,1000px);
-            height: clamp(300px,35%,1000px);
+            width: clamp(325px,35%,1000px);
+            height: clamp(400px,40%,1200px);
             border: 1px solid white;
-
         }
 
         #colorsettings {
@@ -245,7 +244,7 @@
             animation: 0.5s fadeENzoom;
             opacity: 0;
             animation-fill-mode: forwards;
-            animation-delay: 0.2s;
+            animation-delay: 0.35s;
         }
 
         #control-panel:hover h3 i {
@@ -255,10 +254,28 @@
 
         #control-panel:hover h3 span {
             display: block;
+            font-size: 1.5em;
         }
         .slider::-webkit-slider-thumb:active {
             opacity: 1;
         }
+
+        label {
+            text-align: right;
+            width: 10em;
+        }
+
+
+        .color {
+            width: 6em;
+            height: 3em;
+            background: transparent;
+            cursor: pointer;
+            transition: border-color 0.3s, transform 0.3s;
+            outline: none;
+        }
+
+
 
     </style>
     <meta name="robots" content="noindex">
@@ -268,12 +285,12 @@
     <div id="control-panel">
         <h3><i class="fa-solid fa-sliders"></i><span id="instellingentekst">Settings</span></h3>
         <div class="settings padding">
-            <label for="padding-slider">Padding container</label>
-            <input type="range" id="padding-slider" min="0" max="25" step="1" class="slider">
-            <input type="number" id="padding-number" min="0" max="25" step="1" class="number-input">
+            <label for="padding-slider">Padding container (%)</label>
+            <input type="range" id="padding-slider" min="0" max="20" step="0.5" class="slider">
+            <input type="number" id="padding-number" min="0" max="20" step="0.5" class="number-input">
         </div>
         <div class="settings minh">
-            <label for="minh-slider">Min height blocks</label>
+            <label for="minh-slider">Min height blocks (%)</label>
             <input type="range" id="hoogte-slider" min="0" max="50" step="1" class="slider">
             <input type="number" id="hoogte-number" min="0" max="50" step="1" class="number-input">
         </div>
@@ -283,9 +300,14 @@
             <input type="number" id="fontWeight-number" min="1" max="9" step="1" class="number-input">
         </div>
         <div class="settings fontSize">
-            <label for="fontSize-slider">Font size</label>
-            <input type="range" id="fontSize-slider" min="1" max="15" step="1" class="slider">
-            <input type="number" id="fontSize-number" min="1" max="15" step="1" class="number-input">
+            <label for="fontSize-slider">Font size (em)</label>
+            <input type="range" id="fontSize-slider" min="1" max="15" step="0.5" class="slider">
+            <input type="number" id="fontSize-number" min="1" max="15" step="0.5" class="number-input">
+        </div>
+        <div class="settings fontSizeHover">
+            <label for="hoverFontSize-slider">Hover font size (%)</label>
+            <input type="range" id="hoverFontSize-slider" min="50" max="250" step="1" class="slider">
+            <input type="number" id="hoverFontSize-number" min="50" max="250" step="1" class="number-input">
         </div>
         <div class="settings backgroundStart">
             <label for="backgroundStart-color">Background start (0 minutes)</label>
@@ -463,12 +485,15 @@
     const backgroundStartNum = document.getElementById("backgroundStart-color");
     const backgroundEndNum = document.getElementById("backgroundEnd-color");
     const container = document.querySelector(".container");
+    const hoverFontSizeSlider = document.getElementById("hoverFontSize-slider");
+    const hoverFontSizeNumber = document.getElementById("hoverFontSize-number");
 
     function applySettings() { // Bij laden doc
-        const paddingValue = localStorage.getItem("containerPadding") || "2.5";
+        const paddingValue = localStorage.getItem("containerPadding") || "2";
         const minh = localStorage.getItem("minh") || "20";
         const fontWeight = localStorage.getItem("fontWeight")|| "3";
         const fontSize = localStorage.getItem("fontSize") || "7";
+        const savedHoverFontSize = localStorage.getItem("hoverFontSize") || "130";
 
 
         const rs = localStorage.getItem("rs") || 0;
@@ -490,6 +515,7 @@
         updateMinh(minh);
         updateFontWeight(fontWeight);
         updateFontSize(fontSize);
+        updateHoverFontSize(savedHoverFontSize);
     }
 
     function updatePadding(value) {
@@ -504,7 +530,7 @@
     });
 
     paddingNumber.addEventListener("input", () => {
-        const value = Math.min(Math.max(paddingNumber.value, 0), 25);
+        const value = Math.min(Math.max(paddingNumber.value, 0), 20);
         updatePadding(value);
     });
 
@@ -577,6 +603,28 @@
         localStorage.setItem("ge", ge);
         localStorage.setItem("be", be);
     });
+
+
+
+    function updateHoverFontSize(value) {
+        document.documentElement.style.setProperty("--hover-font-size", `${value}%`);
+        hoverFontSizeSlider.value = value;
+        hoverFontSizeNumber.value = value;
+        localStorage.setItem("hoverFontSize", value);
+    }
+
+    hoverFontSizeSlider.addEventListener("input", () => {
+        updateHoverFontSize(hoverFontSizeSlider.value);
+    });
+
+    hoverFontSizeNumber.addEventListener("input", () => {
+        const value = Math.min(Math.max(hoverFontSizeNumber.value, 50), 250);
+        updateHoverFontSize(value);
+    });
+
+
+
+
 
     window.addEventListener("DOMContentLoaded", applySettings);
 </script>
