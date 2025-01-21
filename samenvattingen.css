@@ -801,5 +801,25 @@ h1#blokheader {
 
 
 .vak-en-toets {
-  min-width: fit-content;
+    min-width: fit-content;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: var(--zwart);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--lblauw);
+    border-radius: 10px;
+    border: 3px solid var(--zwart);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--dblauw);
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--zwart);
+    border-radius: 10px;
 }
