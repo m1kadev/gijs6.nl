@@ -20,6 +20,7 @@ body {
     z-index: 10;
     border-radius: 8px;
     color: #969696;
+    opacity: 0;
     animation: 0.5s fadeENzoom;
     animation-fill-mode: forwards;
     animation-delay: 0.5s;
