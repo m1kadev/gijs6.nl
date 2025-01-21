@@ -130,7 +130,7 @@
     }
 
 
-    function updateBlokken() {
+    function updateBlocks() {
         const now = new Date();
 
         const minH = parseInt(localStorage.getItem("minh"));
@@ -195,7 +195,7 @@
 
     setTimeout(() => {
         setInterval(updateBlokken, 500);
-        updateBlokken();
+        updateBlocks();
     }, 500);
 </script>
 
