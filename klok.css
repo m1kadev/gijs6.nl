@@ -241,7 +241,7 @@ input[type="color" i]::-webkit-color-swatch {
     transition: 250ms all ease;
 }
 
-.blok:hover~.internetekst {
+.blok:hover ~ .internetekst {
     font-size: var(--hover-font-size, 130%);
 }
 
