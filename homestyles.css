@@ -41,14 +41,12 @@
 
 body {
     background-color: var(--background);
-    flex-direction: column;
     height: 100vh;
     margin: 0;
     color: var(--text-color);
     font-family: 'Montserrat', sans-serif;
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
 }
 
 
@@ -73,7 +71,6 @@ body {
     gap: 65px;
     padding: 50px;
     flex-grow: 1;
-    width: -webkit-fill-available;
 }
 
 
@@ -269,7 +266,6 @@ h2 {
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    /* width: 100%; */
 }
 
 .onderkantrechts {
@@ -439,7 +435,6 @@ a.block:hover {
     padding: 10px;
     border: 2px solid var(--gray);
     border-radius: 10px;
-    /* min-width: -webkit-fill-available; */
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -455,7 +450,6 @@ a.block:hover {
 .linklist a.block:hover[descript]:not([descript=""])::after {
     opacity: 1;
     visibility: visible;
-    /* bottom: -60px; */
 }
 
 

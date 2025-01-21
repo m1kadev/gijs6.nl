@@ -149,18 +149,18 @@ h1 {
     z-index: 1;
     left: 0;
     top: 0;
-
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.9);
     padding: 5%;
     flex-direction: column;
-    width: -webkit-fill-available;
     animation: 0.5s fade;
     opacity: 0;
     animation-fill-mode: forwards;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     gap: 35px;
+    flex-grow: 1;
+    box-sizing: border-box;
 }
 
 
@@ -281,7 +281,6 @@ h1 {
     align-items: stretch;
     align-content: center;
     flex-grow: 1;
-    /* flex-wrap: wrap; */
     hyphens: auto;
 }
 
@@ -302,10 +301,7 @@ h1 {
     animation-fill-mode: forwards;
     animation-delay: 0.1s;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    /* width: -webkit-fill-available; */
-    /* overflow-wrap: break-word; */
     hyphens: auto;
-    /* word-break: break-word; */
 }
 
 .voorbeeldblok.blauw {
@@ -803,6 +799,7 @@ h1 {
 .vak-en-toets {
     min-width: fit-content;
 }
+
 
 ::-webkit-scrollbar {
     width: 12px;
