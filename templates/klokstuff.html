@@ -83,7 +83,7 @@
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
 
-    const timeBlocksInfo = [{
+    const tijdBlokken = [{
             element: "uurblok",
             tekst: "uurbloktekst",
             max: 23
@@ -130,7 +130,7 @@
     }
 
 
-    function updateBlocks() {
+    function updateBlokken() {
         const now = new Date();
 
         const minH = parseInt(localStorage.getItem("minh"));
@@ -146,7 +146,7 @@
             now.getFullYear() % 100
         ];
 
-        timeBlocksInfo.forEach((blok, index) => {
+        tijdBlokken.forEach((blok, index) => {
 
             const waarde = tijdswaarden[index];
             const hoogte = ((waarde / blok.max) * (100-minH)) + minH;
@@ -195,7 +195,7 @@
 
     setTimeout(() => {
         setInterval(updateBlokken, 500);
-        updateBlocks();
+        updateBlokken();
     }, 500);
 </script>
 

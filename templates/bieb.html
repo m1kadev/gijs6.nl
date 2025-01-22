@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% set active_page = "bieb" %}
+
+{% block title %}{{ "Websitebieb" if lang == "nl" else "Website library" if lang == "en" }}{% endblock %}
+
+{% block extra_headers %}
+<meta name="robots" content="noindex">
+{% endblock %}
+{% block content %}
+<div class="title">
+    <h1>{% if lang == "en" %}
+        Library of websites
+        {% elif lang == "nl" %}
+        Bibliotheek van websites
+        {% endif %}
+    </h1>
+    </div>
+
+
+<div id="link-section-deux" class="links-section">
+    <div class="section-title">
+        <i class="fa-brands fa-python"></i>
+        <h2>{% if lang == "en" %}
+            Things I host here on PythonAnywhere (mostly personal school stuff)
+            {% elif lang == "nl" %}
+            Dingen die ik hier op PythonAnywhere host (vooral voor school)
+            {% endif %}
+        </h2>
+    </div>
+    <div class="linklist">
+        {% for item in pysites %}
+        <a href="{{ item.link }}" class="block" descript="{{ item.popupdescript[lang] }}">
+            <div class="txt">{{ item.title[lang] | safe }}</div>
+            <i class="{{ item.fa_icon_class if item.fa_icon_class else "fa-solid fa-arrow-up-right-from-square" }}"></i>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+<div id="link-section-drei" class="links-section">
+    <div class="section-title">
+        <i class="fa-solid fa-globe"></i>
+        <h2>{% if lang == "en" %}
+            Interesting sites and articles
+            {% elif lang == "nl" %}
+            Interessante  websites en artikelen
+            {% endif %}
+        </h2>
+    </div>
+    <div class="linklist">
+        {% for item in leukesites %}
+        <a href="{{ item.link }}" class="block" descript="{{ item.popupdescript[lang] }}">
+            <div class="txt">{{ item.title[lang] | safe }}</div>
+            <i class="{{ item.fa_icon_class if item.fa_icon_class else "fa-solid fa-arrow-up-right-from-square" }}"></i>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+<div id="link-section-vier" class="links-section">
+    <div class="section-title">
+        <i class="fa-solid fa-globe"></i>
+        <h2>{% if lang == "en" %}
+            Some handy sites
+            {% elif lang == "nl" %}
+            Handige websites
+            {% endif %}
+        </h2>
+    </div>
+    <div class="linklist">
+        {% for item in handigesites %}
+        <a href="{{ item.link }}" class="block" descript="{{ item.popupdescript[lang] }}">
+            <div class="txt">{{ item.title[lang] | safe }}</div>
+            <i class="{{ item.fa_icon_class if item.fa_icon_class else "fa-solid fa-arrow-up-right-from-square" }}"></i>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

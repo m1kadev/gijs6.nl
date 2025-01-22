@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% set active_page = "code" %}
+
+{% block title %}{{ "Stukjes code" if lang == "nl" else "Code snippets" }}{% endblock %}
+
+
+{% block extra_headers %}
+<link href="{{ url_for('static', filename='prismdarkgoed.css') }}" rel="stylesheet">
+<meta name="robots" content="noindex">
+{% endblock %}
+
+
+
+
+{% block content %}
+<div class="title">
+    <h1>{% if lang == "en" %}
+    Handy code snippets
+    {% elif lang == "nl" %}
+    Handige stukjes code
+    {% endif %}
+    </h1>
+    <h2>{% if lang == "en" %}
+    Just stuff I can't be bothered to remember
+    {% elif lang == "nl" %}
+    Dingen waar ik niet de moeite voor kan nemen om ze te onthouden
+    {% endif %}
+    </h2>
+    </div>
+
+
+<!-- Niet vergeten om { en } ook te escapen ('&#123;' en '&#125;') ivm Jinja!!! -->
+
+<div class="codebox">
+    <h2>{% if lang == "en" %}
+    HTML base of a subpage (Jinja, with basis.html as template)
+    {% elif lang == "nl" %}
+    HTML basis van een subpagina (Jinja, met basis.html als template)
+    {% endif %}</h2>
+    <pre><code class="language-html">&#123;% extends &quot;basis.html&quot; %"&#125;
+&#123;% set active_page = &quot;code&quot; %&#125;
+
+&#123;% block title %&#125;&#123;&#123; &quot;Stukjes code&quot; if lang == &quot;nl&quot; else &quot;Code snippets&quot; &#125;&#125;&#123;% endblock %&#125;
+
+
+&#123;% block extra_headers %&#125;
+&#123;% endblock %&#125;
+
+
+&#123;% block content %&#125;
+&lt;div class=&quot;title&quot;&gt;
+    &lt;h1&gt;&#123;% if lang == &quot;en&quot; %&#125;
+    Handy code snippets
+    &#123;% elif lang == &quot;nl&quot; %&#125;
+    Handige stukjes code
+    &#123;% endif %&#125;&lt;/h1&gt;
+    &lt;h2&gt;&#123;% if lang == &quot;en&quot; %&#125;
+    Just stuff I can't be bothered to remember
+    &#123;% elif lang == &quot;nl&quot; %&#125;
+    Dingen waar ik niet de moeite voor kan nemen om ze te onthouden
+    &#123;% endif %&#125;&lt;/h2&gt;
+&lt;/div&gt;
+&#123;% endblock %&#125;</code></pre>
+</div>
+
+
+
+<div class="codebox">
+    <h2>{% if lang == "en" %}
+    HTML boilerplate page
+    {% elif lang == "nl" %}
+    HTML boilerplate page
+    {% endif %}</h2>
+    <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=nl&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        &lt;title&gt;Titel&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;&#123;&#123; url_for('static', filename='style.css') &#125;&#125;&quot;&gt;
+        &lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;&#123;&#123; url_for('static', filename='fav.ico') &#125;&#125;&quot;&gt;
+        &lt;script src=&quot;https://kit.fontawesome.com/4a94c21782.js&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt; &lt;!-- FontAwesome --&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+
+<div class="codebox">
+    <h2>{% if lang == "en" %}
+    Python stuff
+    {% elif lang == "nl" %}
+    Python dingen
+    {% endif %}</h2>
+    <pre><code class="language-python">import locale
+locale.setlocale(locale.LC_TIME, &quot;nl_NL&quot;)
+
+
+
+# Duur seconden -> Leesbaar
+tekst = f&quot;&#123;duur // 3600&#125; uur &#123;(duur % 3600) // 60&#125; minuten &#123;duur % 60&#125; seconden&quot;</code></pre>
+</div>
+<div class="codebox">
+    <h2>{% if lang == "en" %}
+    Goole Sheets stuff
+    {% elif lang == "nl" %}
+    Google Sheets dingen
+    {% endif %}</h2>
+    <pre><code class="language-excel-formula">=ARRAYFORMULA(ALS(ISLEEG(A2:A);;BEREKENING))</code></pre>
+</div>
+
+
+
+
+<script src="{{ url_for('static', filename='prismdarkgoed.js') }}"></script>
+
+{% endblock %}
+
