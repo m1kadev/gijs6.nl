@@ -111,16 +111,34 @@ h1 {
     animation-delay: 0.2s;
 }
 
+
+
 .header p {
-    font-weight: 600 !important;
-    font-size: 1em !important;
-    margin: 0 !important;
+    margin: 0;
     text-align: end;
 }
 
-#laatstOpgehaald {
-    font-size: 0.7em !important;
+#headernaam {
+    font-size: 1.1em;
+    font-weight: 600;
 }
+
+.headertekstklein {
+    font-size: 0.8em;
+    font-weight: 400;
+}
+
+
+
+#introtekstsche {
+    font-size: 1.25em;
+    font-weight: 700;
+    margin: 0;
+}
+
+
+
+
 
 .inleidingtekst h1 {
     font-size: 2.5em;
@@ -128,11 +146,9 @@ h1 {
     margin-top: 20px;
 }
 
-.inleidingtekst p {
-    font-size: 1.5em;
-    font-weight: 700;
-    margin: 0;
-}
+
+
+
 
 
 
@@ -359,7 +375,7 @@ h1 {
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    gap: 5vh;
+    gap: 4vh;
     word-wrap: break-word;
 }
 
@@ -684,14 +700,8 @@ h1 {
     }
 
     .voorbeeldblokkencontainer {
-        /* flex-wrap: wrap; */
         flex-direction: column;
         gap: 30px;
-    }
-
-    .voorbeeldblokkencontainer-2 {
-        /* flex-wrap: wrap; */
-        /* flex-direction: row; */
     }
 
     .voorbeeldblok {
@@ -705,7 +715,7 @@ h1 {
     }
 
     .container-toetsen {
-        gap: 5vh;
+        gap: 3.5vh;
     }
 
     .inleiding {
@@ -721,9 +731,32 @@ h1 {
         font-size: 2.5em !important;
     }
 
-    .inleidingtekst p {
-        font-size: 1em !important;
+
+
+
+    #headernaam {
+        font-size: 0.9em;
     }
+
+    .headertekstklein {
+        font-size: 0.65em;
+    }
+
+
+    #introtekstsche {
+        font-size: 1em;
+    }
+
+
+
+
+
+    .inleidingtekst h1 {
+        font-size: 2.5em;
+        font-weight: 900;
+        margin-top: 20px;
+    }
+
 
 
     .popup-inhoud p {
