@@ -23,7 +23,7 @@
                 </div>
             </div>
             <h1>Welkom!</h1>
-            <p id="introtekstsche">Op deze pagina vind je een overzicht van samenvattingen en andere leermiddelen voor alle toetsen van dit schooljaar. Veel succes met leren!</p>
+            <p id="introtekstsche">Op deze pagina vind je een overzicht van samenvattingen en andere leermiddelen voor alle toetsen van dit schooljaar. Hover over een toets om meer informatie over die toets te zien. Veel succes met leren!</p>
         </div>
         <div class="popup" id="infoPopup">
             <span class="sluitKnop"><i class="fa-solid fa-circle-xmark"></i> Site-informatie</span>
@@ -85,7 +85,13 @@
             </div>
 
 
+
+
+
+
             <!-- Hoverinfostuff -->
+
+
             <div class="onzichtbarehoverzooi">
                 <div class="infoblok">
                     <div class="infoblokrijding vakinfoblokrij">
@@ -102,13 +108,17 @@
                         <div class="iconcontainerinfoblok">
                             <i class="fa-solid fa-book"></i>
                         </div>
-                        {{ item.Leerstof }}
+                        {{ item.Leerstof_medium }}
                     </div>
                     <div class="infoblokrijding">
                         <div class="iconcontainerinfoblok">
                             <i class="fa-solid fa-calendar"></i>
                         </div>
-                        {{ item.Tijd.capitalize() }}
+                        {% if item.Afname_tekst_specificiteit == "DATUM" %}
+                            {{ item.Afnametijd_dag.capitalize() }}
+                        {% else %}
+                            {{ item.Tijd.capitalize() }}
+                        {% endif %}
                     </div>
                     <div class="infoblokrijding">
                         <div class="iconcontainerinfoblok">
@@ -120,16 +130,20 @@
                         <div class="iconcontainerinfoblok">
                             <i class="fa-solid fa-clock"></i>
                         </div>
-                        {{ item.Duur }} min
+                        {% if item.Duur == "-" %}
+                            Niet van toepassing
+                        {% else %}
+                            {{ item.Duur }} min
+                        {% endif %}
                     </div>
                     <div class="infoblokrijding">
                         <div class="iconcontainerinfoblok">
                             <i class="fa-solid fa-rotate-right"></i>
                         </div>
                         {% if item.Herkansbaarheid == "Ja" %}
-                            Wel herkansbaar
+                            <span style="color: var(--groen);">Wel</span>&nbsp;herkansbaar
                         {% elif item.Herkansbaarheid == "Nee" %}
-                            Niet herkansbaar
+                            <span style="color: var(--rood);">Niet</span>&nbsp;herkansbaar
                         {% endif %}
                     </div>
                     <div class="infoblokrijding">
@@ -154,6 +168,15 @@
 
 
             <!-- /Hoverinfostuff -->
+
+
+
+
+
+
+
+
+
 
 
             <div class="linkjes {{ item.Weergave }}">

@@ -789,6 +789,7 @@ h1 {
 
     .vak-en-toets h1 {
         font-size: 1.5em;
+        min-width: 75px;
     }
 
     .vak-en-toets h2 {
@@ -864,8 +865,8 @@ h1 {
     position: absolute;
     top: 100%;
     left: 0;
+    width: min(100%, 500px);
     display: none;
-    width: min(100%, 300px););)%;);
 }
 
 
@@ -876,7 +877,7 @@ h1 {
     background: black;
     border-color: var(--witblauw);
     padding: 10px;
-    animation: 0.5s fadeENzoom;
+    animation: 0.5s fadeOMLAAG;
     opacity: 0;
     animation-fill-mode: forwards;
     animation-delay: 0.1s;
@@ -929,3 +930,22 @@ h1 {
 .onzichtbarehoverzooi:hover {
     display: block;
 }
+
+
+
+
+
+
+@keyframes fadeOMLAAG {
+    0% {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+
