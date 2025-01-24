@@ -847,7 +847,7 @@ h1 {
     top: 100%;
     left: 0;
     display: none;
-    animation: 0.5s fadeOMLAAG;
+    animation: 300ms fadeOMLAAG;
     opacity: 0;
     animation-fill-mode: forwards;
     animation-delay: 0.1s;
@@ -898,6 +898,7 @@ h1 {
     gap: 10px;
     font-size: 1.5em;
     font-weight: 800;
+    margin-right: 10px;
 }
 
 .icon-in-de-vakinfoblokrij {
@@ -907,7 +908,7 @@ h1 {
 
 
 .onzichtbarehoverzooi.sluiten {
-    animation: 0.5s fadeOMHOOG forwards;
+    animation: 300ms fadeOMHOOG forwards;
 }
 
 
