@@ -398,7 +398,6 @@ h1 {
     flex-direction: row;
     align-items: stretch;
     justify-content: flex-start;
-    align-content: center;
     gap: 10px;
     width: 45%;
     animation: 0.5s fadeENzoom;
@@ -407,7 +406,8 @@ h1 {
     animation-delay: 0.1s;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    position: relative;
+    user-select: none;
+    cursor: default;
 }
 
 .blok.titel.JA {

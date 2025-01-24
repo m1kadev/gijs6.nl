@@ -39,7 +39,7 @@
             <div class="popup-inhoud kleur inleiding" id="popupInhoudInleiding">
                 <h1>Welkom op deze fantastische pagina!</h1>
                 <p><span class="veranderendeTekst mobiel">Op deze pagina vind je alle toetsen</span><span class="veranderendeTekst desktop">Aan de linkerkant staan de verschillende toetsen</span> en <span class="veranderendeTekst desktop">aan de rechterkant zie je</span> de bijbehorende leermiddelen.
-                <br>Voor bijna alle toetsen maak ik wel een samenvatting. Verslagen, PO"s en presentaties uiteraard niet, maar ja. Je vindt hier ook handige woordenlijsten (vaak op StudyGo), begrippenlijsten en linkjes naar andere handige leermiddelen.
+                <br>Voor bijna alle toetsen maak ik wel een samenvatting. Verslagen, PO's en presentaties uiteraard niet, maar ja. Je vindt hier ook handige woordenlijsten (vaak op StudyGo), begrippenlijsten en linkjes naar andere handige leermiddelen.
                 <br><small>Ik ben al een tijdje "bezig" met het overzetten van de samenvattingen van Google Docs naar een md die ik hier zelf host maar dat heb ik nog niet af, dus voor nu kun je gewoon terecht op de Google Docs.</small>
                 <br><strong>Veel succes met leren en maak er wat moois van!</strong></p>
             </div>
@@ -323,46 +323,43 @@
     </script>
 
 
-
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const blokTitels = document.querySelectorAll(".blok.titel");
-            const onzichtbarehoverzooien = document.querySelectorAll(".onzichtbarehoverzooi"); // "onzichtbarehoverzooien" is wel de mooiste naam die ik ooit heb gebruikt
+    document.addEventListener('DOMContentLoaded', () => {
+        const blokTitels = document.querySelectorAll('.blok.titel');
+        const onzichtbarehoverzooien = document.querySelectorAll('.onzichtbarehoverzooi'); // onzichtbarehoverzooien is wel de mooiste naam die ik ooit heb gebruikt
 
-            blokTitels.forEach((blokTitel, index) => {
-                const onzichtbarehoverzooi = onzichtbarehoverzooien[index];
-                let hideTimeout = null;
-                let isHovered = false;
+        blokTitels.forEach((blokTitel, index) => {
+            const onzichtbarehoverzooi = onzichtbarehoverzooien[index];
 
-                function hideOnHover() {
-                    isHovered = false;
 
-                    hideTimeout = setTimeout(() => {
-                        if (!isHovered) {
-                            onzichtbarehoverzooi.classList.add("sluiten");
-                            setTimeout(() => {
-                                if (!isHovered) {
-                                    onzichtbarehoverzooi.style.display = "none";
-                                    onzichtbarehoverzooi.classList.remove("sluiten");
-                                }
-                            }, 500);
-                        }
-                    }, 100);
+            function hideOnHover() {
+                if (!blokTitel.matches(':hover') && !onzichtbarehoverzooi.matches(':hover')) {
+                    onzichtbarehoverzooi.classList.add("sluiten");
+                    setTimeout(() => {
+                        onzichtbarehoverzooi.style.display = "none";
+                        onzichtbarehoverzooi.classList.remove("sluiten");
+                        setTimeout(() => {
+                            showOnHover()
+                        }, 400);
+                    }, 300); // Zelfde als de duur van de .onzichtbarehoverzooi.sluiten animatie
+
                 }
+            }
 
-                function showOnHover() {
-                    isHovered = true;
-                    clearTimeout(hideTimeout);
+            function showOnHover() {
+                if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
                     onzichtbarehoverzooi.style.display = "block";
                 }
+            }
 
-                blokTitel.addEventListener("mouseenter", showOnHover);
-                onzichtbarehoverzooi.addEventListener("mouseenter", showOnHover);
-                blokTitel.addEventListener("mouseleave", hideOnHover);
-                onzichtbarehoverzooi.addEventListener("mouseleave", hideOnHover);
-            });
+            blokTitel.addEventListener('mouseleave', hideOnHover);
+            onzichtbarehoverzooi.addEventListener('mouseleave', hideOnHover);
+            blokTitel.addEventListener('mouseenter', showOnHover);
+            onzichtbarehoverzooi.addEventListener('mouseenter', showOnHover);
         });
+    });
 </script>
+
 
 
 </body>
