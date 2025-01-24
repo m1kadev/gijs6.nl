@@ -153,12 +153,6 @@ h1 {
 
 
 
-
-
-
-
-
-
 .popup {
     display: none;
     position: fixed;
@@ -265,8 +259,6 @@ h1 {
 
 
 
-
-
 .popup-inhoud {
     flex-grow: 1;
     max-height: fit-content;
@@ -359,17 +351,6 @@ h1 {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 .container {
     display: flex;
     flex-direction: column;
@@ -420,7 +401,6 @@ h1 {
     align-content: center;
     gap: 10px;
     width: 45%;
-    /* flex-grow: 1; */
     animation: 0.5s fadeENzoom;
     opacity: 0;
     animation-fill-mode: forwards;
@@ -455,8 +435,7 @@ h1 {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.textcontainer h1,
-.textcontainer h2 {
+.textcontainer h1, .textcontainer h2 {
     margin: 0;
 }
 
@@ -470,15 +449,13 @@ h1 {
     word-wrap: break-word;
 }
 
-.vak-en-toets.NEE,
-.vak-en-toets.JA_DEELS {
+.vak-en-toets.NEE, .vak-en-toets.JA_DEELS {
     display: flex;
     flex-direction: row;
     align-items: center;
     flex-grow: 1;
     gap: 10px;
     justify-content: flex-start;
-    /* flex-wrap: wrap; */
 }
 
 .vak-en-toets h1 {
@@ -628,8 +605,6 @@ h1 {
 
 
 
-
-
 @keyframes fadeENzoom {
     0% {
         opacity: 0;
@@ -679,9 +654,6 @@ h1 {
 
 
 
-
-
-
 @media (max-width: 1300px) {
     .container-toetsen {
         gap: 35px;
@@ -709,6 +681,7 @@ h1 {
     }
 }
 
+
 @media (max-width: 768px) {
     .container {
         hyphens: auto;
@@ -732,8 +705,6 @@ h1 {
     }
 
 
-
-
     #headernaam {
         font-size: 0.9em;
     }
@@ -746,8 +717,6 @@ h1 {
     #introtekstsche {
         font-size: 1em;
     }
-
-
 
 
 
@@ -828,8 +797,6 @@ h1 {
 
 
 
-
-
 .vak-en-toets {
     min-width: fit-content;
 }
@@ -904,7 +871,7 @@ h1 {
 }
 
 .iconcontainerinfoblok {
-    width: 1.4em;
+    min-width: 1.4em;
     font-size: 1.25em;
     display: flex;
     justify-content: flex-start;
@@ -913,7 +880,6 @@ h1 {
 }
 
 .vakinfoblokrij {
-    gap: 10px;
     font-size: 1.5em;
     font-weight: 800;
 }
@@ -932,10 +898,6 @@ h1 {
 }
 
 
-
-
-
-
 @keyframes fadeOMLAAG {
     0% {
         opacity: 0;
@@ -947,5 +909,3 @@ h1 {
         transform: translateY(0px);
     }
 }
-
-
