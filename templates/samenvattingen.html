@@ -23,8 +23,13 @@
                 </div>
             </div>
             <h1>Welkom!</h1>
-            <p id="introtekstsche">Op deze pagina vind je een overzicht van samenvattingen en andere leermiddelen voor alle toetsen van dit schooljaar. Hover over een toets om meer informatie over die toets te zien. Veel succes met leren!</p>
+            <p id="introtekstsche">Op deze pagina vind je een overzicht van samenvattingen en andere leermiddelen voor alle toetsen van dit schooljaar. <span class="veranderendeTekst mobiel">Druk op de naam van een toets om meer informatie te zien.</span><span class="veranderendeTekst desktop">Hover over een toets om meer informatie over die toets te zien.</span> Veel succes met leren!</p>
         </div>
+
+
+
+        <!-- Popup -->
+
         <div class="popup" id="infoPopup">
             <span class="sluitKnop"><i class="fa-solid fa-circle-xmark"></i> Site-informatie</span>
             <div class="popup-inhoud kleur inleiding" id="popupInhoudInleiding">
@@ -58,7 +63,16 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- /Popup -->
+
+
+
+
+
     </div>
+
 
 
 
@@ -253,6 +267,7 @@
         openKnop.addEventListener('click', () => {
             popup.style.display = 'flex';
         });
+
         document.querySelector(".sluitKnop").addEventListener("click", function () {
             const popup = document.getElementById("infoPopup");
             const popupcontentinl = document.getElementById('popupInhoudInleiding');
@@ -271,5 +286,39 @@
             }, 500);
         });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blokTitels = document.querySelectorAll('.blok.titel');
+        const onzichtbarehoverzooien = document.querySelectorAll('.onzichtbarehoverzooi'); // onzichtbarehoverzooien is wel de mooiste naam die ik ooit heb gebruikt
+
+        blokTitels.forEach((blokTitel, index) => {
+            const onzichtbarehoverzooi = onzichtbarehoverzooien[index];
+
+
+            function hideOnHover() {
+                if (!blokTitel.matches(':hover') && !onzichtbarehoverzooi.matches(':hover')) {
+                    onzichtbarehoverzooi.classList.add("sluiten");
+                    setTimeout(() => {
+                        onzichtbarehoverzooi.style.display = "none";
+                        onzichtbarehoverzooi.classList.remove("sluiten");
+                    }, 500); // Zelfde als de duur van de .onzichtbarehoverzooi.sluiten animatie
+                }
+            }
+
+            function showOnHover() {
+                if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
+                    onzichtbarehoverzooi.style.display = "block";
+                }
+            }
+
+            blokTitel.addEventListener('mouseleave', hideOnHover);
+            onzichtbarehoverzooi.addEventListener('mouseleave', hideOnHover);
+            blokTitel.addEventListener('mouseenter', showOnHover);
+            onzichtbarehoverzooi.addEventListener('mouseenter', showOnHover);
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -828,12 +828,31 @@ h1 {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .onzichtbarehoverzooi {
     position: absolute;
     top: 100%;
     left: 0;
-    width: min(100%, 500px);
     display: none;
+    animation: 0.5s fadeOMLAAG;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-delay: 0.1s;
+    max-width: 100%;
+    z-index: 10;
 }
 
 
@@ -844,12 +863,8 @@ h1 {
     background: black;
     border-color: var(--witblauw);
     padding: 10px;
-    animation: 0.5s fadeOMLAAG;
-    opacity: 0;
-    animation-fill-mode: forwards;
-    animation-delay: 0.1s;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 2;
+    z-index: 10;
     position: relative;
     margin-top: 1vh;
     display: flex;
@@ -871,7 +886,7 @@ h1 {
 }
 
 .iconcontainerinfoblok {
-    min-width: 1.4em;
+    width: 1.4em;
     font-size: 1.25em;
     display: flex;
     justify-content: flex-start;
@@ -880,6 +895,7 @@ h1 {
 }
 
 .vakinfoblokrij {
+    gap: 10px;
     font-size: 1.5em;
     font-weight: 800;
 }
@@ -889,13 +905,13 @@ h1 {
 }
 
 
-.blok.titel:hover ~ .onzichtbarehoverzooi {
-    display: block;
+
+.onzichtbarehoverzooi.sluiten {
+    animation: 0.5s fadeOMHOOG forwards;
 }
 
-.onzichtbarehoverzooi:hover {
-    display: block;
-}
+
+
 
 
 @keyframes fadeOMLAAG {
@@ -909,3 +925,20 @@ h1 {
         transform: translateY(0px);
     }
 }
+
+
+
+
+@keyframes fadeOMHOOG {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+}
+
+
