@@ -35,7 +35,7 @@
         <!-- Popup -->
 
         <div class="popup" id="infoPopup">
-            <span class="sluitKnop"><i class="fa-solid fa-circle-xmark"></i> Site-informatie</span>
+            <span id="sluitKnop"><i class="fa-solid fa-circle-xmark"></i> Site-informatie</span>
             <div class="popup-inhoud kleur inleiding" id="popupInhoudInleiding">
                 <h1>Welkom op deze fantastische pagina!</h1>
                 <p><span class="veranderendeTekst mobiel">Op deze pagina vind je alle toetsen</span><span class="veranderendeTekst desktop">Aan de linkerkant staan de verschillende toetsen</span> en <span class="veranderendeTekst desktop">aan de rechterkant zie je</span> de bijbehorende leermiddelen.
@@ -109,14 +109,12 @@
 
 
 
-
-
-
             <!-- Hoverinfostuff -->
 
 
             <div class="onzichtbarehoverzooi">
                 <div class="infoblok">
+                    <span class="sluitKnop3"><i class="fa-solid fa-circle-xmark"></i></span>
                     <div class="infoblokrijding vakinfoblokrij">
                         {{ item.Vak_volledig }}
                         <div class="iconcontainerinfoblok icon-in-de-vakinfoblokrij">
@@ -327,26 +325,39 @@
     document.addEventListener('DOMContentLoaded', () => {
         const blokTitels = document.querySelectorAll('.blok.titel');
         const onzichtbarehoverzooien = document.querySelectorAll('.onzichtbarehoverzooi'); // onzichtbarehoverzooien is wel de mooiste naam die ik ooit heb gebruikt
+        const sluitKnoppen = document.querySelectorAll(".sluitKnop3");
+
 
         blokTitels.forEach((blokTitel, index) => {
             const onzichtbarehoverzooi = onzichtbarehoverzooien[index];
+            const sluitKnop = sluitKnoppen[index];
+
+
+            function stuffHiden() {
+                console.log("Allo!");
+                onzichtbarehoverzooi.classList.add("sluiten");
+                setTimeout(() => {
+                    onzichtbarehoverzooi.style.display = "none";
+                    onzichtbarehoverzooi.classList.remove("sluiten");
+                    showOnHover();
+                }, 300); // Zelfde als de duur van de .onzichtbarehoverzooi.sluiten animatie
+
+            }
 
 
             function hideOnHover() {
                 if (!blokTitel.matches(':hover') && !onzichtbarehoverzooi.matches(':hover')) {
-                    onzichtbarehoverzooi.classList.add("sluiten");
-                    setTimeout(() => {
-                        onzichtbarehoverzooi.style.display = "none";
-                        onzichtbarehoverzooi.classList.remove("sluiten");
-                        showOnHover();
-                    }, 300); // Zelfde als de duur van de .onzichtbarehoverzooi.sluiten animatie
-
+                    stuffHiden()
                 }
             }
 
             function showOnHover() {
                 if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
-                    onzichtbarehoverzooi.style.display = "block";
+                    setTimeout(() => {
+                        if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
+                            onzichtbarehoverzooi.style.display = "block";
+                        }
+                    }, 150);
                 }
             }
 
@@ -354,6 +365,9 @@
             onzichtbarehoverzooi.addEventListener('mouseleave', hideOnHover);
             blokTitel.addEventListener('mouseenter', showOnHover);
             onzichtbarehoverzooi.addEventListener('mouseenter', showOnHover);
+            sluitKnop.addEventListener("click", () => {
+                stuffHiden()
+            });
         });
     });
 </script>

@@ -180,7 +180,7 @@ h1 {
 
 
 
-.sluitKnop {
+#sluitKnop {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -191,12 +191,12 @@ h1 {
 
 
 
-.sluitKnop i {
+#sluitKnop i {
     font-size: 30px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.sluitKnop i:hover {
+#sluitKnop i:hover {
     color: var(--lblauw);
 }
 
@@ -786,6 +786,11 @@ h1 {
         flex-wrap: wrap;
         gap: 5px;
     }
+
+
+
+
+
 }
 
 
@@ -862,7 +867,7 @@ h1 {
     border-width: 3px;
     background: black;
     border-color: var(--witblauw);
-    padding: 10px;
+    padding: 20px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
     position: relative;
@@ -874,6 +879,8 @@ h1 {
     gap: 10px;
     font-size: 1.2em;
     font-weight: 600;
+    padding-right: 60px;
+    /* position: relative; */
 }
 
 
@@ -886,7 +893,7 @@ h1 {
 }
 
 .iconcontainerinfoblok {
-    width: 1.4em;
+    min-width: 1.4em;
     font-size: 1.25em;
     display: flex;
     justify-content: flex-start;
@@ -942,4 +949,31 @@ h1 {
     }
 }
 
+.sluitKnop3 {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 1.5em;
+    display: none;
+}
 
+
+
+@media (max-width: 768px) {
+    .sluitKnop3 {
+        display: block;
+    }
+
+    .infoblok {
+        padding-right: 20px;
+        font-size: 1em;
+    }
+
+    .iconcontainerinfoblok {
+        font-size: 1em;
+    }
+
+    .vakinfoblokrij {
+        font-size: 1.25em;
+    }
+}
