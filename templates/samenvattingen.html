@@ -331,10 +331,9 @@
         blokTitels.forEach((blokTitel, index) => {
             const onzichtbarehoverzooi = onzichtbarehoverzooien[index];
             const sluitKnop = sluitKnoppen[index];
-
+            let knopTimeout = false
 
             function stuffHiden() {
-                console.log("Allo!");
                 onzichtbarehoverzooi.classList.add("sluiten");
                 setTimeout(() => {
                     onzichtbarehoverzooi.style.display = "none";
@@ -352,7 +351,7 @@
             }
 
             function showOnHover() {
-                if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
+                if ((blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) && !knopTimeout) {
                     setTimeout(() => {
                         if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
                             onzichtbarehoverzooi.style.display = "block";
@@ -366,7 +365,11 @@
             blokTitel.addEventListener('mouseenter', showOnHover);
             onzichtbarehoverzooi.addEventListener('mouseenter', showOnHover);
             sluitKnop.addEventListener("click", () => {
+                knopTimeout = true
                 stuffHiden()
+                setTimeout(() => {
+                        knopTimeout = false
+                    }, 400);
             });
         });
     });
