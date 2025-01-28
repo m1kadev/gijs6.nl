@@ -47,7 +47,7 @@ h1 {
 
 
 
-.inleiding {
+#inleiding {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -60,7 +60,7 @@ h1 {
     /* Hier absoluut geen animatie toevoegen want dan breekt alles maar ik weet niet waarom maar doe het gewoon niet! */
 }
 
-.inleidingtekst {
+#inleidingtekst {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
@@ -71,7 +71,7 @@ h1 {
     animation-delay: 0.3s;
 }
 
-.headerheader {
+#headerheader {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -84,7 +84,7 @@ h1 {
 }
 
 
-.helpknop i {
+#helpknop i {
     animation: 0.5s fadeENzoom;
     opacity: 0;
     animation-fill-mode: forwards;
@@ -93,11 +93,11 @@ h1 {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.helpknop i:hover {
+#helpknop i:hover {
     color: var(--lblauw);
 }
 
-.header {
+#header {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -113,7 +113,7 @@ h1 {
 
 
 
-.header p {
+#header p {
     margin: 0;
     text-align: end;
 }
@@ -140,7 +140,7 @@ h1 {
 
 
 
-.inleidingtekst h1 {
+#inleidingtekst h1 {
     font-size: 2.5em;
     font-weight: 900;
     margin-top: 20px;
@@ -691,16 +691,16 @@ h1 {
         gap: 3.5vh;
     }
 
-    .inleiding {
+    #inleiding {
         padding: 5% 5% 0% 5%;
         gap: 1vh;
     }
 
-    .inleidingtekst {
+    #inleidingtekst {
         gap: 5px;
     }
 
-    .inleidingtekst h1 {
+    #inleidingtekst h1 {
         font-size: 2.5em !important;
     }
 
@@ -720,7 +720,7 @@ h1 {
 
 
 
-    .inleidingtekst h1 {
+    #inleidingtekst h1 {
         font-size: 2.5em;
         font-weight: 900;
         margin-top: 20px;
@@ -757,12 +757,12 @@ h1 {
     }
 
     .vak-en-toets h1 {
-        font-size: 1.5em;
-        min-width: 75px;
+        font-size: 1.3em;
+        min-width: 80px;
     }
 
     .vak-en-toets h2 {
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .overige-info h2 {
