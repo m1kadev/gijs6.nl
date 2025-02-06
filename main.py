@@ -1,24 +1,60 @@
-from flask import Flask, request, redirect, url_for, render_template, jsonify, send_from_directory, Response
+from flask import Flask, flash, request, redirect, url_for, render_template, send_from_directory
 import locale
 import pickle
+import time
+
+from formdata import opslaan
 
 locale.setlocale(locale.LC_TIME, "nl_NL")
 
 app = Flask(__name__)
 
 
-def read_file(filename):
-    with open(filename, 'r') as f:
-        return f.read().strip()
-
-
 @app.route("/.well-known/security.txt")
 def securitytxt():
     return send_from_directory('static', "security.txt", mimetype="text/plain")
 
+
 @app.route("/security.txt")
 def securitytxtredirect():
     return redirect(url_for('securitytxt')), 301
+
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+
+        lang = request.args.get('lang', 'en')
+
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+
+        if not message:
+            if lang == "nl":
+                flash("Vul een bericht in", "error")
+            else:
+                flash("Please enter a message.", "error")
+            return redirect(url_for('contact'))
+
+        status = opslaan({"name": name, "email": email, "message": message, "time": time.time()})
+
+        if not status:
+            if lang == "nl":
+                flash("Er is een fout opgetreden. Probeer het later opnieuw.", "error")
+            else:
+                flash("An error has occurred. Please try again later.", "error")
+            return redirect(url_for('contact'))
+
+        if lang == "nl":
+            flash("Succesvol verstuurd!", "goed")
+        else:
+            flash("Sent successfully", "goed")
+
+        return redirect(url_for('contact'))
+    else:
+        lang = request.args.get('lang', 'en')
+        return render_template("contact.html", lang=lang)
 
 
 @app.route("/")
@@ -81,7 +117,8 @@ def colofon():
 def school():
     with open("samenvattingen.pkl", "rb") as bestand:
         data = pickle.load(bestand)
-    laatst_bijgewerkt = read_file("laatst_samva_data_bijgewerkt.txt")
+    with open("laatst_samva_data_bijgewerkt.txt", 'r') as f:
+        laatst_bijgewerkt = f.read().strip()
 
     return render_template("school.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt)
 

@@ -17,7 +17,7 @@
                     <i class="fa-solid fa-circle-question" id="openKnop"></i>
                 </div>
                 <div id="header">
-                    <p id="headernaam">Een website van <span style="font-weight: 900;">Gijs</span></p>
+                    <p id="headernaam">Een website van <a href="/contact?lang=nl" style="font-weight: 900;text-decoration:none;color: var(--witblauw);">Gijs</a></p>
                     <p class="headertekstklein">Data voor het laatst opgehaald op {{ laatst_bijgewerkt }}</p>
                     <p class="headertekstklein">Bekijk informatie over de toetsen op de <a href="https://docs.google.com/spreadsheets/d/1y3-yMQ4lJkRT0c4pisbabl0PplqZcEzZGolNi-Glg_M/" target="_blank" class="link-in-tekst">PTA-spreadsheet</a>!</p>
                 </div>
@@ -25,10 +25,6 @@
             <h1>Welkom!</h1>
             <p id="introtekstsche">Op deze pagina vind je een overzicht van samenvattingen en andere leermiddelen voor alle toetsen van dit schooljaar. <span class="veranderendeTekst mobiel">Druk op de naam van een toets om meer informatie te zien.</span><span class="veranderendeTekst desktop">Hover over een toets om meer informatie over die toets te zien.</span> Veel succes met leren!</p>
         </div>
-
-
-
-
 
 
 
@@ -64,24 +60,14 @@
                     <p>Alle <strong>originele website-inhoud</strong> en <strong>code</strong> en de <strong>originele inhoud</strong> van <strong>samenvattingen</strong>, <strong>woordenlijsten</strong> en <strong>overige leermiddelen</strong>, is <strong>volledig vrijgegeven in het publieke domein zonder enige vorm van auteursrecht</strong>, in overeenstemming met de <a href="https://unlicense.org/" target="_blank" class="link-in-tekst">Unlicense</a> en <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" class="link-in-tekst">CC0</a> (externe bronnen kunnen onder andere licentievoorwaarden  en auteursrechten vallen)</p>
                     <p>Gemaakt met <a href="https://github.com/pallets/flask" target="_blank" class="link-in-tekst">Flask</a> en <a href="https://github.com/pallets/jinja" target="_blank" class="link-in-tekst">Jinja</a>, gehost door <a href="https://eu.pythonanywhere.com/" target="_blank" class="link-in-tekst">PythonAnwyhere</a></p>
                     <p>Bekijk de <a href="https://github.com/Gijs6/site" target="_blank" class="link-in-tekst">broncode op GitHub</a></p>
+                    <p>Neem <a href="/contact?lang=nl">contact</a> op</p>
                 </div>
             </div>
         </div>
 
-
         <!-- /Popup -->
 
-
-
-
-
     </div>
-
-
-
-
-
-
 
 
 
@@ -204,20 +190,7 @@
             </div>
 
 
-
-
-
-
-
             <!-- /Hoverinfostuff -->
-
-
-
-
-
-
-
-
 
 
 
@@ -284,6 +257,7 @@
             <p>Alle <strong>originele website-inhoud</strong> en <strong>code</strong> en de <strong>originele inhoud</strong> van <strong>samenvattingen</strong>, <strong>woordenlijsten</strong> en <strong>overige leermiddelen</strong>, is <strong>volledig vrijgegeven in het publieke domein zonder enige vorm van auteursrecht</strong>, in overeenstemming met de <a href="https://unlicense.org/" target="_blank" class="link-in-tekst">Unlicense</a> en <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" class="link-in-tekst">CC0</a> (externe bronnen kunnen onder andere licentievoorwaarden  en auteursrechten vallen)</p>
             <p>Gemaakt met <a href="https://github.com/pallets/flask" target="_blank" class="link-in-tekst">Flask</a> en <a href="https://github.com/pallets/jinja" target="_blank" class="link-in-tekst">Jinja</a>, gehost door <a href="https://eu.pythonanywhere.com/" target="_blank" class="link-in-tekst">PythonAnwyhere</a></p>
             <p>Bekijk de <a href="https://github.com/Gijs6/site" target="_blank" class="link-in-tekst">broncode op GitHub</a></p>
+            <p>Neem <a href="/contact?lang=nl">contact</a> op</p>
         </div>
     </div>
 
@@ -322,60 +296,58 @@
 
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const blokTitels = document.querySelectorAll('.blok.titel');
-        const onzichtbarehoverzooien = document.querySelectorAll('.onzichtbarehoverzooi'); // onzichtbarehoverzooien is wel de mooiste naam die ik ooit heb gebruikt
-        const sluitKnoppen = document.querySelectorAll(".sluitKnop3");
+        document.addEventListener('DOMContentLoaded', () => {
+            const blokTitels = document.querySelectorAll('.blok.titel');
+            const onzichtbarehoverzooien = document.querySelectorAll('.onzichtbarehoverzooi'); // onzichtbarehoverzooien is wel de mooiste naam die ik ooit heb gebruikt
+            const sluitKnoppen = document.querySelectorAll(".sluitKnop3");
 
 
-        blokTitels.forEach((blokTitel, index) => {
-            const onzichtbarehoverzooi = onzichtbarehoverzooien[index];
-            const sluitKnop = sluitKnoppen[index];
-            let knopTimeout = false
+            blokTitels.forEach((blokTitel, index) => {
+                const onzichtbarehoverzooi = onzichtbarehoverzooien[index];
+                const sluitKnop = sluitKnoppen[index];
+                let knopTimeout = false
 
-            function stuffHiden() {
-                onzichtbarehoverzooi.classList.add("sluiten");
-                setTimeout(() => {
-                    onzichtbarehoverzooi.style.display = "none";
-                    onzichtbarehoverzooi.classList.remove("sluiten");
-                    showOnHover();
-                }, 300); // Zelfde als de duur van de .onzichtbarehoverzooi.sluiten animatie
-
-            }
-
-
-            function hideOnHover() {
-                if (!blokTitel.matches(':hover') && !onzichtbarehoverzooi.matches(':hover')) {
-                    stuffHiden()
-                }
-            }
-
-            function showOnHover() {
-                if ((blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) && !knopTimeout) {
+                function stuffHiden() {
+                    onzichtbarehoverzooi.classList.add("sluiten");
                     setTimeout(() => {
-                        if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
-                            onzichtbarehoverzooi.style.display = "block";
-                        }
-                    }, 150);
-                }
-            }
+                        onzichtbarehoverzooi.style.display = "none";
+                        onzichtbarehoverzooi.classList.remove("sluiten");
+                        showOnHover();
+                    }, 300); // Zelfde als de duur van de .onzichtbarehoverzooi.sluiten animatie
 
-            blokTitel.addEventListener('mouseleave', hideOnHover);
-            onzichtbarehoverzooi.addEventListener('mouseleave', hideOnHover);
-            blokTitel.addEventListener('mouseenter', showOnHover);
-            onzichtbarehoverzooi.addEventListener('mouseenter', showOnHover);
-            sluitKnop.addEventListener("click", () => {
-                knopTimeout = true
-                stuffHiden()
-                setTimeout(() => {
-                        knopTimeout = false
-                    }, 400);
+                }
+
+
+                function hideOnHover() {
+                    if (!blokTitel.matches(':hover') && !onzichtbarehoverzooi.matches(':hover')) {
+                        stuffHiden()
+                    }
+                }
+
+                function showOnHover() {
+                    if ((blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) && !knopTimeout) {
+                        setTimeout(() => {
+                            if (blokTitel.matches(':hover') || onzichtbarehoverzooi.matches(':hover')) {
+                                onzichtbarehoverzooi.style.display = "block";
+                            }
+                        }, 150);
+                    }
+                }
+
+                blokTitel.addEventListener('mouseleave', hideOnHover);
+                onzichtbarehoverzooi.addEventListener('mouseleave', hideOnHover);
+                blokTitel.addEventListener('mouseenter', showOnHover);
+                onzichtbarehoverzooi.addEventListener('mouseenter', showOnHover);
+                sluitKnop.addEventListener("click", () => {
+                    knopTimeout = true
+                    stuffHiden()
+                    setTimeout(() => {
+                            knopTimeout = false
+                        }, 400);
+                });
             });
         });
-    });
-</script>
-
-
+    </script>
 
 </body>
 </html>

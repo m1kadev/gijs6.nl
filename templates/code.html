@@ -79,7 +79,7 @@
         &lt;title&gt;Titel&lt;/title&gt;
         &lt;link rel=&quot;stylesheet&quot; href=&quot;&#123;&#123; url_for('static', filename='style.css') &#125;&#125;&quot;&gt;
         &lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;&#123;&#123; url_for('static', filename='fav.ico') &#125;&#125;&quot;&gt;
-        &lt;script src=&quot;https://kit.fontawesome.com/4a94c21782.js&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt; &lt;!-- FontAwesome --&gt;
+        &lt;script src=&quot;https://kit.fontawesome.com/....js&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt; &lt;!-- FontAwesome --&gt;
     &lt;/head&gt;
     &lt;body&gt;
     &lt;/body&gt;
@@ -98,7 +98,13 @@ locale.setlocale(locale.LC_TIME, &quot;nl_NL&quot;)
 
 
 # Duur seconden -> Leesbaar
-tekst = f&quot;&#123;duur // 3600&#125; uur &#123;(duur % 3600) // 60&#125; minuten &#123;duur % 60&#125; seconden&quot;</code></pre>
+tekst = f&quot;&#123;duur // 3600&#125; uur &#123;(duur % 3600) // 60&#125; minuten &#123;duur % 60&#125; seconden&quot;
+
+
+
+# Sorten op een datetime
+sorted(data, key=lambda x: datetime.strptime(x[&quot;datumInvoer&quot;], &quot;%Y-%m-%dT%H:%M:%S.%f%z&quot;)) # reverse=True voor omgekeerd
+</code></pre>
 </div>
 <div class="codebox">
     <h2>{% if lang == "en" %}
@@ -115,4 +121,3 @@ tekst = f&quot;&#123;duur // 3600&#125; uur &#123;(duur % 3600) // 60&#125; minu
 <script src="{{ url_for('static', filename='prismdarkgoed.js') }}"></script>
 
 {% endblock %}
-

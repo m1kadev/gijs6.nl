@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% set active_page = "contact" %}
+{% block title %}Contact{% endblock %}
+
+{% block extra_headers %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{% block content %}
+    <div class="title">
+        <h1>{% if lang == "en" %}
+            Contact me
+            {% elif lang == "nl" %}
+            Neem contact op
+            {% endif %} <i class="fa-solid fa-envelope-open"></i>
+        </h1>
+    </div>
+    <div class="blockfull">
+        <h2>{{ "Je kunt je naam en e-mailadres leeg laten als je dat wilt (maar je moet wel je e-mailadres invullen als je een antwoord wilt :D)" if lang == "nl" else "You can leave your name and mail empty if you want to (but you should fill in your mail if you want a reply :D)" }}</h2>
+        <form action="/contact?lang={{ lang }}" method="post" id="contactform">
+            <div class="formcontainer">
+                <label for="name">{{ "Naam" if lang == "nl" else "Name" }}</label>
+                <input type="text" id="name" name="name">
+            </div>
+
+            <div class="formcontainer">
+                <label for="email">{{ "Mailadres" if lang == "nl" else "Email" }}</label>
+                <input type="text" id="email" name="email">
+            </div>
+
+            <div class="formcontainer">
+                <label for="message">{{ "Bericht" if lang == "nl" else "Message" }}</label>
+                <textarea id="message" name="message"></textarea>
+            </div>
+
+
+            <button type="submit">{{ "Versturen" if lang == "nl" else "Send" }}</button>
+        </form>
+    </div>
+{% endblock %}
