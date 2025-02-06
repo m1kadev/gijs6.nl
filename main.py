@@ -1,7 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template, jsonify, send_from_directory, Response
 import locale
 import pickle
-from datetime import datetime
 
 locale.setlocale(locale.LC_TIME, "nl_NL")
 
@@ -13,7 +12,14 @@ def read_file(filename):
         return f.read().strip()
 
 
-# PUB PAG
+@app.route("/.well-known/security.txt")
+def securitytxt():
+    return send_from_directory('static', "security.txt", mimetype="text/plain")
+
+@app.route("/security.txt")
+def securitytxtredirect():
+    return redirect(url_for('securitytxt')), 301
+
 
 @app.route("/")
 def home():
