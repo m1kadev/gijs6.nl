@@ -1,16 +1,13 @@
+
 {% extends "base.html" %}
 {% set active_page = "code" %}
 
 {% block title %}{{ "Stukjes code" if lang == "nl" else "Code snippets" }}{% endblock %}
 
-
 {% block extra_headers %}
 <link href="{{ url_for('static', filename='prismdarkgoed.css') }}" rel="stylesheet">
 <meta name="robots" content="noindex">
 {% endblock %}
-
-
-
 
 {% block content %}
 <div class="title">
@@ -70,6 +67,8 @@
     HTML boilerplate page
     {% elif lang == "nl" %}
     HTML boilerplate page
+    {% elif lang == "fr" %}
+    Page HTML standard
     {% endif %}</h2>
     <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=nl&gt;

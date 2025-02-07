@@ -20,57 +20,10 @@ def securitytxtredirect():
     return redirect(url_for('securitytxt')), 301
 
 
-@app.route("/contact", methods=["GET", "POST"])
-def contact():
-    prefillEmpty = {
-        "name": "",
-        "mail": "",
-        "message": ""
-    }
-
-    if request.method == "POST":
-        lang = request.args.get('lang', 'en')
-
-        name = request.form.get("name", "")
-        email = request.form.get("email", "")
-        message = request.form.get("message", "")
-
-        if not message:
-            if lang == "nl":
-                flash("Vul een bericht in", "error")
-            else:
-                flash("Please enter a message.", "error")
-            prefilldata = {
-                "name": name,
-                "mail": email,
-                "message": message
-            }
-            return render_template("contact.html", lang=lang, prefill=prefilldata)
-
-        status = opslaan({"name": name, "email": email, "message": message, "time": time.time()})
-
-        if not status:
-            if lang == "nl":
-                flash("Er is een fout opgetreden. Probeer het later opnieuw.", "error")
-            else:
-                flash("An error has occurred. Please try again later.", "error")
-
-            prefilldata = {
-                "name": name,
-                "mail": email,
-                "message": message
-            }
-            return render_template("contact.html", lang=lang, prefill=prefilldata)
-
-        if lang == "nl":
-            flash("Succesvol verstuurd!", "goed")
-        else:
-            flash("Sent successfully", "goed")
-
-        return render_template("contact.html", lang=lang, prefill=prefillEmpty)
-    else:
-        lang = request.args.get('lang', 'en')
-        return render_template("contact.html", lang=lang, prefill=prefillEmpty)
+@app.route('/favicon.ico')
+@app.route('/favicon')
+def favicon():
+    return send_from_directory('static', "favs/dice.ico", mimetype='image/vnd.microsoft.icon'), 301
 
 
 @app.route("/")
@@ -127,7 +80,59 @@ def colofon():
     return render_template("colofon.html", lang=lang)
 
 
-# SAMENVATTINGEN
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    prefillEmpty = {
+        "name": "",
+        "mail": "",
+        "message": ""
+    }
+
+    if request.method == "POST":
+        lang = request.args.get('lang', 'en')
+
+        name = request.form.get("name", "")
+        email = request.form.get("email", "")
+        message = request.form.get("message", "")
+
+        if not message:
+            if lang == "nl":
+                flash("Vul een bericht in", "error")
+            else:
+                flash("Please enter a message.", "error")
+            prefilldata = {
+                "name": name,
+                "mail": email,
+                "message": message
+            }
+            return render_template("contact.html", lang=lang, prefill=prefilldata)
+
+        status = opslaan({"name": name, "email": email, "message": message, "time": time.time()})
+
+        if not status:
+            if lang == "nl":
+                flash("Er is een fout opgetreden. Probeer het later opnieuw.", "error")
+            else:
+                flash("An error has occurred. Please try again later.", "error")
+
+            prefilldata = {
+                "name": name,
+                "mail": email,
+                "message": message
+            }
+            return render_template("contact.html", lang=lang, prefill=prefilldata)
+
+        if lang == "nl":
+            flash("Succesvol verstuurd!", "goed")
+        else:
+            flash("Sent successfully", "goed")
+
+        return render_template("contact.html", lang=lang, prefill=prefillEmpty)
+    else:
+        lang = request.args.get('lang', 'en')
+        return render_template("contact.html", lang=lang, prefill=prefillEmpty)
+
+
 
 @app.route("/school")
 def school():

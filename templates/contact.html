@@ -1,5 +1,7 @@
-{% extends "basis.html" %}
+{% extends "base.html" %}
+
 {% set active_page = "contact" %}
+
 {% block title %}Contact{% endblock %}
 
 {% block extra_headers %}
@@ -36,7 +38,7 @@
 
             <div class="formcontainer">
                 <label for="message">{{ "Bericht" if lang == "nl" else "Message" }}</label>
-                <textarea id="message" name="message" value="{{ prefill['message'] }}"></textarea>
+                <textarea id="message" name="message">{{ prefill['message'] }}</textarea>
             </div>
 
 
@@ -44,9 +46,9 @@
         </form>
         <h2>
             {% if lang == "en" %}
-            Or just send me an <a href="mailto:gijs6@dupunkto.org">email</a>.
+            Or just send me an <a href="mailto:gijs6@dupunkto.org" target="__blank">email</a>.
             {% elif lang == "nl" %}
-            Of stuur gewoon een <a href="mailto:gijs6@dupunkto.org">mailtje</a>.
+            Of stuur gewoon een <a href="mailto:gijs6@dupunkto.org" target="__blank">mailtje</a>.
             {% endif %}
         </h2>
     </div>

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leermiddelenoverzicht</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='samenvattingen.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='samvafavico.ico') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/samva.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='afbs/samvapng.png') }}">
     <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -95,7 +95,7 @@
             <div class="blok titel {{ item.Weergave }}">
                 <div class="iconcontainer">
                     {% if item.Icon in ["NETL", "ENTL", "FATL"] %}
-                        <img src="/static/{{ item.Icon }}.png" width="40" alt="Een vlag om het vak {{ item.Icon }} te duiden">
+                        <img src="/static/afbs/{{ item.Icon }}.png" width="40" alt="Een vlag om het vak {{ item.Icon }} te duiden">
                     {% else %}
                         <i class="{{ item.Icon }}"></i>
                     {% endif %}
@@ -123,7 +123,7 @@
                         {{ item.Vak_volledig }}
                         <div class="iconcontainerinfoblok icon-in-de-vakinfoblokrij">
                             {% if item.Icon in ["NETL", "ENTL", "FATL"] %}
-                                <img src="/static/{{ item.Icon }}.png" width="40" alt="Een vlag om het vak {{ item.Icon }} te duiden">
+                                <img src="/static/afbs/{{ item.Icon }}.png" width="40" alt="Een vlag om het vak {{ item.Icon }} te duiden">
                             {% else %}
                                 <i class="{{ item.Icon }}"></i>
                             {% endif %}

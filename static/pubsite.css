@@ -498,7 +498,7 @@ a.block:hover {
     align-items: stretch;
 }
 
-#link-section-uno-blok {
+.link-section-uno-blok {
     flex-grow: 1;
 }
 

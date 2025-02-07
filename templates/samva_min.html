@@ -5,55 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leermiddelenoverzicht - minimaal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='samva_min.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='samvafavico.ico') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/samvamin.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='afbs/samvamin.png') }}">
 </head>
 <body>
-    <div id="header">
-        <h1>Leermiddelenoverzicht (minimale versie)</h1>
-        <a href="/school">Naar de reguliere versie</a>
-    </div>
-
-    {% macro maak_toets_rij(item) %}
-        <div class="itemrij">
-            <div class="links">
-                <h1>{{ item.Vak }}: {{ item.Leerstof }}</h1>
-                <h2>{{ item.Toetsvorm }} {{ "tijdens" if item.Afname_tekst_specificiteit == "TIJDVAK" else "op" }} <span style="font-weight: bold;">{{ item.Afname_tekst }}</span></h2>
-            </div>
-            <div class="rechts">
-                <span id="samva">
-                    {% if not item.samenvattingtonen %}
-                        {{ item.samenvattingstatustekst }}
-                    {% else %}
-                        <a href="{{ item.Link_samenvatting }}" target="_blank">Samenvatting</a>
-                    {% endif %}
-                </span>
-                {% if item.linksbeschikbaar %}
-                    {% for linkitem in item.links %}
-                        <a href="{{ linkitem.link }}" target="_blank">{{ linkitem.title }}</a>
-                    {% endfor %}
-                {% endif %}
-            </div>
+    <div id="container">
+        <div id="header">
+            <h1>Leermiddelenoverzicht (minimale versie)</h1>
+            <a href="/school">Naar de reguliere versie</a>
         </div>
-    {% endmacro %}
+
+        {% macro maak_toets_rij(item) %}
+            <div class="itemrij">
+                <div class="links">
+                    <h1>{{ item.Vak }}: {{ item.Leerstof }}</h1>
+                    <h2>{{ item.Toetsvorm }} {{ "tijdens" if item.Afname_tekst_specificiteit == "TIJDVAK" else "op" }} <span style="font-weight: bold;">{{ item.Afname_tekst }}</span></h2>
+                </div>
+                <div class="rechts">
+                    <span id="samva">
+                        {% if not item.samenvattingtonen %}
+                            {{ item.samenvattingstatustekst }}
+                        {% else %}
+                            <a href="{{ item.Link_samenvatting }}" target="_blank">Samenvatting</a>
+                        {% endif %}
+                    </span>
+                    {% if item.linksbeschikbaar %}
+                        {% for linkitem in item.links %}
+                            <a href="{{ linkitem.link }}" target="_blank">{{ linkitem.title }}</a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endmacro %}
 
 
-    <div id="toetsencontainer">
-        {% for item in data %}
-            {% if item.Weergave == "JA" %}
-                {{ maak_toets_rij(item) }}
-            {% endif %}
-        {% endfor %}
-        {% for item in data %}
-            {% if item.Weergave == "NEE" %}
-                {{ maak_toets_rij(item) }}
-            {% endif %}
-        {% endfor %}
-        {% for item in data %}
-            {% if item.Weergave == "JA_DEELS" %}
-                {{ maak_toets_rij(item) }}
-            {% endif %}
-        {% endfor %}
+        <div id="toetsencontainer">
+            {% for item in data %}
+                {% if item.Weergave == "JA" %}
+                    {{ maak_toets_rij(item) }}
+                {% endif %}
+            {% endfor %}
+            {% for item in data %}
+                {% if item.Weergave == "NEE" %}
+                    {{ maak_toets_rij(item) }}
+                {% endif %}
+            {% endfor %}
+            {% for item in data %}
+                {% if item.Weergave == "JA_DEELS" %}
+                    {{ maak_toets_rij(item) }}
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>
