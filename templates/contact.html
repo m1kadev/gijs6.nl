@@ -26,17 +26,17 @@
         <form action="/contact?lang={{ lang }}" method="post" id="contactform">
             <div class="formcontainer">
                 <label for="name">{{ "Naam" if lang == "nl" else "Name" }}</label>
-                <input type="text" id="name" name="name">
+                <input type="text" id="name" name="name" value="{{ prefill['name'] }}">
             </div>
 
             <div class="formcontainer">
                 <label for="email">{{ "Mailadres" if lang == "nl" else "Email" }}</label>
-                <input type="text" id="email" name="email">
+                <input type="text" id="email" name="email" value="{{ prefill['mail'] }}">
             </div>
 
             <div class="formcontainer">
                 <label for="message">{{ "Bericht" if lang == "nl" else "Message" }}</label>
-                <textarea id="message" name="message"></textarea>
+                <textarea id="message" name="message" value="{{ prefill['message'] }}"></textarea>
             </div>
 
 

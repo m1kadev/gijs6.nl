@@ -22,20 +22,30 @@ def securitytxtredirect():
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    if request.method == "POST":
+    prefillEmpty = {
+        "name": "",
+        "mail": "",
+        "message": ""
+    }
 
+    if request.method == "POST":
         lang = request.args.get('lang', 'en')
 
-        name = request.form.get("name")
-        email = request.form.get("email")
-        message = request.form.get("message")
+        name = request.form.get("name", "")
+        email = request.form.get("email", "")
+        message = request.form.get("message", "")
 
         if not message:
             if lang == "nl":
                 flash("Vul een bericht in", "error")
             else:
                 flash("Please enter a message.", "error")
-            return redirect(url_for('contact'))
+            prefilldata = {
+                "name": name,
+                "mail": email,
+                "message": message
+            }
+            return render_template("contact.html", lang=lang, prefill=prefilldata)
 
         status = opslaan({"name": name, "email": email, "message": message, "time": time.time()})
 
@@ -44,17 +54,23 @@ def contact():
                 flash("Er is een fout opgetreden. Probeer het later opnieuw.", "error")
             else:
                 flash("An error has occurred. Please try again later.", "error")
-            return redirect(url_for('contact'))
+
+            prefilldata = {
+                "name": name,
+                "mail": email,
+                "message": message
+            }
+            return render_template("contact.html", lang=lang, prefill=prefilldata)
 
         if lang == "nl":
             flash("Succesvol verstuurd!", "goed")
         else:
             flash("Sent successfully", "goed")
 
-        return redirect(url_for('contact'))
+        return render_template("contact.html", lang=lang, prefill=prefillEmpty)
     else:
         lang = request.args.get('lang', 'en')
-        return render_template("contact.html", lang=lang)
+        return render_template("contact.html", lang=lang, prefill=prefillEmpty)
 
 
 @app.route("/")
