@@ -23,7 +23,7 @@ def securitytxtredirect():
 @app.route('/favicon.ico')
 @app.route('/favicon')
 def favicon():
-    return send_from_directory('static', "favs/dice.ico", mimetype='image/vnd.microsoft.icon'), 301
+    return send_from_directory('static', "favs/dice.ico", mimetype='image/vnd.microsoft.icon')
 
 
 @app.route("/")
