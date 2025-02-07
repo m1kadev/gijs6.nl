@@ -83,17 +83,26 @@ h1 {
     animation-delay: 0.3s;
 }
 
+#helpknoppen {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 
-#helpknop i {
+#helpknoppen i {
     animation: 0.5s fadeENzoom;
     opacity: 0;
     animation-fill-mode: forwards;
     animation-delay: 0.4s;
-    font-size: 30px;
+    font-size: 1.75em;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#helpknop i:hover {
+#helpknoppen i:hover {
     color: var(--lblauw);
 }
 
@@ -153,7 +162,7 @@ h1 {
 
 
 
-.popup {
+#infoPopup {
     display: none;
     position: fixed;
     z-index: 1;
@@ -171,16 +180,118 @@ h1 {
     gap: 35px;
     flex-grow: 1;
     box-sizing: border-box;
+    width: 100%;
 }
 
 
-.popup.sluiten {
+#infoPopup.sluiten {
     animation: 0.5s fadeOut forwards;
 }
 
 
 
-#sluitKnop {
+#settingsContainer {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    overflow: auto;
+    padding: 2% 5% 5% 5%;
+    flex-direction: column;
+    animation: 0.5s fadeENzoom;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 35px;
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+
+#settingsContainer.sluiten {
+    animation: 0.5s fadeOutZoom forwards;
+}
+
+
+
+#settingsInhoud {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: black;
+    border: 3px solid var(--lblauw);
+    border-radius: 20px;
+    padding: 2%;
+    gap: 1em;
+    min-height: 35%;
+}
+
+
+
+
+
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+#orderSettings {
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.orderitem {
+    text-align: center;
+    cursor: move;
+    padding: 10px 0 10px 0;
+}
+
+.orderitem.over .orderiteminhoud {
+    border: 2px white dashed;
+}
+
+.orderiteminhoud {
+    background-color: black;
+    border-radius: 10px;
+    padding: 1em;
+}
+
+.orderiteminhoud.eerder {
+    border: 3px solid var(--groen);
+}
+
+.orderiteminhoud.binnenkort {
+    border: 3px solid var(--lblauw);
+}
+
+.orderiteminhoud.later {
+    border: 3px solid var(--geel);
+}
+
+#settingsInhoud h1 {
+    font-size: 1.5em;
+}
+
+
+
+
+
+
+#knopSluitInfo {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -191,12 +302,12 @@ h1 {
 
 
 
-#sluitKnop i {
+.sluitKnop i {
     font-size: 30px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#sluitKnop i:hover {
+.sluitKnop i:hover {
     color: var(--lblauw);
 }
 
@@ -349,6 +460,14 @@ h1 {
 }
 
 
+#alletoetsencontainer {
+    flex-direction: column;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 5vh;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 
 .container {
@@ -356,7 +475,7 @@ h1 {
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    gap: 4vh;
+    gap: 2vh;
     word-wrap: break-word;
 }
 
@@ -368,6 +487,7 @@ h1 {
     opacity: 0;
     animation-fill-mode: forwards;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 5% 0% 5%;
 }
 
 .container-toetsen {
@@ -376,7 +496,7 @@ h1 {
     align-items: stretch;
     justify-content: center;
     gap: 20px;
-    padding: 0 5% 5% 5%;
+    padding: 0 5% 0% 5%;
 }
 
 .itemrij {
@@ -808,7 +928,7 @@ h1 {
 
 
 ::-webkit-scrollbar {
-    width: 12px;
+    /* width: 12px; */
     background-color: var(--zwart);
 }
 

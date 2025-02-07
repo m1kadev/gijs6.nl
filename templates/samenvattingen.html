@@ -13,25 +13,22 @@
     <div id="inleiding">
         <div id="inleidingtekst">
             <div id="headerheader">
-                <div id="helpknop">
-                    <i class="fa-solid fa-circle-question" id="openKnop"></i>
+                <div id="helpknoppen">
+                    <i class="fa-solid fa-circle-question" id="knopOpenInfo"></i>
+                    <i class="fa-solid fa-gears" id="knopOpenSettings"></i>
                 </div>
                 <div id="header">
                     <p id="headernaam">Een website van <a href="/contact?lang=nl" style="font-weight: 900;text-decoration:none;color: var(--witblauw);">Gijs</a></p>
                     <p class="headertekstklein">Data voor het laatst opgehaald op {{ laatst_bijgewerkt }}</p>
-                    <p class="headertekstklein">Bekijk informatie over de toetsen op de <a href="https://docs.google.com/spreadsheets/d/1y3-yMQ4lJkRT0c4pisbabl0PplqZcEzZGolNi-Glg_M/" target="_blank" class="link-in-tekst">PTA-spreadsheet</a>!</p>
                 </div>
             </div>
             <h1>Welkom!</h1>
             <p id="introtekstsche">Op deze pagina vind je een overzicht van samenvattingen en andere leermiddelen voor alle toetsen van dit schooljaar. <span class="veranderendeTekst mobiel">Druk op de naam van een toets om meer informatie te zien.</span><span class="veranderendeTekst desktop">Hover over een toets om meer informatie over die toets te zien.</span> Veel succes met leren!</p>
         </div>
 
-
-
-        <!-- Popup -->
-
+        <!-- Infopopup -->
         <div class="popup" id="infoPopup">
-            <span id="sluitKnop"><i class="fa-solid fa-circle-xmark"></i> Site-informatie</span>
+            <span id="knopSluitInfo" class="sluitKnop"><i class="fa-solid fa-circle-xmark"></i> Site-informatie</span>
             <div class="popup-inhoud kleur inleiding" id="popupInhoudInleiding">
                 <h1>Welkom op deze fantastische pagina!</h1>
                 <p><span class="veranderendeTekst mobiel">Op deze pagina vind je alle toetsen</span><span class="veranderendeTekst desktop">Aan de linkerkant staan de verschillende toetsen</span> en <span class="veranderendeTekst desktop">aan de rechterkant zie je</span> de bijbehorende leermiddelen.
@@ -60,16 +57,36 @@
                     <p>Alle <strong>originele website-inhoud</strong> en <strong>code</strong> en de <strong>originele inhoud</strong> van <strong>samenvattingen</strong>, <strong>woordenlijsten</strong> en <strong>overige leermiddelen</strong>, is <strong>volledig vrijgegeven in het publieke domein zonder enige vorm van auteursrecht</strong>, in overeenstemming met de <a href="https://unlicense.org/" target="_blank" class="link-in-tekst">Unlicense</a> en <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" class="link-in-tekst">CC0</a> (externe bronnen kunnen onder andere licentievoorwaarden  en auteursrechten vallen)</p>
                     <p>Gemaakt met <a href="https://github.com/pallets/flask" target="_blank" class="link-in-tekst">Flask</a> en <a href="https://github.com/pallets/jinja" target="_blank" class="link-in-tekst">Jinja</a>, gehost door <a href="https://eu.pythonanywhere.com/" target="_blank" class="link-in-tekst">PythonAnwyhere</a></p>
                     <p>Bekijk de <a href="https://github.com/Gijs6/site" target="_blank" class="link-in-tekst">broncode op GitHub</a></p>
-                    <p>Neem <a href="/contact?lang=nl">contact</a> op</p>
+                    <p>Neem <a href="/contact?lang=nl" class="link-in-tekst">contact</a> op</p>
                 </div>
             </div>
         </div>
-
-        <!-- /Popup -->
-
+        <!-- /Infopopup -->
+        
+        
+        
+        <!-- Settings -->
+        <div id="settingsContainer">
+            <div id="settingsInhoud">
+                <span class="sluitKnop"><i class="fa-solid fa-circle-xmark" id="knopSluitSettings"></i></span>
+                <h1>Bepaal de volgorde van de toetscategorieën</h1>
+                <div id="orderSettings">
+                    <div class="orderitem" draggable="true">
+                        <div class="orderiteminhoud binnenkort">Toetsen binnenkort</div>
+                    </div>
+                    <div class="orderitem" draggable="true">
+                        <div class="orderiteminhoud eerder">Eerdere toetsen</div>
+                    </div>
+                    <div class="orderitem" draggable="true">
+                        <div class="orderiteminhoud later">Latere toetsen</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /settings -->
+        
+        
     </div>
-
-
 
 
     {% macro maak_toets_rij(item) %}
@@ -222,33 +239,51 @@
 
 
 
+    <div id="alletoetsencontainer">
 
-    <div class="container">
-        <h1 class="blokheader">Aankomende toetsen</h1>
-        <div class="container-toetsen aankomend">
-            {% for item in data %}
-                {% if item.Weergave != "NEE" %}
+        {% if isErBinnenkort %}
+            <div class="container" id="containerBinnenkort">
+                <h1 class="blokheader">Binnenkort</h1>
+                <div class="container-toetsen binnenkort">
+                    {% for item in data %}
+                        {% if item.Weergave == "JA" %}
+                            {{ maak_toets_rij(item) }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if isErEerder %}
+            <div class="container" id="containerEerder">
+                <h1 class="blokheader">Eerder</h1>
+                <div class="container-toetsen eerder">
+                    {% for item in data %}
+                        {% if item.Weergave == "NEE" %}
+                            {{ maak_toets_rij(item) }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if isErLater %}
+            <div class="container" id="containerLater">
+                <h1 class="blokheader">Later</h1>
+                <div class="container-toetsen later">
+                    {% for item in data %}
+                        {% if item.Weergave == "JA_DEELS" %}
+                            {{ maak_toets_rij(item) }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        
+        
 
-                    {{ maak_toets_rij(item) }}
-
-                {% endif %}
-            {% endfor %}
-        </div>
     </div>
 
-
-    <div class="container">
-        <h1 class="blokheader">Eerdere toetsen</h1>
-        <div class="container-toetsen eerder">
-            {% for item in data %}
-                {% if item.Weergave == "NEE" %}
-
-                    {{ maak_toets_rij(item) }}
-
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
 
 
     <div class="footercontainer">
@@ -257,7 +292,7 @@
             <p>Alle <strong>originele website-inhoud</strong> en <strong>code</strong> en de <strong>originele inhoud</strong> van <strong>samenvattingen</strong>, <strong>woordenlijsten</strong> en <strong>overige leermiddelen</strong>, is <strong>volledig vrijgegeven in het publieke domein zonder enige vorm van auteursrecht</strong>, in overeenstemming met de <a href="https://unlicense.org/" target="_blank" class="link-in-tekst">Unlicense</a> en <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" class="link-in-tekst">CC0</a> (externe bronnen kunnen onder andere licentievoorwaarden  en auteursrechten vallen)</p>
             <p>Gemaakt met <a href="https://github.com/pallets/flask" target="_blank" class="link-in-tekst">Flask</a> en <a href="https://github.com/pallets/jinja" target="_blank" class="link-in-tekst">Jinja</a>, gehost door <a href="https://eu.pythonanywhere.com/" target="_blank" class="link-in-tekst">PythonAnwyhere</a></p>
             <p>Bekijk de <a href="https://github.com/Gijs6/site" target="_blank" class="link-in-tekst">broncode op GitHub</a></p>
-            <p>Neem <a href="/contact?lang=nl">contact</a> op</p>
+            <p>Neem <a href="/contact?lang=nl" class="link-in-tekst">contact</a> op</p>
         </div>
     </div>
 
@@ -266,9 +301,10 @@
 
 
 
+    <!-- Info popup -->
     <script>
-        const openKnop = document.getElementById("openKnop");
-        const sluitKnop = document.getElementById("sluitKnop");
+        const openKnop = document.getElementById("knopOpenInfo");
+        const sluitKnop = document.getElementById("knopSluitInfo");
         const popup = document.getElementById("infoPopup");
 
         openKnop.addEventListener("click", () => {
@@ -293,8 +329,30 @@
             }, 500);
         });
     </script>
+    
+    <!-- Settings popup -->
+    <script>
+        const openKnopSettings = document.getElementById("knopOpenSettings");
+        const sluitKnopSettings = document.getElementById("knopSluitSettings");
+        const popupSettings = document.getElementById("settingsContainer");
+        const popupcontentSettings = document.getElementById("settingsInhoud");
 
+        openKnopSettings.addEventListener("click", () => {
+            popupSettings.style.display = "flex";
+        });
 
+        sluitKnopSettings.addEventListener("click", function () {
+            popupSettings.classList.add("sluiten");
+            popupcontentSettings.classList.add("sluiten");
+            setTimeout(() => {
+                popupSettings.style.display = "none";
+                popupSettings.classList.remove("sluiten");
+                popupcontentSettings.classList.remove("sluiten");
+            }, 500);
+        });
+    </script>
+
+    <!-- Info hover -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const blokTitels = document.querySelectorAll('.blok.titel');
@@ -318,6 +376,12 @@
                 }
 
 
+                function stuffShowen() {
+                    onzichtbarehoverzooi.style.display = "block";
+                }
+
+
+
                 function hideOnHover() {
                     if (!blokTitel.matches(':hover') && !onzichtbarehoverzooi.matches(':hover')) {
                         stuffHiden()
@@ -338,6 +402,7 @@
                 onzichtbarehoverzooi.addEventListener('mouseleave', hideOnHover);
                 blokTitel.addEventListener('mouseenter', showOnHover);
                 onzichtbarehoverzooi.addEventListener('mouseenter', showOnHover);
+                blokTitel.addEventListener("click", stuffShowen);
                 sluitKnop.addEventListener("click", () => {
                     knopTimeout = true
                     stuffHiden()
@@ -347,6 +412,102 @@
                 });
             });
         });
+    </script>
+    
+    <!-- Volgorde aanpassen -->
+    <script>
+        const containerBinnenkort = document.getElementById("containerBinnenkort");
+        const containerLater = document.getElementById("containerLater");
+        const containerEerder = document.getElementById("containerEerder");
+        
+        function updateVolgorde() {
+            let orderItems = document.querySelectorAll("#orderSettings .orderitem");
+            let indexEerder, indexBinnenkort, indexLater;
+        
+            orderItems.forEach((item, index) => {
+                const inhoud = item.querySelector(".orderiteminhoud");
+                if (inhoud.classList.contains("eerder")) {
+                    indexEerder = index;
+                } else if (inhoud.classList.contains("binnenkort")) {
+                    indexBinnenkort = index;
+                } else if (inhoud.classList.contains("later")) {
+                    indexLater = index;
+                }
+            });
+            
+            containerBinnenkort.style.order = indexBinnenkort;
+            containerLater.style.order = indexLater;
+            containerEerder.style.order = indexEerder;
+        }
+        
+        
+        
+    
+    
+    
+    
+    
+    
+        var dragSrcEl = null;
+        
+        function handleDragStart(e) {
+            dragSrcEl = this;
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/html", this.outerHTML);
+            this.classList.add("dragElem");
+        }
+        
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+        
+            this.classList.add("over");
+            e.dataTransfer.dropEffect = "move";
+        
+            return false;
+        }
+        
+        function handleDragEnter(e) {}
+        
+        function handleDragLeave(e) {
+            this.classList.remove("over");
+        }
+        
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+        
+            if (dragSrcEl != this) {
+                this.parentNode.removeChild(dragSrcEl);
+                var dropHTML = e.dataTransfer.getData("text/html");
+                this.insertAdjacentHTML("beforebegin", dropHTML);
+                var dropElem = this.previousSibling;
+                addDnDHandlers(dropElem);
+                updateVolgorde();
+            }
+        
+            this.classList.remove("over");
+            return false;
+        }
+        
+        function handleDragEnd(e) {
+            this.classList.remove("over");
+        }
+        
+        function addDnDHandlers(elem) {
+            elem.addEventListener("dragstart", handleDragStart, false);
+            elem.addEventListener("dragenter", handleDragEnter, false);
+            elem.addEventListener("dragover", handleDragOver, false);
+            elem.addEventListener("dragleave", handleDragLeave, false);
+            elem.addEventListener("drop", handleDrop, false);
+            elem.addEventListener("dragend", handleDragEnd, false);
+        }
+        
+        var items = document.querySelectorAll("#orderSettings .orderitem");
+        [].forEach.call(items, addDnDHandlers);
+
     </script>
 
 </body>

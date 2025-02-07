@@ -136,7 +136,12 @@ def school():
     with open("laatst_samva_data_bijgewerkt.txt", 'r') as f:
         laatst_bijgewerkt = f.read().strip()
 
-    return render_template("school.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt)
+    isErBinnenkort = any(item["Weergave"] == "JA" for item in data)
+    isErLater = any(item["Weergave"] == "JA_DEELS" for item in data)
+    isErEerder = any(item["Weergave"] == "NEE" for item in data)
+
+
+    return render_template("samenvattingen.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt, verschil=verschil_format, legenda_tonen=legenda_blokken_en_tekst_tonen, isErBinnenkort=isErBinnenkort, isErLater=isErLater, isErEerder=isErEerder,)
 
 
 # OVERIG
