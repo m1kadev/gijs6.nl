@@ -20,6 +20,7 @@
                 <div id="header">
                     <p id="headernaam">Een website van <a href="/contact?lang=nl" style="font-weight: 900;text-decoration:none;color: var(--witblauw);">Gijs</a></p>
                     <p class="headertekstklein">Data voor het laatst opgehaald op {{ laatst_bijgewerkt }}</p>
+                    <p class="headertekstklein"><a href="/school/min" class="link-in-tekst">Alleen de basics?</a></p>
                 </div>
             </div>
             <h1>Welkom!</h1>
@@ -62,9 +63,9 @@
             </div>
         </div>
         <!-- /Infopopup -->
-        
-        
-        
+
+
+
         <!-- Settings -->
         <div id="settingsContainer">
             <div id="settingsInhoud">
@@ -84,8 +85,8 @@
             </div>
         </div>
         <!-- /settings -->
-        
-        
+
+
     </div>
 
 
@@ -207,7 +208,20 @@
             </div>
 
 
+
+
+
+
+
             <!-- /Hoverinfostuff -->
+
+
+
+
+
+
+
+
 
 
 
@@ -238,7 +252,6 @@
 
 
 
-
     <div id="alletoetsencontainer">
 
         {% if isErBinnenkort %}
@@ -253,7 +266,7 @@
                 </div>
             </div>
         {% endif %}
-        
+
         {% if isErEerder %}
             <div class="container" id="containerEerder">
                 <h1 class="blokheader">Eerder</h1>
@@ -266,7 +279,7 @@
                 </div>
             </div>
         {% endif %}
-        
+
         {% if isErLater %}
             <div class="container" id="containerLater">
                 <h1 class="blokheader">Later</h1>
@@ -279,11 +292,10 @@
                 </div>
             </div>
         {% endif %}
-        
-        
+
+
 
     </div>
-
 
 
     <div class="footercontainer">
@@ -295,6 +307,7 @@
             <p>Neem <a href="/contact?lang=nl" class="link-in-tekst">contact</a> op</p>
         </div>
     </div>
+
 
 
 
@@ -329,7 +342,7 @@
             }, 500);
         });
     </script>
-    
+
     <!-- Settings popup -->
     <script>
         const openKnopSettings = document.getElementById("knopOpenSettings");
@@ -342,6 +355,8 @@
         });
 
         sluitKnopSettings.addEventListener("click", function () {
+            // const popupSettings = document.getElementById("settingsContainer");
+            // const popupcontentSettings = document.getElementById("settingsInhoud");
             popupSettings.classList.add("sluiten");
             popupcontentSettings.classList.add("sluiten");
             setTimeout(() => {
@@ -413,17 +428,17 @@
             });
         });
     </script>
-    
+
     <!-- Volgorde aanpassen -->
     <script>
         const containerBinnenkort = document.getElementById("containerBinnenkort");
         const containerLater = document.getElementById("containerLater");
         const containerEerder = document.getElementById("containerEerder");
-        
+
         function updateVolgorde() {
             let orderItems = document.querySelectorAll("#orderSettings .orderitem");
             let indexEerder, indexBinnenkort, indexLater;
-        
+
             orderItems.forEach((item, index) => {
                 const inhoud = item.querySelector(".orderiteminhoud");
                 if (inhoud.classList.contains("eerder")) {
@@ -434,51 +449,51 @@
                     indexLater = index;
                 }
             });
-            
+
             containerBinnenkort.style.order = indexBinnenkort;
             containerLater.style.order = indexLater;
             containerEerder.style.order = indexEerder;
         }
-        
-        
-        
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
         var dragSrcEl = null;
-        
+
         function handleDragStart(e) {
             dragSrcEl = this;
             e.dataTransfer.effectAllowed = "move";
             e.dataTransfer.setData("text/html", this.outerHTML);
             this.classList.add("dragElem");
         }
-        
+
         function handleDragOver(e) {
             if (e.preventDefault) {
                 e.preventDefault();
             }
-        
+
             this.classList.add("over");
             e.dataTransfer.dropEffect = "move";
-        
+
             return false;
         }
-        
+
         function handleDragEnter(e) {}
-        
+
         function handleDragLeave(e) {
             this.classList.remove("over");
         }
-        
+
         function handleDrop(e) {
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
-        
+
             if (dragSrcEl != this) {
                 this.parentNode.removeChild(dragSrcEl);
                 var dropHTML = e.dataTransfer.getData("text/html");
@@ -487,15 +502,15 @@
                 addDnDHandlers(dropElem);
                 updateVolgorde();
             }
-        
+
             this.classList.remove("over");
             return false;
         }
-        
+
         function handleDragEnd(e) {
             this.classList.remove("over");
         }
-        
+
         function addDnDHandlers(elem) {
             elem.addEventListener("dragstart", handleDragStart, false);
             elem.addEventListener("dragenter", handleDragEnter, false);
@@ -504,11 +519,13 @@
             elem.addEventListener("drop", handleDrop, false);
             elem.addEventListener("dragend", handleDragEnd, false);
         }
-        
+
         var items = document.querySelectorAll("#orderSettings .orderitem");
         [].forEach.call(items, addDnDHandlers);
 
     </script>
+
+
 
 </body>
 </html>

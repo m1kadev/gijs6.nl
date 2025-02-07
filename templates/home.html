@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "basis.html" %}
 {% set active_page = "home" %}
 {% block title %}Home{% endblock %}
 {% block content %}
@@ -29,7 +29,7 @@
     </div>
     <div class="linklist">
         {% for item in socialsites %}
-        <a href="{{ item.link }}" class="block" descript="{{ item.popupdescript[lang] }}" id="link-section-uno-blok">
+        <a href="{{ item.link }}" class="block link-section-uno-blok">
             <div class="txt">{{ item.title[lang] }}</div>
             <i class="{{ item.fa_icon_class if item.fa_icon_class else "fa-solid fa-arrow-up-right-from-square" }}"></i>
         </a>

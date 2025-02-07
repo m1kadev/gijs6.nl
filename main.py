@@ -141,7 +141,15 @@ def school():
     isErEerder = any(item["Weergave"] == "NEE" for item in data)
 
 
-    return render_template("samenvattingen.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt, verschil=verschil_format, legenda_tonen=legenda_blokken_en_tekst_tonen, isErBinnenkort=isErBinnenkort, isErLater=isErLater, isErEerder=isErEerder,)
+    return render_template("samenvattingen.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt, isErBinnenkort=isErBinnenkort, isErLater=isErLater, isErEerder=isErEerder,)
+
+
+@app.route("/school/min")
+def school_min():
+    with open("samenvattingen.pkl", "rb") as bestand:
+        data = pickle.load(bestand)
+    return render_template("samva_min.html", data=data)
+
 
 
 # OVERIG
