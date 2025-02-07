@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "basis.html" %}
 {% set active_page = "contact" %}
 {% block title %}Contact{% endblock %}
 
@@ -16,7 +16,13 @@
         </h1>
     </div>
     <div class="blockfull">
-        <h2>{{ "Je kunt je naam en e-mailadres leeg laten als je dat wilt (maar je moet wel je e-mailadres invullen als je een antwoord wilt :D)" if lang == "nl" else "You can leave your name and mail empty if you want to (but you should fill in your mail if you want a reply :D)" }}</h2>
+        <h2>
+            {% if lang == "en" %}
+            You can leave your name and mail empty if you want to (but you should fill in your mail if you want a reply :D)
+            {% elif lang == "nl" %}
+            Je kunt je naam en e-mailadres leeg laten als je dat wilt (maar je moet wel je e-mailadres invullen als je een antwoord wilt :D)
+            {% endif %}
+        </h2>
         <form action="/contact?lang={{ lang }}" method="post" id="contactform">
             <div class="formcontainer">
                 <label for="name">{{ "Naam" if lang == "nl" else "Name" }}</label>
@@ -36,5 +42,12 @@
 
             <button type="submit">{{ "Versturen" if lang == "nl" else "Send" }}</button>
         </form>
+        <h2>
+            {% if lang == "en" %}
+            Or just send me an <a href="mailto:gijs6@dupunkto.org">email</a>.
+            {% elif lang == "nl" %}
+            Of stuur gewoon een <a href="mailto:gijs6@dupunkto.org">mailtje</a>.
+            {% endif %}
+        </h2>
     </div>
 {% endblock %}

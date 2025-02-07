@@ -53,6 +53,13 @@ body {
 
 
 
+
+
+
+
+
+
+
 #messages {
     margin: 0;
     position: fixed;
@@ -92,6 +99,11 @@ body {
     transform: scale(0.8);
   }
 }
+
+
+
+
+
 
 
 
@@ -707,4 +719,10 @@ input, textarea {
 label {
     font-size: 1.2em;
     font-weight: 600;
+}
+
+
+
+.blockfull a {
+    color: var(--lightblue-highlight)
 }
