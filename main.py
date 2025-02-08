@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/.well-known/security.txt")
 def securitytxt():
-    return send_from_directory('static', "security.txt", mimetype="text/plain")
+    return send_from_directory('static', "txts/security.txt", mimetype="text/plain")
 
 
 @app.route("/security.txt")
