@@ -346,7 +346,7 @@ h2 {
 
 .link-in-tekst {
     text-decoration: underline;
-    color: var(--text-color);
+    color: var(--text-color) !important;
     font-weight: bold;
     transition: all 0.3s ease;
 }
@@ -723,6 +723,7 @@ label {
 
 
 
+
 .blockfull a {
-    color: var(--lightblue-highlight)
+    color: var(--lightblue-highlight);
 }

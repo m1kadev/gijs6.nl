@@ -20,9 +20,9 @@
     <div class="blockfull">
         <h2>
             {% if lang == "en" %}
-            You can leave your name and mail empty if you want to (but you should fill in your mail if you want a reply :D)
+            You can leave your name and mail empty if you want to
             {% elif lang == "nl" %}
-            Je kunt je naam en e-mailadres leeg laten als je dat wilt (maar je moet wel je e-mailadres invullen als je een antwoord wilt :D)
+            Je kunt je naam en e-mailadres leeg laten als je dat wilt
             {% endif %}
         </h2>
         <form action="/contact?lang={{ lang }}" method="post" id="contactform">
