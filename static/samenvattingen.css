@@ -133,7 +133,7 @@ h1 {
 }
 
 .headertekstklein {
-    font-size: 0.8em;
+    font-size: 0.6em;
     font-weight: 400;
 }
 
@@ -682,7 +682,11 @@ h1 {
     padding: 0 5% 5% 5%;
 }
 
-.footer {
+#earliersamvascontainer {
+    padding: 0 5%;
+}
+
+.footer, #earliersamvas {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -702,6 +706,7 @@ h1 {
     animation-fill-mode: forwards;
     animation-delay: 0.1s;
     background-color: black;
+    border-color: var(--wit);
 }
 
 .footer p {
@@ -720,9 +725,10 @@ h1 {
     color: var(--lblauw);
 }
 
-
-
-
+#earliersamvas {
+    font-size: 1.2em;
+    font-weight: 600;
+}
 
 
 @keyframes fadeENzoom {
