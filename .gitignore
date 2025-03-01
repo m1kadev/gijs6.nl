@@ -3,6 +3,8 @@
 .obsidian/
 mdtest/
 form/
+
 *.pkl
 *.json
-robots.txt
+
+dekstop.ini
