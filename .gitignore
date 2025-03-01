@@ -8,3 +8,4 @@ form/
 *.json
 
 dekstop.ini
+**/desktop.ini
