@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 }
 
 .libitem {
@@ -12,4 +12,13 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 5px;
+    border: 1px var(--front) solid;
+    padding: 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.libitem:hover {
+    background: var(--front);
+    color: var(--back);
 }

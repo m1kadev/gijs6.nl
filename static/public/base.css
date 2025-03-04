@@ -87,6 +87,7 @@ a:hover {
     gap: 10px;
     border: 3px var(--back) solid;
     padding: 10px;
+    flex-grow: 1;
 }
 
 
@@ -118,4 +119,8 @@ a:hover {
 #pagetitle {
     margin: auto;
     margin-bottom: 30px;
+}
+
+.annotation {
+    font-size: 0.7em;color: #888;
 }
