@@ -1,0 +1,89 @@
+{% extends "public/base.html" %}
+
+{% set active_page = "code" %}
+
+{% block title %}Code snippets{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='public/code.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id="pagetitle">
+        <h1>Handy code snippets</h1>
+        <h2>Mostly just stuff I can't be bothered to remember</h2>
+    </div>
+
+    <!-- Niet vergeten om { en } ook te escapen ('&#123;' en '&#125;') ivm Jinja!!! -->
+
+    <div class="codebox">
+        <h2>HTML base of a subpage (Jinja, with basis.html as template)</h2>
+        <pre><code>&#123;% extends &quot;basis.html&quot; %"&#125;
+&#123;% set active_page = &quot;code&quot; %&#125;
+
+&#123;% block title %&#125;&#123;&#123; &quot;Stukjes code&quot; if lang == &quot;nl&quot; else &quot;Code snippets&quot; &#125;&#125;&#123;% endblock %&#125;
+
+
+&#123;% block extra_headers %&#125;
+&#123;% endblock %&#125;
+
+
+&#123;% block content %&#125;
+&lt;div class=&quot;title&quot;&gt;
+    &lt;h1&gt;&#123;% if lang == &quot;en&quot; %&#125;
+    Handy code snippets
+    &#123;% elif lang == &quot;nl&quot; %&#125;
+    Handige stukjes code
+    &#123;% endif %&#125;&lt;/h1&gt;
+    &lt;h2&gt;&#123;% if lang == &quot;en&quot; %&#125;
+    Just stuff I can't be bothered to remember
+    &#123;% elif lang == &quot;nl&quot; %&#125;
+    Dingen waar ik niet de moeite voor kan nemen om ze te onthouden
+    &#123;% endif %&#125;&lt;/h2&gt;
+&lt;/div&gt;
+&#123;% endblock %&#125;</code></pre>
+    </div>
+
+
+    <div class="codebox">
+        <h2>HTML boilerplate</h2>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=nl&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        &lt;title&gt;Titel&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;&#123;&#123; url_for('static', filename='style.css') &#125;&#125;&quot;&gt;
+        &lt;link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;&#123;&#123; url_for('static', filename='fav.ico') &#125;&#125;&quot;&gt;
+        &lt;script src=&quot;https://kit.fontawesome.com/....js&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt; &lt;!-- FontAwesome --&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+
+
+    <div class="codebox">
+        <h2>Python stuff</h2>
+        <pre><code># Nice datetimes
+import locale
+locale.setlocale(locale.LC_TIME, &quot;nl_NL&quot;)
+
+
+
+# Duration in seconds to a more readable format seconden -> Leesbaar
+duration_txt = f&quot;&#123;duration // 3600&#125; hours &#123;(duration % 3600) // 60&#125; minutes &#123;duration % 60&#125; seconds&quot;
+
+
+
+# Sorting datetime
+sorted(data, key=lambda x: datetime.strptime(x[&quot;datumInvoer&quot;], &quot;%Y-%m-%dT%H:%M:%S.%f%z&quot;)) # reverse=True is an option</code></pre>
+    </div>
+
+
+    <div class="codebox">
+        <h2>Goole Sheets stuff</h2>
+        <pre><code>=ARRAYFORMULA(ALS(ISLEEG(A2:A);;BEREKENING))</code></pre>
+    </div>
+
+{% endblock %}

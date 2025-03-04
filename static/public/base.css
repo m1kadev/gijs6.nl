@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+:root {
+    --black: #0f212e;
+    --whiteblue: #d1e3f0;
+    --white: #eaf2ef;
+    --gray: #6b6d76;
+    --darkblue: #28587b;
+    --lightblue: #0f95b0;
+    --yellow: #ffa630;
+    --red: #e65039;
+    --green: #06c749;
+}
+
+
+
+:root {
+    --front: white;
+    --back: black;
+}
+
+[data-theme="light"] {
+    --front: black;
+    --back: white;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: var(--back);
+    height: 100vh;
+    margin: 0;
+    color: var(--front);
+    font-family: 'Montserrat', sans-serif;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+a {
+    text-decoration-color: #888;
+    color: inherit;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration-color: var(--lightblue);
+}
+
+
+#header {
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5vw;
+}
+
+#menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    flex-grow: 1;
+    gap: 2vw;
+    flex-wrap: wrap;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+    gap: 10px;
+    border: 3px var(--back) solid;
+    padding: 10px;
+}
+
+
+.menu-item.active, .menu-item:hover {
+    border-bottom: 3px var(--front) solid;
+    border-radius: 5px;
+}
+
+#theme-toggle  {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+    gap: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: var(--front);
+    color: var(--back);
+}
+
+
+#content {
+    margin: 40px 0;
+}
+
+#pagetitle {
+    margin: auto;
+    margin-bottom: 30px;
+}

@@ -1,0 +1,28 @@
+{% extends "public/base.html" %}
+
+{% set active_page = "colophon" %}
+
+{% block title %}Colophon{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='public/colophon.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id="pagetitle">
+        <h1>About this site</h1>
+    </div>
+    <div class="txtpiece">
+        <h2>Copyright and licences</h2>
+        <p>
+            All <strong>original</strong> content on every page of this website, including but not limited to text, images, videos, and any other media, as well as the <strong>original</strong> code used to create and design the website, is <strong>fully released into the public domain</strong>. This release is in accordance with the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a>. This means that you are free to use, modify, distribute, and build upon any part of the website's original content and code without any restrictions.<br>
+            However, please be aware that external resources used on the website, such as fonts, frameworks, icons, and other third-party assets, are <strong>not released into the public domain</strong>. These resources may be subject to their own licences, and you must comply with the terms and conditions of these licences when using them. It is your responsibility to ensure that you adhere to the licensing requirements of any external resources.
+        </p>
+    </div>
+    <div class="txtpiece">
+        <p>
+            Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted by <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnywhere</a><br>
+            View the <a href="https://github.com/Gijs6/site" target="_blank">source code on GitHub</a>
+        </p>
+    </div>
+{% endblock %}

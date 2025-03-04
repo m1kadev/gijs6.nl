@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %} - Gijs6</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='public/base.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/dice.ico') }}">
+        <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+        {% block extra_headers %}{% endblock %}
+    </head>
+    <body>
+        <div id="header">
+            <div id="menu">
+                <a href="/" class="menu-item {% if active_page == 'home' %}active{% endif %}">
+                    <i class="fa-solid fa-house-user"></i>
+                    <div class="menu-itemtxt">Home</div>
+                </a>
+                <a href="/code" class="menu-item {% if active_page == 'code' %}active{% endif %}">
+                    <i class="fa-solid fa-code"></i>
+                    <div class="menu-itemtxt">Code snippets</div>
+                </a>
+                <a href="/lib" class="menu-item {% if active_page == 'lib' %}active{% endif %}">
+                    <i class="fa-solid fa-rectangle-list"></i>
+                    <div class="menu-itemtxt">Website library</div>
+                </a>
+                <a href="/colophon" class="menu-item {% if active_page == 'colophon' %}active{% endif %}">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <div class="menu-itemtxt">Colophon</div>
+                </a>
+                <a href="/school" class="menu-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <div class="menu-itemtxt">School</div>
+                </a>
+                <a href="mailto:gijs6@dupunkto.org" class="menu-item">
+                    <i class="fa-solid fa-envelope-open"></i>
+                    <div class="menu-itemtxt">Contact</div>
+                </a>
+            </div>
+            <button id="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+            </button>
+        </div>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+
+
+
+        <div id="onderkantje">
+                <p>Made by Gijs</p>
+                <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
+                <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>
+                <p>View the <a href="https://github.com/Gijs6/site" target="_blank">source code on GitHub</a></p>
+        </div>
+        <script>
+            const toggleButton = document.getElementById('theme-toggle');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+
+            toggleButton.addEventListener('click', () => {
+                const theme = document.documentElement.getAttribute('data-theme');
+                const newTheme = theme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        </script>
+    </body>
+</html>

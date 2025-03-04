@@ -237,7 +237,7 @@ input[type="color" i]::-webkit-color-swatch {
     animation: 0.5s fadeENzoom;
     opacity: 0;
     animation-fill-mode: forwards;
-    animation-delay: 0.7s;
+    animation-delay: 500ms;
     transition: 250ms all ease;
 }
 

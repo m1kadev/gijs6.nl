@@ -1,0 +1,25 @@
+{% extends "public/base.html" %}
+
+{% set active_page = "lib" %}
+
+{% block title %}Library{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='public/lib.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id="pagetitle">
+        <h1>Library of websites</h1>
+        <h2>A collection of websites I find handy or interesting</h2>
+    </div>
+
+    <div id="libcollection">
+        {% for item in data %}
+            <a href="{{ item.link }}" class="libitem" descript="{{ item.popupdescript }}">
+                <div class="libitemtxt">{{ item.title | safe }}</div>
+                <i class="{{ item.fa_icon_class if item.fa_icon_class else 'fa-solid fa-arrow-up-right-from-square' }}"></i>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
