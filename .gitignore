@@ -6,6 +6,7 @@ form/
 
 *.pkl
 *.json
+*.txt
 
 dekstop.ini
 **/desktop.ini
