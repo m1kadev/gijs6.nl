@@ -18,21 +18,31 @@
 
     <table id="commitfreq">
         <tr>
+            <th class="extra-info weeknum"></th>
             {% for headeritem in headers %}
-                <th>{{ headeritem }}</th>
+                <th class="extra-info weeknum">{{ headeritem }}</th>
             {% endfor %}
         </tr>
+
+        {% set days_of_week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] %}
+        
         {% for row in graphdata %}
             <tr>
+                <td class="extra-info weekday">{{ days_of_week[loop.index0] }}</td>
                 {% for cell in row %}
-                    <td data-value="{{ cell.value }}" data-date="{{ cell.date }}" data-color-dark="{{ cell.darkcolor }}" data-color-light="{{ cell.lightcolor }}"></td>
+                    <td data-value="{{ cell.value }}" data-date="{{ cell.date }}" data-message="{{ cell.message }}" data-color-dark="{{ cell.darkcolor }}" data-color-light="{{ cell.lightcolor }}"></td>
                 {% endfor %}
             </tr>
         {% endfor %}
     </table>
-
-    <p class="annotation">The heatmap above shows the amount of Git commits I made in <a href="https://github.com/Gijs6?tab=repositories" target="_blank">all of my own repo's</a> and in all the repo's from <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>.</p>
-
+    <div id="undergraph">
+        <p class="annotation">The heatmap above shows the amount of Git commits I made in <a href="https://github.com/Gijs6?tab=repositories" target="_blank">all of my own repo's</a> and in all the repo's from <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>.</p>
+        <div id="extra-info-checkbox">
+            <input type="checkbox" id="extra-info-toggle" name="extra-info" />
+            <label for="extra-info"><i class="fa-solid fa-circle-info"></i></label>
+         </div>
+    </div>
+    
     <script>
         function fixThemes(theme) {
             var tds = document.querySelectorAll('#commitfreq td');
@@ -46,6 +56,19 @@
         }
         var oldTheme = localStorage.getItem('theme') || 'dark';
         fixThemes(oldTheme);
+    </script>
+    
+    <script>
+        const checkbox = document.getElementById('extra-info-toggle');
+        const graph = document.getElementById('commitfreq');
+    
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                graph.setAttribute('data-extrainfo', 'true');
+            } else {
+                graph.removeAttribute('data-extrainfo');
+            }
+        });
     </script>
 
 {% endblock %}
