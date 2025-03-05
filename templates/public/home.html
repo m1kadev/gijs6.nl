@@ -17,6 +17,11 @@
     </div>
 
     <table id="commitfreq">
+        <tr>
+            {% for headeritem in headers %}
+                <th>{{ headeritem }}</th>
+            {% endfor %}
+        </tr>
         {% for row in graphdata %}
             <tr>
                 {% for cell in row %}
@@ -26,7 +31,7 @@
         {% endfor %}
     </table>
 
-    <p class="annotation">The heatmap above shows the amount of Git commits I made in <a href="https://github.com/Gijs6?tab=repositories" target="_blank">all of my own repo's</a> and in all the repo's from <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>. The heatmap starts a year ago.</p>
+    <p class="annotation">The heatmap above shows the amount of Git commits I made in <a href="https://github.com/Gijs6?tab=repositories" target="_blank">all of my own repo's</a> and in all the repo's from <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>.</p>
 
     <script>
         function fixThemes(theme) {
