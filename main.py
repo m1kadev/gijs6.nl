@@ -50,7 +50,7 @@ def home():
 
     alle_values = [int(item) for sublist in graphdata for item in sublist if item != '']
 
-    min_value = int(min(alle_values))
+    min_value = 0
     max_value = int(max(alle_values))
 
     def value_to_color(value, theme):
