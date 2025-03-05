@@ -780,7 +780,7 @@ h1 {
 
 
 
-@media (max-width: 1300px) {
+@media (max-width: 1000px) {
     .container-toetsen {
         gap: 35px;
     }
@@ -808,7 +808,7 @@ h1 {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .container {
         hyphens: auto;
     }
