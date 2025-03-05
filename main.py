@@ -1,4 +1,6 @@
 from flask import Flask, redirect, render_template, send_from_directory, url_for
+from datetime import datetime, date, timedelta
+from collections import defaultdict
 import json
 import locale
 import pickle
@@ -45,13 +47,39 @@ def robots():
 
 @app.route("/")
 def home():
-    with open('graphdata.json', 'r') as file:
+    with open('/home/gijs3/mysite/homepagegraph/graphdata.json', 'r') as file:
         graphdata = json.load(file)
 
-    alle_values = [int(item) for sublist in graphdata for item in sublist if item != '']
+    with open('/home/gijs3/mysite/homepagegraph/headers.json', 'r') as file:
+        headers = json.load(file)
+
+
+    return render_template("public/home.html", graphdata=graphdata, headers=headers)
+
+
+# This function is used in another script
+
+def homepagegraphdataparser(data):
+    headers = ["" for _ in range(52)]
+    weeknumindex = defaultdict(int)
+    currentweeknum = datetime.now().isocalendar()[1]
+    weeknumindex[currentweeknum] = 0
+    weekprocess = currentweeknum + 1
+    weekprocessheaders = currentweeknum + 1
+
+    for i in range(1, 53):
+        weeknumindex[weekprocess] = i
+        headers[i - 1] = weekprocessheaders
+        weekprocess += 1
+        weekprocessheaders += 1
+        if weekprocess > 51:
+            weekprocess = 0
+        if weekprocessheaders > 52:
+            weekprocessheaders = 1
+
 
     min_value = 0
-    max_value = int(max(alle_values))
+    max_value = int(max(data.values()))
 
     def value_to_color(value, theme):
         max_color="#06C749"
@@ -59,10 +87,8 @@ def home():
             min_color = "#FFFFFF"
         else:
             min_color = "#000000"
-        if value:
-            value = int(value)
-            normalized_value = (value - min_value) / (max_value - min_value)
-            normalized_value = max(0, min(1, normalized_value))
+        if value and value != 0:
+            normalized_value = max(0, min(1, (int(value) - min_value) / (max_value - min_value)))
 
             min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
             max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
@@ -76,7 +102,23 @@ def home():
             return hex_color
         else:
             return min_color
-    return render_template("public/home.html", graphdata=graphdata, value_to_color=value_to_color)
+
+    tabledata = [["" for _ in range(52)] for _ in range(7)]
+    for weekday in range(7):
+        for indexweeknumstuff in range(52):
+            weeknumthiscell = headers[indexweeknumstuff]
+            if weeknumthiscell > datetime.now().isocalendar()[1]:
+                year = datetime.now().year - 1
+            else:
+                year = datetime.now().year
+            first_day = date(year, 1, 1) + timedelta(weeks=weeknumthiscell-1)
+            thiscelldate = first_day - timedelta(days=first_day.weekday()) + timedelta(days=weekday)
+
+            value = data.get(datetime.strftime(thiscelldate, "%Y-%m-%d"), 0)
+
+            tabledata[weekday][indexweeknumstuff] = {"value": value, "date": thiscelldate.strftime('%d-%m-%Y'), "darkcolor": value_to_color(value, "dark"), "lightcolor": value_to_color(value, "light")}
+
+    return tabledata, headers
 
 
 
