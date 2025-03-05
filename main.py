@@ -53,9 +53,12 @@ def home():
     min_value = int(min(alle_values))
     max_value = int(max(alle_values))
 
-    def value_to_color(value):
+    def value_to_color(value, theme):
         max_color="#06C749"
-        min_color="#000000"
+        if theme == "light":
+            min_color = "#FFFFFF"
+        else:
+            min_color = "#000000"
         if value:
             value = int(value)
             normalized_value = (value - min_value) / (max_value - min_value)

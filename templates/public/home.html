@@ -20,11 +20,27 @@
         {% for row in graphdata %}
             <tr>
                 {% for cell in row %}
-                    <td data="{{ cell }}" style="background:{{ value_to_color(cell) }}"></td>
+                    <td data-value="{{ cell }}" data-color-dark="{{ value_to_color(cell, 'dark') }}" data-color-light="{{ value_to_color(cell, 'light') }}"></td>
                 {% endfor %}
             </tr>
         {% endfor %}
     </table>
 
-    <p class="annotation">The heatmap above shows the amount of Git commits I made in <a href="https://github.com/Gijs6" target="_blank">all of my own repo's</a> and in all the repo's from <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>. The heatmap starts a year ago.</p>
+    <p class="annotation">The heatmap above shows the amount of Git commits I made in <a href="https://github.com/Gijs6?tab=repositories" target="_blank">all of my own repo's</a> and in all the repo's from <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>. The heatmap starts a year ago.</p>
+
+    <script>
+        function fixThemes(theme) {
+            var tds = document.querySelectorAll('#commitfreq td');
+            tds.forEach(function(td) {
+                if (theme == 'light') {
+                    td.style.background = td.getAttribute('data-color-light');
+                } else {
+                    td.style.background = td.getAttribute('data-color-dark');
+                }
+            });
+        }
+        var oldTheme = localStorage.getItem('theme') || 'dark';
+        fixThemes(oldTheme);
+    </script>
+
 {% endblock %}
