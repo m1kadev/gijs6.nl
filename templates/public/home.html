@@ -25,7 +25,7 @@
         {% for row in graphdata %}
             <tr>
                 {% for cell in row %}
-                    <td data-value="{{ cell }}" data-color-dark="{{ value_to_color(cell, 'dark') }}" data-color-light="{{ value_to_color(cell, 'light') }}"></td>
+                    <td data-value="{{ cell.value }}" data-date="{{ cell.date }}" data-color-dark="{{ cell.darkcolor }}" data-color-light="{{ cell.lightcolor }}"></td>
                 {% endfor %}
             </tr>
         {% endfor %}

@@ -93,10 +93,7 @@ def homepagegraphdataparser(data):
             min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
             max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
 
-            interpolated_color = [
-                int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value)
-                for i in range(3)
-            ]
+            interpolated_color = [int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value) for i in range(3)]
 
             hex_color = '#' + ''.join(f'{x:02X}' for x in interpolated_color)
             return hex_color
