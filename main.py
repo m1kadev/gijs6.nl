@@ -44,17 +44,18 @@ def robots():
 
 # Public site
 
-
 @app.route("/")
 def home():
-    with open('/home/gijs3/mysite/homepagegraph/graphdata.json', 'r') as file:
-        graphdata = json.load(file)
+    with open('graphdata.json', 'r') as file:
+        graphdatafull = json.load(file)
 
-    with open('/home/gijs3/mysite/homepagegraph/headers.json', 'r') as file:
+    graphdata = graphdatafull["data"]
+    last_updated = graphdatafull["last_updated"]
+
+    with open('headers.json', 'r') as file:
         headers = json.load(file)
 
-
-    return render_template("public/home.html", graphdata=graphdata, headers=headers)
+    return render_template("public/home.html", graphdata=graphdata, headers=headers, last_updated=last_updated)
 
 
 # This function is used in another script
@@ -115,7 +116,12 @@ def homepagegraphdataparser(data):
 
             tabledata[weekday][indexweeknumstuff] = {"value": value, "date": thiscelldate.strftime('%d-%m-%Y'), "darkcolor": value_to_color(value, "dark"), "lightcolor": value_to_color(value, "light")}
 
-    return tabledata, headers
+    saved_data = {
+        "data": tabledata,
+        "last_updated": datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+    }
+
+    return saved_data, headers
 
 
 
