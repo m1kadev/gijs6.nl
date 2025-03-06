@@ -38,8 +38,7 @@
     display: table-cell;
 }
 
-
-#commitfreq[data-extrainfo="true"] td:hover::after {
+#commitfreq td:hover::after {
     visibility: visible;
 }
 
