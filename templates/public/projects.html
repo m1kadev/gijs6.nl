@@ -1,0 +1,67 @@
+{% extends "public/base.html" %}
+
+{% set active_page = "projects" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='public/projects.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id="pagetitle">
+        <h1>Projects</h1>
+        <h2>Some of the projects I have made or that I have contributed to.</h2>
+    </div>
+
+    <ul id="projlists">
+        <li>
+            <div class="projcontainer">
+                <a href="/" target="_blank" class="projname">This site</a>
+                <p>My own site. There isn't relly much to see but it looks quite nice, I hope.</p>
+                <img class="projimg" src="/static/public/projectimages/home.png">
+            </div>
+        </li>
+        <li>
+            <div class="projcontainer">
+                <a href="https://ckv.gijs6.nl" target="_blank" class="projname">My CKV-site</a>
+                <p>My site for CKV (<i>culturele en kunstzinnige vorming</i>, so basically "culture and art"). I could have just built it in Wix, like everyone else, but I decided to <s>make my life more difficult</s> do everything myself.</p>
+                <img class="projimg" src="/static/public/projectimages/ckv.png">
+            </div>
+        </li>
+        <li>
+            <div class="projcontainer">
+                <a href="/gss" target="_blank" class="projname">GSS</a>
+                <p>A little tool to not only beautify CSS but also make the order of the CSS nicer.</p>
+                <img class="projimg" src="/static/public/projectimages/gss.png">
+            </div>
+        </li>
+        <li>
+            <div class="projcontainer">
+                <a href="/meliag" target="_blank" class="projname">Meliag</a>
+                <p>A site to display data about trains in a nice way.</p>
+                <img class="projimg" src="/static/public/projectimages/meliag.png">
+            </div>
+        </li>
+        <li>
+            <div class="projcontainer">
+                <a href="/school" target="_blank" class="projname"><i>Leermiddelenoverzicht</i></a>
+                <p>A site to collect learning recoures and my <i>samenvattingen</i>.</p>
+                <img class="projimg" src="/static/public/projectimages/leermid.png">
+            </div>
+        </li>
+        <li>
+            <div class="projcontainer">
+                <a href="https://git.dupunkto.org/~dupunkto/kodo" target="_blank" class="projname">Kodo</a>
+                <p>A game inside a QR-code.</p>
+            </div>
+        </li>
+        <li>
+            <div class="projcontainer">
+                <a href="/clock" target="_blank" class="projname">Clock</a>
+                <p>This <u><b>amazing</b></u> clock.</p>
+                <img class="projimg" src="/static/public/projectimages/clock.png">
+            </div>
+        </li>
+    </ul>
+{% endblock %}

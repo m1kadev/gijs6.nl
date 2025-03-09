@@ -213,6 +213,10 @@ def lib():
     return render_template("public/lib.html", data=lib_data)
 
 
+@app.route("/projects")
+def projects():
+    return render_template("public/projects.html")
+
 @app.route("/colophon")
 def colofon():
     return render_template("public/colophon.html")

@@ -1,0 +1,22 @@
+#projlists {
+    padding: revert;
+}
+
+.projname {
+    font-weight: 700;
+}
+
+
+.projimg {
+    width: 50vw;
+}
+
+#projlists li {
+    margin-bottom: 30px;
+}
+
+.projcontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

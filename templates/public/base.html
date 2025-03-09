@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,8 +21,12 @@
                     <div class="menu-itemtxt">Code snippets</div>
                 </a>
                 <a href="/lib" class="menu-item {% if active_page == 'lib' %}active{% endif %}">
-                    <i class="fa-solid fa-rectangle-list"></i>
+                    <i class="fa-solid fa-folder-open"></i>
                     <div class="menu-itemtxt">Website library</div>
+                </a>
+                <a href="/projects" class="menu-item {% if active_page == 'projects' %}active{% endif %}">
+                    <i class="fa-solid fa-list-ul"></i>
+                    <div class="menu-itemtxt">Projects</div>
                 </a>
                 <a href="/colophon" class="menu-item {% if active_page == 'colophon' %}active{% endif %}">
                     <i class="fa-solid fa-circle-info"></i>
