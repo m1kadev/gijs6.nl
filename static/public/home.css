@@ -11,7 +11,6 @@
     color: #888;
     font-size: 0.8vw;
     font-weight: 300;
-    display: none;
 }
 
 #commitfreq td.extra-info.weekday {
@@ -32,11 +31,9 @@
     color: var(--front);
     border: 0.1vw solid var(--front);
     border-radius: 0.75vw;
+    white-space: pre-line;
 }
 
-#commitfreq[data-extrainfo="true"] th, #commitfreq[data-extrainfo="true"] .extra-info.weekday {
-    display: table-cell;
-}
 
 #commitfreq td:hover::after {
     visibility: visible;

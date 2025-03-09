@@ -80,7 +80,7 @@ def homepagegraphdataparser(data):
 
 
     min_value = 0
-    max_value = int(max(data.values()))
+    max_value = int(max(item["value"] for item in data.values()))
 
     def value_to_color(value, theme):
         max_color="#06C749"
@@ -89,7 +89,8 @@ def homepagegraphdataparser(data):
         else:
             min_color = "#000000"
         if value and value != 0:
-            normalized_value = max(0, min(1, (int(value) - min_value) / (max_value - min_value)))
+            value = int(value)
+            normalized_value = max(0, min(1, (value - min_value) / (max_value - min_value)))
 
             min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
             max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
@@ -112,15 +113,37 @@ def homepagegraphdataparser(data):
             first_day = date(year, 1, 1) + timedelta(weeks=weeknumthiscell-1)
             thiscelldate = first_day - timedelta(days=first_day.weekday()) + timedelta(days=weekday)
 
-            value = data.get(datetime.strftime(thiscelldate, "%Y-%m-%d"), 0)
+            celldata = data.get(datetime.strftime(thiscelldate, "%Y-%m-%d"), {"value": 0, "repos": {}})
+            value = celldata.get("value", 0)
+            repo_list = celldata.get("repos", {})
 
-            tabledata[weekday][indexweeknumstuff] = {"value": value, "date": thiscelldate.strftime('%d-%m-%Y'), "darkcolor": value_to_color(value, "dark"), "lightcolor": value_to_color(value, "light")}
+            repo_list_sorted = sorted(repo_list.items(), key=lambda x: x[1], reverse=True)
+
+            repo_list_formatted = "\n".join(f"{key}: {value}" for key, value in repo_list_sorted)
+
+            formatted_date = thiscelldate.strftime('%d-%m-%Y')
+
+            if value == 0:
+                message = f"No commits on {formatted_date}"
+            elif value == 1:
+                message = f"1 commit on {formatted_date}\n\n{repo_list_formatted}"
+            else:
+                message = f"{value} commits on {formatted_date}\n\n{repo_list_formatted}"
+
+            tabledata[weekday][indexweeknumstuff] = {
+                "value": value,
+                "date": thiscelldate.strftime('%d-%m-%Y'),
+                "message": message,
+                "darkcolor": value_to_color(value, "dark"),
+                "lightcolor": value_to_color(value, "light")
+            }
+
 
     saved_data = {
         "data": tabledata,
         "last_updated": datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     }
-
+    
     return saved_data, headers
 
 
