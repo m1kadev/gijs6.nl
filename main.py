@@ -247,31 +247,14 @@ def colofon():
 
 
 
-
-# SAMENVATTINGEN
-
-
 @app.route("/school")
 def school():
-    with open("samenvattingen.pkl", "rb") as bestand:
-        data = pickle.load(bestand)
-    with open("laatst_samva_data_bijgewerkt.txt", 'r') as f:
-        laatst_bijgewerkt = f.read().strip()
-
-    isErBinnenkort = any(item["Weergave"] == "JA" for item in data)
-    isErLater = any(item["Weergave"] == "JA_DEELS" for item in data)
-    isErEerder = any(item["Weergave"] == "NEE" for item in data)
-
-
-    return render_template("public/samenvattingen.html", data=data, laatst_bijgewerkt=laatst_bijgewerkt, isErBinnenkort=isErBinnenkort, isErLater=isErLater, isErEerder=isErEerder)
-
+    return redirect("https://school.gijs6.nl")
 
 
 @app.route("/school/min")
 def school_min():
-    with open("samenvattingen.pkl", "rb") as bestand:
-        data = pickle.load(bestand)
-    return render_template("public/samva_min.html", data=data)
+    return redirect("https://school.gijs6.nl")
 
 
 
