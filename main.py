@@ -85,9 +85,11 @@ def homepagegraphdataparser(data):
     def value_to_color(value, theme):
         max_color="#06C749"
         if theme == "light":
-            min_color = "#FFFFFF"
+            min_color = "#ECFAF1"
+            zero_color = "#FFFFFF"
         else:
-            min_color = "#000000"
+            min_color = "#000E05"
+            zero_color = "#000000"
         if value and value != 0:
             value = int(value)
             normalized_value = max(0, min(1, (value - min_value) / (max_value - min_value)))
@@ -95,12 +97,12 @@ def homepagegraphdataparser(data):
             min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
             max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
 
-            interpolated_color = [int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value) for i in range(3)]
+            interpolated_color = [int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value)for i in range(3)]
 
             hex_color = '#' + ''.join(f'{x:02X}' for x in interpolated_color)
             return hex_color
         else:
-            return min_color
+            return zero_color
 
     tabledata = [["" for _ in range(52)] for _ in range(7)]
     for weekday in range(7):
@@ -124,11 +126,11 @@ def homepagegraphdataparser(data):
             formatted_date = thiscelldate.strftime('%d-%m-%Y')
 
             if value == 0:
-                message = f"No commits on {formatted_date}"
+                message = f"No lines changed on {formatted_date}"
             elif value == 1:
-                message = f"1 commit on {formatted_date}\n\n{repo_list_formatted}"
+                message = f"1 line changed on {formatted_date}\n\n{repo_list_formatted}"
             else:
-                message = f"{value} commits on {formatted_date}\n\n{repo_list_formatted}"
+                message = f"{value} lines changed on {formatted_date}\n\n{repo_list_formatted}"
 
             tabledata[weekday][indexweeknumstuff] = {
                 "value": value,
