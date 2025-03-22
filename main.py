@@ -158,7 +158,7 @@ def code():
 lib_data = [
     {
         "title": "Lorem Picsum",
-        "link": "https://picsum.photos/",
+        "link": "https://picsum.photos",
         "fa_icon_class": "fa-solid fa-camera"
     },
     {
@@ -173,32 +173,32 @@ lib_data = [
     },
     {
         "title": "Dimensions",
-        "link": "https://www.dimensions.com/",
+        "link": "https://dimensions.com",
         "fa_icon_class": "fa-solid fa-up-right-and-down-left-from-center"
     },
     {
         "title": "BGJar",
-        "link": "https://bgjar.com/",
+        "link": "https://bgjar.com",
         "fa_icon_class": "fa-solid fa-file-image"
     },
     {
         "title": "Simpleicons",
-        "link": "https://simpleicons.org/",
+        "link": "https://simpleicons.org",
         "fa_icon_class": "fa-solid fa-icons"
     },
     {
         "title": "FontAwesome to .ico",
-        "link": "https://gauger.io/fonticon/",
+        "link": "https://gauger.io/fonticon",
         "fa_icon_class": "fa-solid fa-icons"
     },
     {
         "title": "Column text editor",
-        "link": "https://columneditor.com/",
+        "link": "https://columneditor.com",
         "fa_icon_class": "fa-solid fa-table-columns"
     },
     {
         "title": "MetroDreamin'",
-        "link": "https://metrodreamin.com/",
+        "link": "https://metrodreamin.com",
         "fa_icon_class": "fa-solid fa-train-subway"
     },
     {
@@ -208,28 +208,38 @@ lib_data = [
     },
     {
         "title": "Train positions",
-        "link": "https://treinposities.nl/",
+        "link": "https://treinposities.nl",
         "fa_icon_class": "fa-solid fa-train"
     },
     {
         "title": "Biocubes",
-        "link": "https://biocubes.net/",
+        "link": "https://biocubes.net",
         "fa_icon_class": "fa-solid fa-cube"
     },
     {
         "title": "Map of the universe",
-        "link": "https://mapoftheuniverse.net/",
+        "link": "https://mapoftheuniverse.net",
         "fa_icon_class": "fa-solid fa-map"
-    },
-    {
-        "title": "Quantum Cloud",
-        "link": "https://www.lusas.com/case/civil/gormley.html",
-        "fa_icon_class": "fa-solid fa-hexagon-nodes"
     },
     {
         "title": "FlappyFavi",
         "link": "https://mewtru.com/flappyfavi",
         "fa_icon_class": "fa-solid fa-dove"
+    },
+    {
+        "title": "MathJax-mhchem",
+        "link": "https://mhchem.github.io/MathJax-mhchem",
+        "fa_icon_class": "fa-solid fa-flask-vial"
+    },
+    {
+        "title": "Sans Bullshit Sans",
+        "link": "https://sansbullshitsans.com",
+        "fa_icon_class": "fa-solid fa-font"
+    },
+    {
+        "title": "ShadeMap",
+        "link": "https://shademap.app",
+        "fa_icon_class": "fa-solid fa-cloud-sun"
     }
 ]
 
