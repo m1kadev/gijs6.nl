@@ -3,14 +3,14 @@
 }
 
 body {
-    justify-items: center;
-    padding: clamp(25px, 2.5%, 50px);
     margin: 0;
+    padding: clamp(25px, 2.5%, 50px);
     font-family: monospace;
 }
 
 .container {
-    max-width: clamp(750px, 50%, 1500px);
+    max-width: clamp(750px, 50%, 1000px);
+    margin: auto;
 }
 
 h1, p {
