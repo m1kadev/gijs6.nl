@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cijfercheck</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='grade.css') }}">
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='grade.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('priv_bp.static', filename='grade.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('priv_bp.static', filename='grade.ico') }}">
 
         <meta name="robots" content="noindex">
     </head>
@@ -30,7 +30,7 @@
                 <h2 id="average">{{ average }}</h2>
             </div>
         </div>
-        <audio id="end-sound" src="{{ url_for('static', filename='end.mp3') }}"></audio>
+        <audio id="end-sound" src="{{ url_for('priv_bp.static', filename='end.mp3') }}"></audio>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
