@@ -6,7 +6,7 @@ import subprocess
 # Fetch and reset repo
 subprocess.run(["git", "fetch"], check=True)
 print("Fetched")
-subprocess.run(["git", "reset", "--hard", "origin/trunk"], check=True)
+subprocess.run(["git", "reset", "--hard", "origin/main"], check=True)
 print("Updated files")
 
 # Directories and files to exclude
