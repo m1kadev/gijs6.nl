@@ -1,0 +1,13 @@
+{% extends "blogbase.html" %}
+
+{% block pagetitle %}{{ title }}{% endblock %}
+
+{% set type = "post" %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('blog_bp.static', filename='post.css') }}">
+{% endblock %}
+
+{% block pagecontent %}
+    {{ content | safe }}
+{% endblock %}

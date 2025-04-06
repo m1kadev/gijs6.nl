@@ -223,11 +223,11 @@ def homepage_graph_api():
 
 
 
-with open(os.path.join(BASE_DIR, "data", "redirects.json"), "r") as file:
-    redirects = json.load(file)
-
 @app.errorhandler(404)
 def not_found(e):
+    with open(os.path.join(BASE_DIR, "data", "redirects.json"), "r") as file:
+        redirects = json.load(file)
+
     path = request.path.strip("/")
     if path in redirects:
         return redirect(redirects[path], code=308)
@@ -240,4 +240,4 @@ def internal_server_error(e):
 
 
 if __name__ == "__main__":
-    app.run(port=7000)
+    app.run(port=7000, debug=True)

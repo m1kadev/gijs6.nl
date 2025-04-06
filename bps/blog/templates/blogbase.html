@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Blog - {% block pagetitle %}{% endblock %} - Gijs6</title>
+        <link rel="stylesheet" href="{{ url_for('blog_bp.static', filename='base.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/dice.ico') }}">
+        <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+        {% block extra_headers %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <h1>Blog</h1>
+            <div id="menu">
+                <a href="/" class="menu-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="menu-itemtxt">Back to homepage</span>
+                </a>
+                {% if type == "post" %}
+                    <a href="/blog" class="menu-item">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                        <span class="menu-itemtxt">Back to all posts</span>
+                    </a>
+                {% endif %}
+            </div>
+        </header>
+
+        <main>
+            {% block pagecontent %}{% endblock %}
+        </main>
+
+        <footer>
+            <p>Written by Gijs</p>
+            <p>Replay by <a href="mailto:gijs6@dupunkto.org">email</a></p>
+            <p id="copyrightstuff">Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a>, so do whatever you want with this :D</p>
+        </footer>
+    </body>
+</html>

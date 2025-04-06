@@ -1,0 +1,17 @@
+{% extends "blogbase.html" %}
+
+{% block pagetitle %}Index{% endblock %}
+
+{% set type = "index" %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('blog_bp.static', filename='home.css') }}">
+{% endblock %}
+
+{% block pagecontent %}
+    <ul>
+        {% for blogpost in post_list %}
+            <li>{{ blogpost.date }}: <a href="{{ blogpost.url }}">{{ blogpost.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

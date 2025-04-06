@@ -203,10 +203,6 @@ p {
 
 
 @media (max-width: 1000px) {
-    #score {
-        /* font-size: 12vw; */
-    }
-
     .score-block {
         max-width: none;
     }
