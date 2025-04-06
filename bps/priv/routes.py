@@ -20,12 +20,12 @@ def login_required(func):
         if not session.get("logged_in") or session.get("session_version") != SESSION_VERSION:
             nextparam = None
             if "grade" in request.path:
-                nextparam = url_for("grade_check")
+                nextparam = url_for("priv_bp.grade_check")
             elif "homework" in request.path:
-                nextparam = url_for("homework_check")
+                nextparam = url_for("priv_bp.homework_check")
             else:
                 nextparam = request.path 
-            return redirect(url_for("login", next=nextparam))
+            return redirect(url_for("priv_bp.login", next=nextparam))
         return func(*args, **kwargs)
     wrapper.__name__ = func.__name__
     return wrapper
@@ -39,7 +39,7 @@ def login():
             session["logged_in"] = True
             session["session_version"] = SESSION_VERSION
             session.permanent = True
-            next_page = request.args.get("next", url_for("grade_check"))
+            next_page = request.args.get("next", url_for("priv_bp.grade_check"))
             return redirect(next_page)
         else:
             return render_template("login.html", error="Ongeldig wachtwoord!")
@@ -66,7 +66,7 @@ def grade_check():
     return render_template("grade.html", **data)
 
 
-@priv_bp.route("/check/huiswerk")
+@priv_bp.route("/homework")
 @login_required
 def homework_check():
     homework_data = read_data_file("homework.json")
