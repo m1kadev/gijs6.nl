@@ -13,8 +13,6 @@
     --green: #06c749;
 }
 
-
-
 :root {
     --front: white;
     --back: black;
@@ -84,11 +82,9 @@ a:hover {
     align-content: center;
     text-decoration: none;
     gap: 10px;
-    border-bottom: 3px #00000000 solid;)
-    solid;
+    border-bottom: 3px #00000000 solid;
     padding: 10px;
     flex-grow: 1;
-    Windows Task via Task planner that runs whenever i commit in speak: digits;
     transition: 300ms border ease;
 }
 

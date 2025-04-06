@@ -1,15 +1,9 @@
 .idea/
 .venv/
-.obsidian/
-mdtest/
-form/
 
-*.pkl
-*.json
-*.txt
-*.xml
+__pycache__/
 
 dekstop.ini
 **/desktop.ini
 
-graphdata.py
+auth_hash.txt

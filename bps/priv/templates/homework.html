@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HWcheck</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='grade.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='homework.ico') }}">
+    <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+
+    <meta name="robots" content="noindex">
+
+</head>
+<body class="top-aligned">
+
+    <div class="containerB">
+        {% for item in huiswerk %}
+        <div class="hw-row">
+            <div class="hw-icon-block {{ item.type }}">
+                {% if item.type == "HUISWERK" %}
+                    <i class="fa-solid fa-book-open-reader"></i>
+                {% elif item.type == "TOETS" %}
+                    <i class="fa-solid fa-file-pen"></i>
+                {% elif item.type == "GROTE_TOETS" %}
+                    <i class="fa-solid fa-book"></i>
+                {% elif item.type == "INLEVER" %}
+                    <i class="fa-solid fa-laptop-file"></i>
+            {% endif %}
+            </div>
+            <div class="hw-infotext">
+
+                <div class="hw-toprij">
+                    <div class="vakblok">
+                        <h1 id="hwvak">{{ item.vak }}</h1>
+                        </div>
+                    <div class="hw-datumblokken">
+                        <div class="hw-datumblokAF">
+                            <h1 id="hwdatumaf">Af: {{ item.datumAf }}</h1>
+                        </div>
+                        <div class="hw-datumblokInvoer">
+                            <h1 id="hwdatuminvoer">Invoer: {{ item.aanmaak }}</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hw-onderblok {% if item.gemaakt %}gemaakt{% endif %}">
+                <h2 id="hwkop">{{ item.titel }}</h2>
+                <span id="hwtekst"><p>{{ item.omschrijving | safe }}</p></span>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

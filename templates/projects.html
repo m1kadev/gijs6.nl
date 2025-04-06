@@ -1,11 +1,11 @@
-{% extends "public/base.html" %}
+{% extends "base.html" %}
 
 {% set active_page = "projects" %}
 
 {% block title %}Projects{% endblock %}
 
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='public/projects.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='projects.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
                 <a href="/" target="_blank">
                     <span class="projname">This site</span>
                     <p>My own site. There isn't relly much to see but it looks quite nice, I hope.</p>
-                    <img class="projimg" src="/static/public/projectimages/home.png">
+                    <img class="projimg" src="/static/projectimages/home.png">
                 </a>
 
             </div>
@@ -30,7 +30,7 @@
                 <a href="https://ckv.gijs6.nl" target="_blank">
                     <span class="projname">My CKV-site</span>
                     <p>My site for CKV (<i>culturele en kunstzinnige vorming</i>, so basically "culture and art"). I could have just built it in Wix, like everyone else, but I decided to <s>make my life more difficult</s> do everything myself.</p>
-                    <img class="projimg" src="/static/public/projectimages/ckv.png">
+                    <img class="projimg" src="/static/projectimages/ckv.png">
                 </a>
             </div>
         </li>
@@ -39,16 +39,16 @@
                 <a href="/gss" target="_blank">
                     <span class="projname">GSS</span>
                     <p>A little tool to not only beautify CSS but also make the order of the CSS nicer.</p>
-                    <img class="projimg" src="/static/public/projectimages/gss.png">
+                    <img class="projimg" src="/static/projectimages/gss.png">
                 </a>
             </div>
         </li>
         <li>
             <div class="projcontainer">
-                <a href="/meliag" target="_blank">
+                <a href="https://github.com/Gijs6/Meliag" target="_blank">
                     <span class="projname">Meliag</span>
                     <p>A site to display data about trains in a nice way.</p>
-                    <img class="projimg" src="/static/public/projectimages/meliag.png">
+                    <img class="projimg" src="/static/projectimages/meliag.png">
                 </a>
             </div>
         </li>
@@ -57,7 +57,7 @@
                 <a href="https://school.gijs6.nl" target="_blank">
                     <span class="projname"><i>Leermiddelenoverzicht</i></span>
                     <p>A site to collect learning recoures and my <i>samenvattingen</i>.</p>
-                    <img class="projimg" src="/static/public/projectimages/leermid.png">
+                    <img class="projimg" src="/static/projectimages/leermid.png">
                 </a>
             </div>
         </li>
@@ -74,15 +74,6 @@
                 <a href="https://git.dupunkto.org/~dupunkto/somtomorrow" target="_blank">
                     <span class="projname">Somtomorrow</span>
                     <p>A better web client for Somtoday</p>
-                </a>
-            </div>
-        </li>
-        <li>
-            <div class="projcontainer">
-                <a href="/clock" target="_blank">
-                    <span class="projname">Clock</span>
-                    <p>This <u><b>amazing</b></u> clock.</p>
-                    <img class="projimg" src="/static/public/projectimages/clock.png">
                 </a>
             </div>
         </li>
