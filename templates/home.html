@@ -43,16 +43,16 @@
 
     <script>
         function fixThemes(theme) {
-            var tds = document.querySelectorAll('#commitfreq td');
+            var tds = document.querySelectorAll("#commitfreq td");
             tds.forEach(function(td) {
-                if (theme == 'light') {
-                    td.style.background = td.getAttribute('data-color-light');
+                if (theme == "light") {
+                    td.style.background = td.getAttribute("data-color-light");
                 } else {
-                    td.style.background = td.getAttribute('data-color-dark');
+                    td.style.background = td.getAttribute("data-color-dark");
                 }
             });
         }
-        var oldTheme = localStorage.getItem('theme') || 'dark';
+        var oldTheme = localStorage.getItem("theme") || "dark";
         fixThemes(oldTheme);
     </script>
 

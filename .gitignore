@@ -6,4 +6,4 @@ __pycache__/
 dekstop.ini
 **/desktop.ini
 
-auth_hash.txt
+auth.txt

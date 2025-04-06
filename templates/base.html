@@ -10,7 +10,7 @@
         {% block extra_headers %}{% endblock %}
     </head>
     <body>
-        <div id="header">
+        <header>
             <div id="menu">
                 <a href="/" class="menu-item {% if active_page == 'home' %}active{% endif %}">
                     <i class="fa-solid fa-house-user"></i>
@@ -44,30 +44,32 @@
             <button id="theme-toggle" aria-label="Toggle dark mode">
                 <i class="fa-solid fa-circle-half-stroke"></i>
             </button>
-        </div>
+        </header>
 
-        <div id="content">
+        <main>
             {% block content %}{% endblock %}
-        </div>
+        </main>
 
 
 
         <footer>
             <p id="madeby">Made by Gijs</p>
+            <p>Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (commited on {{ latest_commit_date }} UTC)</p>
+            <p>Deployed on {{ latest_deploy_date }} UTC</p>
             <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
             <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>
             <p>View the <a href="https://github.com/Gijs6/site" target="_blank">source code on GitHub</a></p>
         </footer>
         <script>
-            const toggleButton = document.getElementById('theme-toggle');
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', currentTheme);
+            const toggleButton = document.getElementById("theme-toggle");
+            const currentTheme = localStorage.getItem("theme") || "dark";
+            document.documentElement.setAttribute("data-theme", currentTheme);
 
-            toggleButton.addEventListener('click', () => {
-                const theme = document.documentElement.getAttribute('data-theme');
-                const newTheme = theme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
+            toggleButton.addEventListener("click", () => {
+                const theme = document.documentElement.getAttribute("data-theme");
+                const newTheme = theme === "dark" ? "light" : "dark";
+                document.documentElement.setAttribute("data-theme", newTheme);
+                localStorage.setItem("theme", newTheme);
 
                 fixThemes(newTheme);
             });

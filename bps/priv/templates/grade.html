@@ -33,32 +33,32 @@
         <audio id="end-sound" src="{{ url_for('priv_bp.static', filename='end.mp3') }}"></audio>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('js-enabled');
-    const scoreElement = document.getElementById('score');
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("js-enabled");
+    const scoreElement = document.getElementById("score");
 
     scoreElement.textContent = "???"
 
-    const textBlock = document.querySelector('.text-block');
-    const scoreBlock = document.querySelector('.score-block');
-    const dateBlock = document.querySelector('.date-block');
-    const averageBlock = document.querySelector('.average-block');
+    const textBlock = document.querySelector(".text-block");
+    const scoreBlock = document.querySelector(".score-block");
+    const dateBlock = document.querySelector(".date-block");
+    const averageBlock = document.querySelector(".average-block");
 
-    const endSound = document.getElementById('end-sound');
+    const endSound = document.getElementById("end-sound");
     const subject = "{{ subject }}";
     const subject3 = "{{ subject_copy }}";
 
-    const headerContainer = document.querySelectorAll('.containerBoven')[0];
-    const lowerBlocks = document.querySelectorAll('.containerOnder')[0];
+    const headerContainer = document.querySelectorAll(".containerBoven")[0];
+    const lowerBlocks = document.querySelectorAll(".containerOnder")[0];
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
         const scrollPosition = window.scrollY;
         if (scrollPosition > 100) {
-            headerContainer.classList.add('sticky');
-            lowerBlocks.style.display = 'none';
+            headerContainer.classList.add("sticky");
+            lowerBlocks.style.display = "none";
         } else {
-            headerContainer.classList.remove('sticky');
-            lowerBlocks.style.display = 'flex';
+            headerContainer.classList.remove("sticky");
+            lowerBlocks.style.display = "flex";
         }
     });
 
@@ -178,26 +178,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const message = `${subject3} staat er op!`;
         navigator.clipboard.writeText(message)
             .then(() => {
-                showToast('success', 'Kopie voltooid!');
+                showToast("success", "Kopie voltooid!");
             })
             .catch(err => {
-                showToast('error', `Kopiëren mislukt: ${err.message}`);
+                showToast("error", `Kopiëren mislukt: ${err.message}`);
             });
     }
 
     function showToast(type, message) {
-        const toast = document.createElement('div');
+        const toast = document.createElement("div");
         toast.className = `toast ${type}`;
 
         const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svg.setAttribute("viewBox", "0 0 24 24");
-        if (type === 'success') {
+        if (type === "success") {
             svg.innerHTML = `<path d="M9 16.2l-3.5-3.5L4 14.2l5 5L20 8.2l-1.4-1.4L9 16.2z"/>`;
-        } else if (type === 'error') {
+        } else if (type === "error") {
             svg.innerHTML = `<path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
         }
 
-        const text = document.createElement('span');
+        const text = document.createElement("span");
         text.textContent = message;
 
         toast.appendChild(svg);
@@ -205,11 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(toast);
 
         setTimeout(() => {
-            toast.classList.add('show');
+            toast.classList.add("show");
         }, 100);
 
         setTimeout(() => {
-            toast.classList.remove('show');
+            toast.classList.remove("show");
             setTimeout(() => {
                 document.body.removeChild(toast);
             }, 500);
@@ -217,9 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setTimeout(() => {
-        textBlock.classList.add('fade-in');
-        scoreBlock.classList.add('fade-in');
-        dateBlock.classList.add('fade-in');
+        textBlock.classList.add("fade-in");
+        scoreBlock.classList.add("fade-in");
+        dateBlock.classList.add("fade-in");
     }, 500);
 
 
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function playTone(freq) {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioCtx.createOscillator();
-        oscillator.type = 'sine';
+        oscillator.type = "sine";
         oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
         oscillator.connect(audioCtx.destination);
         oscillator.start();
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
         endSound.play();
 
         setTimeout(() => {
-            averageBlock.classList.add('fade-in');
+            averageBlock.classList.add("fade-in");
         }, 100);
     } else if (currentScore < targetScore) {
         currentScore += 0.05;
@@ -291,13 +291,13 @@ document.addEventListener('DOMContentLoaded', () => {
         endSound.play();
 
         setTimeout(() => {
-            averageBlock.classList.add('fade-in');
+            averageBlock.classList.add("fade-in");
         }, 100);
     }
 }
 
 
-    document.body.addEventListener('click', () => {
+    document.body.addEventListener("click", () => {
         clickCount++;
 
         if (clickCount === 2) {

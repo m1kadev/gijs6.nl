@@ -5,6 +5,7 @@ from werkzeug.security import check_password_hash
 import json
 import locale
 import os
+import subprocess
 
 # Blueprints
 from bps import load_blueprints
@@ -26,24 +27,51 @@ for bp, prefix in load_blueprints():
 
 # Files
 
-@app.route('/favicon.ico')
-@app.route('/favicon')
+@app.route("/favicon.ico")
+@app.route("/favicon")
 def favicon():
-    return send_from_directory('static', "favs/dice.ico", mimetype='image/vnd.microsoft.icon')
+    return send_from_directory("static", "favs/dice.ico", mimetype="image/vnd.microsoft.icon")
 
 @app.route("/.well-known/security.txt")
 def securitytxt():
-    return send_from_directory('static', "txts/security.txt", mimetype="text/plain")
+    return send_from_directory("static", "txts/security.txt", mimetype="text/plain")
 
 @app.route("/security.txt")
 def securitytxtredirect():
-    return redirect(url_for('securitytxt')), 301
+    return redirect(url_for("securitytxt")), 301
 
 @app.route("/robots")
 @app.route("/robots.txt")
 def robots():
     return send_from_directory("static", "txts/robots.txt", mimetype="text/plain")
 
+
+
+def get_commit_and_deploy_date():
+    with open(os.path.join(BASE_DIR, "data", "last_deploy.txt"), "r") as f:
+        latest_deploy_date = f.read().strip()
+
+    latest_commit_hash = subprocess.check_output(["git", "log", "-1", "--pretty=format:%h"], cwd=BASE_DIR).strip().decode()
+    latest_commit_hash_long = subprocess.check_output(["git", "log", "-1", "--pretty=format:%H"], cwd=BASE_DIR).strip().decode()
+    latest_commit_timestamp = int(subprocess.check_output(["git", "log", "-1", "--pretty=format:%ct"], cwd=BASE_DIR).strip())
+    latest_commit_date = datetime.fromtimestamp(latest_commit_timestamp).strftime("%d-%m-%Y at %H:%M:%S")
+
+    comdepdata = {
+        "latest_deploy_date": latest_deploy_date,
+        "latest_commit_hash": latest_commit_hash,
+        "latest_commit_hash_long": latest_commit_hash_long,
+        "latest_commit_date": latest_commit_date
+    }
+
+    return comdepdata
+
+
+comdepdata = get_commit_and_deploy_date()
+
+
+@app.context_processor
+def inject_comdepdata():
+    return comdepdata
 
 
 @app.route("/")
@@ -81,23 +109,13 @@ def colofon():
     return render_template("colophon.html")
 
 
-@app.errorhandler(404)
-def not_found(e):
-    return render_template("404.html", e=e), 404
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template('500.html', e=e), 500
-
-
-
 with open(os.path.join(BASE_DIR, "auth.txt"), "r") as f:
     AUTH_HASH = f.read().strip()
 
 
 @app.route("/homegraphupdate", methods=["POST"])
 def homepage_graph_api():
-    if not check_password_hash(AUTH_HASH, request.headers.get('auth')):
+    if not check_password_hash(AUTH_HASH, request.headers.get("auth")):
         return "No valid auth", 401
     else:
         try:
@@ -149,7 +167,7 @@ def homepage_graph_api():
                     for i in range(3)
                 ]
 
-                hex_color = '#' + ''.join(f'{x:02X}' for x in interpolated_color)
+                hex_color = "#" + "".join(f"{x:02X}" for x in interpolated_color)
                 return hex_color
             else:
                 return zero_color
@@ -173,7 +191,7 @@ def homepage_graph_api():
 
                 repo_list_formatted = "\n".join(f"{key}: {value}" for key, value in repo_list_sorted)
 
-                formatted_date = thiscelldate.strftime('%d-%m-%Y')
+                formatted_date = thiscelldate.strftime("%d-%m-%Y")
 
                 if value == 0:
                     message = f"No lines changed on {formatted_date}"
@@ -184,16 +202,15 @@ def homepage_graph_api():
 
                 tabledata[weekday][indexweeknumstuff] = {
                     "value": value,
-                    "date": thiscelldate.strftime('%d-%m-%Y'),
+                    "date": thiscelldate.strftime("%d-%m-%Y"),
                     "message": message,
                     "darkcolor": value_to_color(value, "dark"),
                     "lightcolor": value_to_color(value, "light")
                 }
 
-
         saved_data = {
             "data": tabledata,
-            "last_updated": datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+            "last_updated": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         }
 
         with open(os.path.join(BASE_DIR, "data", "homepagegraph", "graphdata.json"), "w") as f:
@@ -204,5 +221,23 @@ def homepage_graph_api():
 
         return "Lekker bezig", 201
 
-if __name__ == '__main__':
-    app.run()
+
+
+with open(os.path.join(BASE_DIR, "data", "redirects.json"), "r") as file:
+    redirects = json.load(file)
+
+@app.errorhandler(404)
+def not_found(e):
+    path = request.path.strip("/")
+    if path in redirects:
+        return redirect(redirects[path], code=308)
+    return render_template("404.html", e=e), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("500.html", e=e), 500
+
+
+if __name__ == "__main__":
+    app.run(port=7000)

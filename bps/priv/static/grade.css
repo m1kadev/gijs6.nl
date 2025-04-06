@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 
 :root {
@@ -23,7 +23,7 @@ body {
     background-attachment: fixed;
     color: var(--witblauw);
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 body.cijfer {
@@ -128,7 +128,7 @@ p {
 
 #score {
     font-size: clamp(55px, 12vw, 120px);
-    font-family: 'JetBrains Mono', mono;
+    font-family: "JetBrains Mono", mono;
     font-weight: 900;
 }
 
@@ -156,7 +156,7 @@ p {
 
 #average {
     font-size: clamp(20px, 5vw, 45px);
-    font-family: 'JetBrains Mono', mono;
+    font-family: "JetBrains Mono", mono;
     font-weight: 900;
 }
 
