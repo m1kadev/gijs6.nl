@@ -74,10 +74,10 @@ def homework_check():
     return render_template("homework.html", homework=homework_data)
 
 ical_data = read_data_file("ical.json")
-first_ical_path = ical_data["path_first"]
-second_ical_path = ical_data["path_second"]
+first_ical_path = "/" + ical_data["path_first"]
+second_ical_path = "/" + ical_data["path_second"]
 
-@priv_bp.route(f"/rooster-ical-{first_ical_path}")
+@priv_bp.route(first_ical_path)
 def first_schedule_ical():
     ICAL_URL = ical_data["url_first"]
     response = requests.get(ICAL_URL)
@@ -132,7 +132,7 @@ def first_schedule_ical():
         headers={"Content-Disposition": "attachment; filename=modified.ics"}
     )
 
-@priv_bp.route(f"/rooster-ical-{second_ical_path}")
+@priv_bp.route(second_ical_path)
 def second_schedule_ical():
     ICAL_URL = ical_data["url_second"]
     response = requests.get(ICAL_URL)
