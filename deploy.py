@@ -50,8 +50,9 @@ for root, dirs, files in os.walk("."):
             if start_comment and end_comment:
                 remove_dev_blocks(file_path, start_comment, end_comment)
 
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-with open("last_deploy.txt", "w") as file:
+with open(os.path.join(BASE_DIR, "data", "last_deploy.txt"), "w") as file:
     file.write(datetime.now().strftime("%d-%m-%Y at %H:%M:%S"))
 
 
