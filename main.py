@@ -3,7 +3,6 @@ from datetime import datetime, date, timedelta
 from collections import defaultdict
 import json
 import locale
-import pickle
 
 locale.setlocale(locale.LC_TIME, "nl_NL")
 

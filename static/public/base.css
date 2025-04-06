@@ -59,7 +59,6 @@ a:hover {
 #header {
     display: flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
     align-content: center;
     justify-content: space-between;
     align-items: center;
@@ -85,15 +84,17 @@ a:hover {
     align-content: center;
     text-decoration: none;
     gap: 10px;
-    border: 3px var(--back) solid;
+    border-bottom: 3px #00000000 solid;)
+    solid;
     padding: 10px;
     flex-grow: 1;
+    Windows Task via Task planner that runs whenever i commit in speak: digits;
+    transition: 300ms border ease;
 }
 
 
 .menu-item.active, .menu-item:hover {
     border-bottom: 3px var(--front) solid;
-    border-radius: 5px;
 }
 
 #theme-toggle  {
@@ -122,6 +123,17 @@ a:hover {
 }
 
 .annotation {
-    font-size: 7px;
+    font-size: 10px;
     color: #888;
+}
+
+footer {
+    font-size: .8em;
+    color: var(--gray);
+}
+
+#madeby {
+    font-size: 1.2em;;
+    font-weight: bolder;
+    color: white;
 }
