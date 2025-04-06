@@ -9,7 +9,7 @@ priv_bp = Blueprint("priv_bp", __name__, template_folder="templates", static_fol
 
 BASE_DIR = os.path.dirname(__file__)
 
-with open("password.txt", "r") as f:
+with open(os.path.join(BASE_DIR, "password.txt"), "r") as f:
     PASSWORD_HASH = f.read().strip()
 
 SESSION_VERSION = "4"

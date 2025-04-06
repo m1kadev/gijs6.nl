@@ -91,7 +91,7 @@ def internal_server_error(e):
 
 
 
-with open("auth.txt", "r") as f:
+with open(os.path.join(BASE_DIR, "auth.txt"), "r") as f:
     AUTH_HASH = f.read().strip()
 
 
