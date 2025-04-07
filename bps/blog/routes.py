@@ -6,6 +6,7 @@ import os
 import commonmark
 import yaml
 import pytz
+import html
 import re
 
 blog_bp = Blueprint("blog_bp", __name__, template_folder="templates", static_folder="static")
@@ -88,7 +89,7 @@ def generate_rss_feed():
 
         file_content_clean = re.sub(r"^---\s*\n.*?\n---\s*\n", "", file_content, flags=re.DOTALL)
 
-        html_content = commonmark.commonmark(file_content_clean)
+        html_content = html.escape(commonmark.commonmark(file_content_clean))
 
         entry = feed.add_entry()
         entry.title(title)
