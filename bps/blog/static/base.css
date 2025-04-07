@@ -1,12 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+    --front: white;
+    --back: black;
+    --blue: #14a0c4;
+}
+
+[data-theme="light"] {
+    --front: black;
+    --back: white;
+    --blue: #1d5196;
+}
+
 * {
     box-sizing: border-box;
+    font-family: inherit;
 }
 
 body {
     height: 100vh;
     margin: 0;
-    font-family: serif;
+    font-family: Mulish, sans-serif;
     padding: 20px;
+    background: var(--back);
+    color: var(--front);
+    font-weight: 400;
 }
 
 header {
@@ -19,6 +37,18 @@ header {
     padding-bottom: .5em;
 }
 
+#theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: var(--front);
+    color: var(--back);
+}
+
 header h1 {
     margin-block: .25em;
 }
@@ -27,10 +57,11 @@ header h1 {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    flex-grow: 1;
 }
 
 a {
-    color: #173f5c;
+    color: var(--blue);
 }
 
 footer {
@@ -52,9 +83,32 @@ main {
 
 #post-info {
     padding: 0 .5em;
-    border-left: 2px solid #aaa;
+    border-left: 2px solid var(--blue);
 }
 
 #post-info p {
     margin-block: .25em;
+}
+
+a:has(i) {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.menu-itemtxt {
+    font-weight: 800;
+}
+
+a :not(i) {
+    text-decoration: underline;
+}
+
+i {
+    text-decoration: none !important;
+}
+
+strong {
+    font-weight: 800;
 }
