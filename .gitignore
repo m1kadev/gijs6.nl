@@ -1,6 +1,7 @@
 .idea/
 .venv/
 
+.obsidian/
 __pycache__/
 
 dekstop.ini

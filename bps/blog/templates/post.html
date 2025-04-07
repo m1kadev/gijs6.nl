@@ -9,5 +9,10 @@
 {% endblock %}
 
 {% block pagecontent %}
+    <div id="post-info">
+        <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}">{{ first_commit.datetime }}</a></p>
+        <p>Last edited on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit.hash }}">{{ latest_commit.datetime }}</a></p>
+    </div>
+    
     {{ content | safe }}
 {% endblock %}
