@@ -23,7 +23,7 @@ def blog_index():
         extract = re.match(r"^---\n(.*?)\n---\n", file_content, re.DOTALL)
         post_data = yaml.safe_load(extract.group(1))
         post_data["url"] = "/blog/" + post.removesuffix(".md")
-        lines = subprocess.check_output(["git", "log", "--format=%H %ct", "--", f"bps/blog/posts/{post}"], text=True).strip().split("\n")
+        lines = subprocess.check_output(["git", "log", "--format=%H %ct", "--", f"posts/{post}"], text=True, cwd=BASE_DIR).strip().split("\n")
         try:
             post_data["date"] = datetime.fromtimestamp(int(lines[-1].split()[1])).strftime("%d-%m-%Y")
         except:
@@ -40,8 +40,8 @@ def blog_post(title):
             file_content = file.read().strip()
     except FileNotFoundError:
         return redirect(url_for("blog_bp.blog_index"))
-    
-    lines = subprocess.check_output(["git", "log", "--format=%H %ct", "--", f"bps/blog/posts/{file_name}"], text=True).strip().split("\n")
+
+    lines = subprocess.check_output(["git", "log", "--format=%H %ct", "--", f"posts/{file_name}"], text=True, cwd=BASE_DIR).strip().split("\n")
 
     post_info = {
         "latest_commit": {
@@ -60,7 +60,7 @@ def blog_post(title):
     file_content_clean = re.sub(r"^---\s*\n.*?\n---\s*\n", "", file_content, flags=re.DOTALL)
 
     text = commonmark.commonmark(file_content_clean)
-    
+
     return render_template("post.html", content = text, **post_data, **post_info)
 
 
@@ -74,7 +74,7 @@ def generate_rss_feed():
 
     for post in os.listdir(os.path.join(BASE_DIR, "posts")):
         try:
-            lines = subprocess.check_output(["git", "log", "--format=%H %ct", "--", f"bps/blog/posts/{post}"], text=True).strip().split("\n")
+            lines = subprocess.check_output(["git", "log", "--format=%H %ct", "--", f"posts/{post}"], text=True, cwd=BASE_DIR).strip().split("\n")
             date = datetime.fromtimestamp(int(lines[-1].split()[1]), pytz.timezone('Europe/Amsterdam'))
         except IndexError:
             continue
