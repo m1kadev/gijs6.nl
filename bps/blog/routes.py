@@ -27,11 +27,20 @@ def blog_index():
         if not post_data.get("date"):
             lines = subprocess.check_output(["git", "log", "--format=%ct", "--", f"posts/{post}"], text=True, cwd=BASE_DIR).strip().split("\n")
             try:
-                post_data["date"] = datetime.fromtimestamp(int(lines[-1])).strftime("%d-%m-%Y")
+                timestamp = int(lines[-1])
+                post_data["date"] = datetime.fromtimestamp(timestamp).strftime("%d-%m-%Y")
+                post_data["timestamp"] = timestamp  # for sorting
             except (ValueError, IndexError):
                 post_data["date"] = "Not yet published"
-    
+                post_data["timestamp"] = float("inf")
+        else:
+            dt = datetime.strptime(post_data["date"], "%d-%m-%Y")
+            post_data["timestamp"] = int(dt.timestamp())
+
         post_list.append(post_data)
+
+    post_list.sort(key=lambda x: x["timestamp"], reverse=True)
+
     return render_template("index.html", post_list = post_list)
 
 
