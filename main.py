@@ -8,7 +8,7 @@ import os
 import subprocess
 
 # Blueprints
-from bps import load_blueprints
+from blueprints import load_blueprints
 
 
 locale.setlocale(locale.LC_TIME, "nl_NL")

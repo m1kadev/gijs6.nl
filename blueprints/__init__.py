@@ -9,7 +9,7 @@ def load_blueprints():
         if file_item.is_dir():
             routes_path = os.path.join(file_item.path, "routes.py")
             if os.path.isfile(routes_path):
-                module_path = f"bps.{file_item.name}.routes"
+                module_path = f"blueprints.{file_item.name}.routes"
                 module = importlib.import_module(module_path)
 
                 for attr in dir(module):
