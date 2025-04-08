@@ -54,7 +54,8 @@ def blog_post(slug):
             "first_commit": {
                 "hash": lines[-1].split()[0],
                 "datetime": datetime.fromtimestamp(int(lines[-1].split()[1])).strftime("%d-%m-%Y at %H:%M:%S")
-            }
+            },
+            "multiple_edit": lines[0].split()[0] != lines[-1].split()[0]
         }
     except (ValueError, IndexError):
         post_info = {
@@ -76,8 +77,6 @@ def blog_post(slug):
     return render_template("post.html", content = text, **post_data, **post_info)
 
 
-
-# Function to generate an RSS feed
 def generate_rss_feed():
     feed = FeedGenerator()
     feed.title("Gijs6 - Blog")
@@ -114,9 +113,10 @@ def generate_rss_feed():
         entry.pubDate(date)
         entry.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")
 
-    return feed.rss_str()
+    return feed
 
 @blog_bp.route("/rss.xml")
 def rss():
-    rss_feed = generate_rss_feed()
+    feed = generate_rss_feed()
+    rss_feed = feed.rss_str()
     return Response(rss_feed, mimetype="application/xml")
