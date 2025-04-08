@@ -1,5 +1,6 @@
 .idea/
 .venv/
+.venv1/
 
 .obsidian/
 __pycache__/
