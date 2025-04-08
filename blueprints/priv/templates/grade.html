@@ -22,12 +22,12 @@
         </div>
         <div class="onderrij">
             <div class="date-block">
-                <h2 id="datetimekop">Toegevoegd op</h2>
-                <h3 id="date-timeAB">{{ date_timeA }} om {{ date_timeB }}</h3>
+                <h2 id="datetimekop">Toegevoegd</h2>
+                <h3 id="date-timeAB">{{ invoerdatumtijd }}</h3>
             </div>
             <div class="average-block">
                 <h3 id="infotekst">Nieuw rapportcijfer voor <span id="vakbenadruk">{{ subject5 }}</span></h3>
-                <h2 id="average">{{ average }}</h2>
+                <h2 id="average">{{ current_grade }}</h2>
             </div>
         </div>
         <audio id="end-sound" src="{{ url_for('priv_bp.static', filename='end.mp3') }}"></audio>
