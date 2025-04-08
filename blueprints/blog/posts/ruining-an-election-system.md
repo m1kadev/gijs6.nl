@@ -1,5 +1,5 @@
 ---
-title: Ruining a working election system
+title: Ruining an election system
 ---
 
 # The Dutch Government is ruining its election system
