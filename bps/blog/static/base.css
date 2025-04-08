@@ -113,3 +113,18 @@ i {
 strong {
     font-weight: 800;
 }
+
+blockquote {
+    margin: 0;
+    padding: 0 1em;
+    opacity: .8;
+    border-left: .25em solid var(--blue);
+}
+
+code {
+    font-family: monospace;
+    padding-inline: .3em;
+    background-color: #777b805c;
+    border-radius: 6px;
+}
+
