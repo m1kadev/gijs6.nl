@@ -2,6 +2,10 @@
     margin-bottom: 60px;
 }
 
+.codebox:last-child {
+    margin: 0;
+}
+
 .codebox h2 {
     font-size: 1.2em;
     margin-bottom: 10px;

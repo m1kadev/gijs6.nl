@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
 :root {
     --black: #0f212e;
@@ -32,10 +31,10 @@
 
 body {
     background-color: var(--back);
-    height: 100vh;
+    height: fit-content;
     margin: 0;
     color: var(--front);
-    font-family: "Montserrat", sans-serif;
+    font-family: "Source Code Pro", sans-serif;
     padding: 25px;
     display: flex;
     flex-direction: column;
@@ -46,7 +45,8 @@ body {
 a {
     text-decoration-color: #888;
     color: inherit;
-    font-weight: bold;
+    font-weight: 800;
+    text-decoration: navajowhite;
 }
 
 a:hover {
@@ -60,7 +60,7 @@ header {
     align-content: center;
     justify-content: space-between;
     align-items: center;
-    gap: 5vw;
+    gap: 3em;
 }
 
 #menu {
@@ -70,8 +70,9 @@ header {
     align-content: center;
     align-items: center;
     flex-grow: 1;
-    gap: 2vw;
+    gap: 1em;
     flex-wrap: wrap;
+    font-size: .9em;
 }
 
 .menu-item {
@@ -85,7 +86,6 @@ header {
     border-bottom: 3px #00000000 solid;
     padding: 10px;
     flex-grow: 1;
-    transition: 300ms border ease;
 }
 
 
@@ -110,12 +110,16 @@ header {
 
 
 main {
+    padding: 40px 0;
     margin: 40px 0;
+    border-style: dashed;
+    border-width: 2px 0px;
+    border-color: #aaa;
 }
 
 #pagetitle {
     margin: auto;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .annotation {
@@ -130,6 +134,6 @@ footer {
 
 #madeby {
     font-size: 1.2em;;
-    font-weight: bolder;
+    font-weight: 800;
     color: white;
 }
