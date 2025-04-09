@@ -4,17 +4,15 @@
 
 {% set type = "post" %}
 
-{% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('blog_bp.static', filename='post.css') }}">
-{% endblock %}
-
 {% block pagecontent %}
-    <div id="post-info">
-        <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}">{{ first_commit.datetime }}</a></p>
-        {% if multiple_edit %}
-            <p>Last edited on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit.hash }}">{{ latest_commit.datetime }}</a></p>
-        {% endif %}
-    </div>
-    
-    {{ content | safe }}
+    <main id="post">
+        <div id="post-info">
+            <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}">{{ first_commit.datetime }}</a> (UTC)</p>
+            {% if multiple_edit %}
+                <p>Last edited on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit.hash }}">{{ latest_commit.datetime }}</a> (UTC)</p>
+            {% endif %}
+        </div>
+        
+        {{ content | safe }}
+    </main>
 {% endblock %}

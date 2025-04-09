@@ -65,14 +65,14 @@ def generate_html(md_input):
             "url": url,
             "number": reference_number
         })
-        return f"<span class='reference-inline' id='reference-inline-{reference_number}'>[{reference_number}]</span>"
+        return f"<a href='#reference-url-{reference_number}' class='reference-inline' id='reference-inline-{reference_number}'>[{reference_number}]</a>"
 
     md_input = re.sub(pattern, parse_references, md_input)
 
     html_output = commonmark.commonmark(md_input)
 
     if references:
-        return html_output + "<div id='references'><span id='reference-title'>References</span>" + ''.join(f"<span class='reference-item'>[{item['number']}] <a class='reference-url' href='{item['url']}'>{commonmark.commonmark(item['title'])}</a></span>" for item in references) + "</div>"
+        return html_output + "<div id='references'><span id='reference-title'>References</span>" + ''.join(f"<span class='reference-item'>[{item['number']}] <a class='reference-url' id='reference-url-{item['number']}' href='{item['url']}'>{commonmark.commonmark(item['title'])}</a></span>" for item in references) + "</div>"
 
 
     return html_output

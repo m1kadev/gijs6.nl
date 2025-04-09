@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
 :root {
     --front: white;
@@ -18,13 +18,14 @@
 }
 
 body {
-    height: 100vh;
-    margin: 0;
-    font-family: Mulish, sans-serif;
-    padding: 20px;
+    height: fit-content;
+    font-family: "Source Code Pro", monospace;
     background: var(--back);
     color: var(--front);
     font-weight: 400;
+    max-width: 850px;
+    margin: auto;
+    padding: 40px;
 }
 
 header {
@@ -33,7 +34,7 @@ header {
     gap: 30px;
     width: 100%;
     align-items: center;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px dashed #aaa;
     padding-bottom: .5em;
 }
 
@@ -65,7 +66,7 @@ a {
 }
 
 footer {
-    border-top: 1px solid #aaa;
+    border-top: 1px dashed #aaa;
     padding-top: 10px;
 }
 
@@ -153,4 +154,12 @@ code {
 
 .reference-item * {
     margin-block: 0;
+}
+
+#post-info, h1, main#index {
+    font-family: "Source Code Pro", monospace;
+}
+
+main {
+    font-family: sans-serif;
 }
