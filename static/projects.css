@@ -25,6 +25,10 @@
     text-decoration: underline;
 }
 
+.projcontainer a {
+    width: fit-content
+}
+
 .projcontainer a p {
     font-size: .8em;
     font-weight: 500;

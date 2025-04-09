@@ -46,7 +46,6 @@ a {
     text-decoration-color: #888;
     color: inherit;
     font-weight: 800;
-    text-decoration: navajowhite;
 }
 
 a:hover {
@@ -66,32 +65,23 @@ header {
 #menu {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-content: center;
     align-items: center;
-    flex-grow: 1;
     gap: 1em;
     flex-wrap: wrap;
     font-size: .9em;
 }
 
 .menu-item {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
     text-decoration: none;
-    gap: 10px;
-    border-bottom: 3px #00000000 solid;
-    padding: 10px;
-    flex-grow: 1;
+    padding: 5px 10px;
 }
 
-
-.menu-item.active, .menu-item:hover {
-    border-bottom: 3px var(--front) solid;
+.menu-item:hover, .menu-item.active {
+    background: var(--front);
+    color: var(--back);
 }
+
 
 #theme-toggle  {
     display: flex;
@@ -101,20 +91,21 @@ header {
     align-content: center;
     text-decoration: none;
     gap: 10px;
-    padding: 10px;
+    padding: .7em;
     border: none;
     border-radius: 5px;
     background: var(--front);
     color: var(--back);
+    font-size: .7em;
 }
 
 
 main {
     padding: 40px 0;
-    margin: 40px 0;
+    margin: 25px 0;
     border-style: dashed;
     border-width: 2px 0px;
-    border-color: #aaa;
+    border-color: #808080;
 }
 
 #pagetitle {
@@ -135,5 +126,5 @@ footer {
 #madeby {
     font-size: 1.2em;;
     font-weight: 800;
-    color: white;
+    color: var(--front);
 }
