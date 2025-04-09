@@ -26,7 +26,8 @@
 }
 
 .projcontainer a {
-    width: fit-content
+    width: fit-content;
+    text-decoration: none;
 }
 
 .projcontainer a p {
