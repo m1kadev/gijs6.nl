@@ -1,52 +1,56 @@
 #commitfreq {
-    margin: auto;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr;
+    font-size: .7em;
+    overflow: visible;
 }
 
-#commitfreq td {
-    padding: 0.7vw !important;
-    position: relative;
-}
-
-#commitfreq th, .extra-info.weekday {
+.extra-info.week {
     color: #888;
-    font-size: 0.8vw;
-    font-weight: 300;
+    text-align: center;
 }
 
-#commitfreq td.extra-info.weekday {
-    padding: 0 !important;
+.extra-info.week.day {
+    font-size: 1.2em;
+}
+
+.cell {
+    position: relative;
+    aspect-ratio: 1 / 1;
 }
 
 
-#commitfreq td::after {
+.cell::after {
     content: attr(data-message);
-    font-size: 1vw;
-    position: fixed;
+    font-size: .8em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 120px;
+    width: min-content;
     visibility: hidden;
     z-index: 1000;
-    align-items: center;
-    justify-content: center;
     padding: 0.5em;
     background: var(--back);
     color: var(--front);
-    border: 0.1vw solid var(--front);
-    border-radius: 0.75vw;
+    border: .1em solid var(--front);
+    border-radius: 0 1em 1em 1em;
     white-space: pre-line;
 }
 
-
-#commitfreq td:hover::after {
+.cell:hover::after {
     visibility: visible;
 }
 
 #undergraph {
-    font-size: 7px;
+    font-size: .9em;
     color: #888;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    margin-top: 15px;
+    gap: 1em;
+    margin-top: 2em;
 }

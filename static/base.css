@@ -32,13 +32,14 @@
 body {
     background-color: var(--back);
     height: fit-content;
-    margin: 0;
     color: var(--front);
     font-family: "Source Code Pro", sans-serif;
-    padding: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    max-width: 1000px;
+    padding: 25px 40px;
+    margin: auto;
 }
 
 
@@ -66,6 +67,7 @@ header {
 .menu-item {
     text-decoration: none;
     padding: 5px 10px;
+    font-weight: 400;
 }
 
 .menu-item:hover, .menu-item.active {
@@ -73,6 +75,7 @@ header {
     color: var(--back);
     filter: blur(.4px);
     text-shadow: 0.03em 0 0 var(--lightblue);
+    font-weight: 600;
 }
 
 #theme-toggle  {

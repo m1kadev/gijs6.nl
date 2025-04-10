@@ -84,6 +84,8 @@ def home():
 
     with open(os.path.join(BASE_DIR, "data", "homepagegraph", "headers.json"), "r") as file:
         headers = json.load(file)
+    
+    headers = [str(h).zfill(2) for h in headers]
 
     return render_template("home.html", graphdata=graphdata, headers=headers, last_updated=last_updated)
 
@@ -172,7 +174,8 @@ def homepage_graph_api():
             else:
                 return zero_color
 
-        tabledata = [["" for _ in range(52)] for _ in range(7)]
+        tabledata = []
+
         for weekday in range(7):
             for indexweeknumstuff in range(52):
                 weeknumthiscell = headers[indexweeknumstuff]
@@ -200,13 +203,14 @@ def homepage_graph_api():
                 else:
                     message = f"{value} lines changed on {formatted_date}\n\n{repo_list_formatted}"
 
-                tabledata[weekday][indexweeknumstuff] = {
+                tabledata.append({
                     "value": value,
                     "date": thiscelldate.strftime("%d-%m-%Y"),
                     "message": message,
+                    "grid_area": f"{weekday + 2} / {indexweeknumstuff + 2} / {weekday + 3} / {indexweeknumstuff + 3}",
                     "darkcolor": value_to_color(value, "dark"),
                     "lightcolor": value_to_color(value, "light")
-                }
+                })
 
         saved_data = {
             "data": tabledata,
