@@ -13,13 +13,14 @@ main {
 }
 
 #post-info {
+    margin: 2em 0;
     padding: 0 .5em;
     border-left: 2px solid var(--blue);
     font-size: .9em;
 }
 
 #post-info p {
-    margin-block: 2em;
+    margin-block: .25em;
 }
 
 .menu-itemtxt {

@@ -30,9 +30,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    min-width: 120px;
-    width: min-content;
     visibility: hidden;
+    min-width: max-content;
     z-index: 1000;
     padding: 0.5em;
     background: var(--back);

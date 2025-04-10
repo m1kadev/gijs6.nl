@@ -61,7 +61,7 @@ a:has(i) {
 }
 
 a :not(i) {
-    text-decoration: underline;
+    text-decoration: inherit;
 }
 
 i {
