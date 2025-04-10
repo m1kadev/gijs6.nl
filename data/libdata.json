@@ -5,11 +5,6 @@
         "fa_icon_class": "fa-solid fa-camera"
     },
     {
-        "title": "BiNaS pdf",
-        "link": "/binas",
-        "fa_icon_class": "fa-solid fa-file-pdf"
-    },
-    {
         "title": "BiNaS online",
         "link": "https://archive.org/details/BiNaSpdf/mode/1up",
         "fa_icon_class": "fa-solid fa-flask-vial"

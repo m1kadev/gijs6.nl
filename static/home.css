@@ -50,14 +50,3 @@
     gap: 20px;
     margin-top: 15px;
 }
-
-#extra-info-checkbox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-#extra-info-toggle {
-    width: 10px;
-}

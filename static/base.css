@@ -57,15 +57,6 @@ header {
     display: flex;
     flex-direction: row;
     align-content: center;
-    justify-content: space-between;
-    align-items: center;
-    gap: 3em;
-}
-
-#menu {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
     align-items: center;
     gap: 1em;
     flex-wrap: wrap;
@@ -81,30 +72,22 @@ header {
     background: var(--front);
     color: var(--back);
     filter: blur(.4px);
-    text-shadow: 0.05em 0 0 var(--lightblue)
+    text-shadow: 0.03em 0 0 var(--lightblue);
 }
 
-
 #theme-toggle  {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    text-decoration: none;
-    gap: 10px;
     padding: .7em;
     border: none;
-    border-radius: 5px;
     background: var(--front);
     color: var(--back);
     font-size: .7em;
+    font-family: inherit;
+    margin-top: 20px;
 }
-
 
 main {
     padding: 40px 0;
-    margin: 25px 0;
+    margin: 25px 0 35px 0;
     border-style: dashed;
     border-width: 2px 0px;
     border-color: #808080;
@@ -113,6 +96,9 @@ main {
 #pagetitle {
     margin: auto;
     margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
 }
 
 .annotation {
@@ -129,4 +115,19 @@ footer {
     font-size: 1.2em;;
     font-weight: 800;
     color: var(--front);
+}
+
+h1 {
+    font-size: 1.5em;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1em;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1em;
+    font-weight: 400;
 }

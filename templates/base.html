@@ -11,35 +11,30 @@
     </head>
     <body>
         <header>
-            <div id="menu">
-                <a href="/" class="menu-item {% if active_page == 'home' %}active{% endif %}">
-                    <div class="menu-itemtxt">/home</div>
-                </a>
-                <a href="/blog" class="menu-item">
-                    <div class="menu-itemtxt">/blog</div>
-                </a>
-                <a href="/projects" class="menu-item {% if active_page == 'projects' %}active{% endif %}">
-                    <div class="menu-itemtxt">/projects</div>
-                </a>
-                <a href="/lib" class="menu-item {% if active_page == 'lib' %}active{% endif %}">
-                    <div class="menu-itemtxt">/library</div>
-                </a>
-                <a href="/code" class="menu-item {% if active_page == 'code' %}active{% endif %}">
-                    <div class="menu-itemtxt">/code</div>
-                </a>
-                <a href="/colophon" class="menu-item {% if active_page == 'colophon' %}active{% endif %}">
-                    <div class="menu-itemtxt">/colophon</div>
-                </a>
-                <a href="/school" class="menu-item">
-                    <div class="menu-itemtxt">/school</div>
-                </a>
-                <a href="mailto:gijs6@dupunkto.org" class="menu-item">
-                    <div class="menu-itemtxt">/contact</div>
-                </a>
-            </div>
-            <button id="theme-toggle" aria-label="Toggle dark mode">
-                <i class="fa-solid fa-circle-half-stroke"></i>
-            </button>
+            <a href="/" class="menu-item {% if active_page == 'home' %}active{% endif %}">
+                /home
+            </a>
+            <a href="/blog" class="menu-item">
+                /blog
+            </a>
+            <a href="/projects" class="menu-item {% if active_page == 'projects' %}active{% endif %}">
+                /projects
+            </a>
+            <a href="/lib" class="menu-item {% if active_page == 'lib' %}active{% endif %}">
+                /library
+            </a>
+            <a href="/code" class="menu-item {% if active_page == 'code' %}active{% endif %}">
+                /code
+            </a>
+            <a href="/colophon" class="menu-item {% if active_page == 'colophon' %}active{% endif %}">
+                /colophon
+            </a>
+            <a href="/school" class="menu-item">
+                /school
+            </a>
+            <a href="mailto:gijs6@dupunkto.org" class="menu-item">
+                /contact
+            </a>
         </header>
 
         <main>
@@ -55,6 +50,10 @@
             <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
             <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>
             <p>View the <a href="https://github.com/Gijs6/site" target="_blank">source code on GitHub</a></p>
+        
+            <button id="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fa-solid fa-circle-half-stroke"></i> Toggle themes
+            </button>
         </footer>
         <script>
             const toggleButton = document.getElementById("theme-toggle");
