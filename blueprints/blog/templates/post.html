@@ -1,18 +1,29 @@
-{% extends "blogbase.html" %}
+{% extends "base.html" %}
 
-{% block pagetitle %}{{ title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
-{% set type = "post" %}
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('blog_bp.static', filename='blogbase.css') }}">
+{% endblock %}
 
-{% block pagecontent %}
-    <main id="post">
-        <div id="post-info">
-            <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}">{{ first_commit.datetime }}</a> (UTC)</p>
-            {% if multiple_edit %}
-                <p>Last edited on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit.hash }}">{{ latest_commit.datetime }}</a> (UTC)</p>
-            {% endif %}
-        </div>
-        
-        {{ content | safe }}
-    </main>
+{% block content %}
+    <a id="back-to-blog" href="/blog/"><i class="fa-solid fa-arrow-left"></i> Back to all posts</a>
+    
+    <div id="post-info">
+        <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}">{{ first_commit.datetime }}</a> (UTC)</p>
+        {% if multiple_edit %}
+            <p>Last edited on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit.hash }}">{{ latest_commit.datetime }}</a> (UTC)</p>
+        {% endif %}
+    </div>
+    
+    {{ blog_content | safe }}
+    
+    
+{% endblock %}
+
+{% block extra_footer %}
+    <div id="extra-footer">
+        <p><a href="{{ url_for('blog_bp.rss') }}"><i class="fa-solid fa-square-rss"></i><span>RSS feed</span></a></p>
+        <p>Reply by <a href="mailto:gijs6@dupunkto.org">email</a></p>
+    </div>
 {% endblock %}

@@ -1,7 +1,6 @@
 #commitfreq {
     display: grid;
-    grid-auto-columns: 1fr;
-    grid-auto-rows: 1fr;
+    grid-template-columns: auto repeat(52, 1fr);
     font-size: .7em;
     overflow: visible;
 }
@@ -13,6 +12,11 @@
 
 .extra-info.week.day {
     font-size: 1.2em;
+    margin-right: .5em;
+}
+
+.extra-info.week.num {
+    margin-bottom: .5em;
 }
 
 .cell {
@@ -23,7 +27,6 @@
 
 .cell::after {
     content: attr(data-message);
-    font-size: .8em;
     position: absolute;
     top: 50%;
     left: 50%;

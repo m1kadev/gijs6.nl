@@ -30,7 +30,7 @@ for bp, prefix in load_blueprints():
 @app.route("/favicon.ico")
 @app.route("/favicon")
 def favicon():
-    return send_from_directory("static", "favs/dice.ico", mimetype="image/vnd.microsoft.icon")
+    return send_from_directory("static", "favs/new_fav.ico", mimetype="image/vnd.microsoft.icon")
 
 @app.route("/.well-known/security.txt")
 def securitytxt():

@@ -15,17 +15,22 @@
 :root {
     --front: white;
     --back: black;
+
+    --blue: #14a0c4;
 }
 
 [data-theme="light"] {
     --front: black;
     --back: white;
+
+    --blue: #1d5196;
 }
 
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: inherit;
 }
 
 
@@ -42,6 +47,26 @@ body {
     margin: auto;
 }
 
+#logo {
+    margin-right: 1em;
+    font-weight: 900;
+    font-size: 1.2em;
+}
+
+a:has(i) {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    text-decoration: none;
+}
+
+a :not(i) {
+    text-decoration: underline;
+}
+
+i {
+    text-decoration: none;
+}
 
 a {
     text-decoration-color: #888;
@@ -80,12 +105,16 @@ header {
 
 #theme-toggle  {
     padding: .7em;
-    border: none;
+    border: 2px solid var(--front);
+    background: var(--back);
+    color: var(--front);
+    font-size: .7em;
+    margin-top: 20px;
+}
+
+#theme-toggle:hover {
     background: var(--front);
     color: var(--back);
-    font-size: .7em;
-    font-family: inherit;
-    margin-top: 20px;
 }
 
 main {
@@ -97,8 +126,7 @@ main {
 }
 
 #pagetitle {
-    margin: auto;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     gap: .5em;
@@ -115,9 +143,10 @@ footer {
 }
 
 #madeby {
-    font-size: 1.2em;;
+    font-size: 1.3em;;
     font-weight: 800;
     color: var(--front);
+    margin-block-end: 1em;
 }
 
 h1 {
@@ -133,4 +162,15 @@ h2 {
 h3 {
     font-size: 1em;
     font-weight: 400;
+}
+
+ul, ol {
+    padding-inline-start: 1em;
+}
+
+#extra-footer {
+    font-size: 1.1em;;
+    font-weight: 600;
+    color: var(--front);
+    margin-block-end: 1em;
 }

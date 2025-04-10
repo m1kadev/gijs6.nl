@@ -1,15 +1,24 @@
-{% extends "blogbase.html" %}
+{% extends "base.html" %}
 
-{% block pagetitle %}Index{% endblock %}
+{% block title %}Blog{% endblock %}
 
-{% set type = "index" %}
+{% block content %}
+    <div id="pagetitle">
+        <h1>Blog</h1>
+        <h2>Just a collection of my opinions</h2> 
+        <p><a href="{{ url_for('blog_bp.rss') }}"><i class="fa-solid fa-square-rss"></i><span>RSS feed</span></a></p>
+    </div>
 
-{% block pagecontent %}
-    <main id="index">
-        <ul>
-            {% for blogpost in post_list %}
-                <li>{{ blogpost.date }}: <a href="{{ blogpost.url }}">{{ blogpost.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </main>
+    <ul>
+        {% for blogpost in post_list %}
+            <li>{{ blogpost.date }}: <a href="{{ blogpost.url }}">{{ blogpost.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+
+{% block extra_footer %}
+    <div id="extra-footer">
+        <p>Reply by <a href="mailto:gijs6@dupunkto.org">email</a></p>
+    </div>
 {% endblock %}

@@ -117,7 +117,7 @@ def blog_post(slug):
 
     text = generate_html(file_content_clean)
 
-    return render_template("post.html", content = text, **post_data, **post_info)
+    return render_template("post.html", blog_content = text, **post_data, **post_info)
 
 
 def generate_rss_feed():
