@@ -204,8 +204,6 @@ def homepage_graph_api():
                     message = f"{value} lines changed\n on {formatted_date}\n\n{repo_list_formatted}"
 
                 tabledata.append({
-                    "value": value,
-                    "date": thiscelldate.strftime("%d-%m-%Y"),
                     "message": message,
                     "grid_area": f"{weekday + 2} / {indexweeknumstuff + 2} / {weekday + 3} / {indexweeknumstuff + 3}",
                     "darkcolor": value_to_color(value, "dark"),

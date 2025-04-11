@@ -29,7 +29,7 @@
 
 
             {% for cell in graphdata %}
-                <div data-value="{{ cell.value }}" data-date="{{ cell.date }}" data-message="{{ cell.message }}" data-color-dark="{{ cell.darkcolor }}" data-color-light="{{ cell.lightcolor }}" style="grid-area: {{ cell.grid_area }}" class="cell"></div>
+                <div data-message="{{ cell.message }}" style="grid-area: {{ cell.grid_area }}; background: light-dark({{ cell.lightcolor }}, {{ cell.darkcolor }})" class="cell"></div>
             {% endfor %}
         </div>
     </div>
@@ -39,19 +39,4 @@
         <p class="annotation">Last updated {{ last_updated }} UTC.</p>
 
     </div>
-
-    <script>
-        function fixThemes(theme) {
-            var cells = document.querySelectorAll(".cell");
-            cells.forEach(function(cell) {
-                if (theme == "light") {
-                    cell.style.background = cell.getAttribute("data-color-light");
-                } else {
-                    cell.style.background = cell.getAttribute("data-color-dark");
-                }
-            });
-        }
-        var oldTheme = localStorage.getItem("theme") || "dark";
-        fixThemes(oldTheme);
-    </script>
 {% endblock %}
