@@ -1,8 +1,13 @@
+#commitfreqcontainer {
+    position: relative;
+}
+
 #commitfreq {
     display: grid;
     grid-template-columns: auto repeat(52, 1fr);
     font-size: .7em;
-    overflow: visible;
+    overflow-x: scroll;
+    padding-bottom: 1em;
 }
 
 .extra-info.week {
@@ -11,16 +16,15 @@
 }
 
 .extra-info.week.day {
-    font-size: 1.2em;
+    font-size: 1.1em;
     margin-right: .5em;
 }
 
 .extra-info.week.num {
-    margin-bottom: .5em;
+    margin: 0 .1em .5em .1em;
 }
 
 .cell {
-    position: relative;
     aspect-ratio: 1 / 1;
 }
 
@@ -28,8 +32,9 @@
 .cell::after {
     content: attr(data-message);
     position: absolute;
-    top: 50%;
-    left: 50%;
+    text-align: right;
+    top: 110%;
+    right: 0%;
     visibility: hidden;
     min-width: max-content;
     z-index: 1000;
@@ -37,7 +42,7 @@
     background: var(--back);
     color: var(--front);
     border: .1em solid var(--front);
-    border-radius: 0 1em 1em 1em;
+    border-radius: 1em;
     white-space: pre-line;
 }
 

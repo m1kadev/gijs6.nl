@@ -42,7 +42,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-width: 1000px;
+    max-width: 1200px;
     padding: 25px 40px;
     margin: auto;
 }
@@ -60,8 +60,8 @@ a:has(i) {
     text-decoration: none;
 }
 
-a :not(i) {
-    text-decoration: inherit;
+a:has(i) :not(i) {
+    text-decoration: underline;
 }
 
 i {
@@ -91,8 +91,9 @@ header {
 
 .menu-item {
     text-decoration: none;
-    padding: 5px 10px;
+    padding: 5px 0;
     font-weight: 400;
+    transition: 100ms padding ease;
 }
 
 .menu-item:hover, .menu-item.active {
@@ -101,11 +102,12 @@ header {
     filter: blur(.4px);
     text-shadow: 0.03em 0 0 var(--lightblue);
     font-weight: 600;
+    padding: 5px 10px;
 }
 
 #theme-toggle  {
     padding: .7em;
-    border: 2px solid var(--front);
+    border: 1px solid var(--front);
     background: var(--back);
     color: var(--front);
     font-size: .7em;
@@ -119,7 +121,7 @@ header {
 
 main {
     padding: 40px 0;
-    margin: 25px 0 35px 0;
+    margin: 25px 0;
     border-style: dashed;
     border-width: 2px 0px;
     border-color: #808080;

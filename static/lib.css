@@ -23,3 +23,7 @@
     background: var(--front);
     color: var(--back);
 }
+
+.libitemtxt {
+    text-decoration: none;
+}

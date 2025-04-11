@@ -197,11 +197,11 @@ def homepage_graph_api():
                 formatted_date = thiscelldate.strftime("%d-%m-%Y")
 
                 if value == 0:
-                    message = f"No lines changed on {formatted_date}"
+                    message = f"No lines changed\non {formatted_date}"
                 elif value == 1:
-                    message = f"1 line changed on {formatted_date}\n\n{repo_list_formatted}"
+                    message = f"1 line changed\n on {formatted_date}\n\n{repo_list_formatted}"
                 else:
-                    message = f"{value} lines changed on {formatted_date}\n\n{repo_list_formatted}"
+                    message = f"{value} lines changed\n on {formatted_date}\n\n{repo_list_formatted}"
 
                 tabledata.append({
                     "value": value,

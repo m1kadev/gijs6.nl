@@ -13,24 +13,27 @@
         <span>Almost all the code I write is open-source, so take a look at my <a href="https://github.com/Gijs6" target="_blank">GitHub profile</a> for some of my projects</span>
     </div>
 
-    <div id="commitfreq">
-        {% for headeritem in headers %}
-            <div class="extra-info week num" style="grid-area: 1 / {{ loop.index + 1 }} / 2 / {{ loop.index + 2 }}">{{ headeritem }}</div>
-        {% endfor %}
+    <div id="commitfreqcontainer">
+        <div id="commitfreq">
+            {% for headeritem in headers %}
+                <div class="extra-info week num" style="grid-area: 1 / {{ loop.index + 1 }} / 2 / {{ loop.index + 2 }}">{{ headeritem }}</div>
+            {% endfor %}
 
-        <div class="extra-info week day" style="grid-area: 2 / 1 / 3 / 2">Mon</div>
-        <div class="extra-info week day" style="grid-area: 3 / 1 / 4 / 2">Tue</div>
-        <div class="extra-info week day" style="grid-area: 4 / 1 / 5 / 2">Wed</div>
-        <div class="extra-info week day" style="grid-area: 5 / 1 / 6 / 2">Thu</div>
-        <div class="extra-info week day" style="grid-area: 6 / 1 / 7 / 2">Fri</div>
-        <div class="extra-info week day" style="grid-area: 7 / 1 / 8 / 2">Sat</div>
-        <div class="extra-info week day" style="grid-area: 8 / 1 / 9 / 2">Sun</div>
+            <div class="extra-info week day" style="grid-area: 2 / 1 / 3 / 2">Mon</div>
+            <div class="extra-info week day" style="grid-area: 3 / 1 / 4 / 2">Tue</div>
+            <div class="extra-info week day" style="grid-area: 4 / 1 / 5 / 2">Wed</div>
+            <div class="extra-info week day" style="grid-area: 5 / 1 / 6 / 2">Thu</div>
+            <div class="extra-info week day" style="grid-area: 6 / 1 / 7 / 2">Fri</div>
+            <div class="extra-info week day" style="grid-area: 7 / 1 / 8 / 2">Sat</div>
+            <div class="extra-info week day" style="grid-area: 8 / 1 / 9 / 2">Sun</div>
 
 
-        {% for cell in graphdata %}
-            <div data-value="{{ cell.value }}" data-date="{{ cell.date }}" data-message="{{ cell.message }}" data-color-dark="{{ cell.darkcolor }}" data-color-light="{{ cell.lightcolor }}" style="grid-area: {{ cell.grid_area }}" class="cell"></div>
-        {% endfor %}
+            {% for cell in graphdata %}
+                <div data-value="{{ cell.value }}" data-date="{{ cell.date }}" data-message="{{ cell.message }}" data-color-dark="{{ cell.darkcolor }}" data-color-light="{{ cell.lightcolor }}" style="grid-area: {{ cell.grid_area }}" class="cell"></div>
+            {% endfor %}
+        </div>
     </div>
+
     <div id="undergraph">
         <p class="annotation">The heatmap above shows the amount of lines changed (lines added + lines deleted) in all Git commits I made in <a href="https://github.com/Gijs6?tab=repositories" target="_blank">all of my own repo's</a> and in all the repo's from <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>.</p>
         <p class="annotation">Last updated {{ last_updated }} UTC.</p>
@@ -51,5 +54,4 @@
         var oldTheme = localStorage.getItem("theme") || "dark";
         fixThemes(oldTheme);
     </script>
-
 {% endblock %}
