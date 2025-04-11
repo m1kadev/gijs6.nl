@@ -5,6 +5,10 @@ kodo_bp = Blueprint("kodo_bp", __name__)
 
 BASE_DIR = os.path.dirname(__file__)
 
+
+# This is the API to store the kodo (https://git.dupunkto.org/~dupunkto/kodo) highscore
+
+
 @kodo_bp.route("/get")
 def kodo_get():
     with open(os.path.join(BASE_DIR, "highscore.txt"), "r") as f:

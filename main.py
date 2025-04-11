@@ -22,8 +22,10 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # Blueprints
 
 for bp, prefix in load_blueprints():
-    app.register_blueprint(bp, url_prefix=prefix)
-
+    try:
+        app.register_blueprint(bp, url_prefix=prefix)
+    except Exception as e:
+        print(f"An error occured while trying to load {bp} as a blueprint: {e}")
 
 # Files
 
@@ -48,8 +50,12 @@ def robots():
 
 
 def get_commit_and_deploy_date():
-    with open(os.path.join(BASE_DIR, "data", "last_deploy.txt"), "r") as f:
-        latest_deploy_date = f.read().strip()
+    try:
+        with open(os.path.join(BASE_DIR, "data", "last_deploy.txt"), "r") as f:
+            latest_deploy_date = f.read().strip()
+    except FileNotFoundError:
+        latest_deploy_date = "unknown"
+        print("No latest deploy date found.")
 
     latest_commit_hash = subprocess.check_output(["git", "log", "-1", "--pretty=format:%h"], cwd=BASE_DIR).strip().decode()
     latest_commit_hash_long = subprocess.check_output(["git", "log", "-1", "--pretty=format:%H"], cwd=BASE_DIR).strip().decode()
@@ -76,14 +82,23 @@ def inject_comdepdata():
 
 @app.route("/")
 def home():
-    with open(os.path.join(BASE_DIR, "data", "homepagegraph", "graphdata.json"), "r") as file:
-        graphdatafull = json.load(file)
+    try:
+        with open(os.path.join(BASE_DIR, "data", "homepagegraph", "graphdata.json"), "r") as file:
+            graphdatafull = json.load(file)
+    except FileNotFoundError:
+        graphdatafull = {"data":[], "last_updated": ""}
+        print("No graphdatafull found.")
 
     graphdata = graphdatafull["data"]
     last_updated = graphdatafull["last_updated"]
 
-    with open(os.path.join(BASE_DIR, "data", "homepagegraph", "headers.json"), "r") as file:
-        headers = json.load(file)
+    try:
+        with open(os.path.join(BASE_DIR, "data", "homepagegraph", "headers.json"), "r") as file:
+            headers = json.load(file)
+    except FileNotFoundError:
+        headers = []
+        print("No headers found.")
+
     
     headers = [str(h).zfill(2) for h in headers]
 
@@ -110,118 +125,123 @@ def projects():
 def colofon():
     return render_template("colophon.html")
 
-
-with open(os.path.join(BASE_DIR, "auth.txt"), "r") as f:
-    AUTH_HASH = f.read().strip()
+try:
+    with open(os.path.join(BASE_DIR, "auth.txt"), "r") as f:
+        AUTH_HASH = f.read().strip()
+except Exception:
+    AUTH_HASH = None
+    print("No auth hash found.")
 
 
 @app.route("/homegraphupdate", methods=["POST"])
 def homepage_graph_api():
-    if not check_password_hash(AUTH_HASH, request.headers.get("auth")):
-        return "No valid auth", 401
-    else:
-        try:
-            data = request.get_json()
-            if not data:
-                return "Invalid JSON data", 405
-        except Exception as e:
-            app.logger.info(f"Error reading JSON: {e}")
-            return f"Error reading JSON: {e}", 404
+    if AUTH_HASH:
+        if not check_password_hash(AUTH_HASH, request.headers.get("auth")):
+            return "No valid auth", 401
+        else:
+            try:
+                data = request.get_json()
+                if not data:
+                    return "Invalid JSON data", 405
+            except Exception as e:
+                app.logger.info(f"Error reading JSON: {e}")
+                return f"Error reading JSON: {e}", 404
 
-        headers = ["" for _ in range(52)]
-        weeknumindex = defaultdict(int)
-        currentweeknum = datetime.now().isocalendar()[1]
-        weeknumindex[currentweeknum] = 0
-        weekprocess = currentweeknum + 1
-        weekprocessheaders = currentweeknum + 1
+            headers = ["" for _ in range(52)]
+            weeknumindex = defaultdict(int)
+            currentweeknum = datetime.now().isocalendar()[1]
+            weeknumindex[currentweeknum] = 0
+            weekprocess = currentweeknum + 1
+            weekprocessheaders = currentweeknum + 1
 
-        for i in range(1, 53):
-            weeknumindex[weekprocess] = i
-            headers[i - 1] = weekprocessheaders
-            weekprocess += 1
-            weekprocessheaders += 1
-            if weekprocess > 51:
-                weekprocess = 0
-            if weekprocessheaders > 52:
-                weekprocessheaders = 1
+            for i in range(1, 53):
+                weeknumindex[weekprocess] = i
+                headers[i - 1] = weekprocessheaders
+                weekprocess += 1
+                weekprocessheaders += 1
+                if weekprocess > 51:
+                    weekprocess = 0
+                if weekprocessheaders > 52:
+                    weekprocessheaders = 1
 
 
-        min_value = 0
-        max_value = int(max(item["value"] for item in data.values()))
+            min_value = 0
+            max_value = int(max(item["value"] for item in data.values()))
 
-        def value_to_color(value, theme):
-            max_color="#06C749"
-            if theme == "light":
-                min_color = "#ECFAF1"
-                zero_color = "#FFFFFF"
-            else:
-                min_color = "#000E05"
-                zero_color = "#000000"
-            if value and value != 0:
-                value = int(value)
-                normalized_value = max(0, min(1, (value - min_value) / (max_value - min_value)))
-
-                min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
-                max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
-
-                interpolated_color = [
-                    int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value)
-                    for i in range(3)
-                ]
-
-                hex_color = "#" + "".join(f"{x:02X}" for x in interpolated_color)
-                return hex_color
-            else:
-                return zero_color
-
-        tabledata = []
-
-        for weekday in range(7):
-            for indexweeknumstuff in range(52):
-                weeknumthiscell = headers[indexweeknumstuff]
-                if weeknumthiscell > datetime.now().isocalendar()[1]:
-                    year = datetime.now().year - 1
+            def value_to_color(value, theme):
+                max_color="#06C749"
+                if theme == "light":
+                    min_color = "#ECFAF1"
+                    zero_color = "#FFFFFF"
                 else:
-                    year = datetime.now().year
-                first_day = date(year, 1, 1) + timedelta(weeks=weeknumthiscell-1)
-                thiscelldate = first_day - timedelta(days=first_day.weekday()) + timedelta(days=weekday)
+                    min_color = "#000E05"
+                    zero_color = "#000000"
+                if value and value != 0:
+                    value = int(value)
+                    normalized_value = max(0, min(1, (value - min_value) / (max_value - min_value)))
 
-                celldata = data.get(datetime.strftime(thiscelldate, "%Y-%m-%d"), {"value": 0, "repos": {}})
-                value = celldata.get("value", 0)
-                repo_list = celldata.get("repos", {})
+                    min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
+                    max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
 
-                repo_list_sorted = sorted(repo_list.items(), key=lambda x: x[1], reverse=True)
+                    interpolated_color = [
+                        int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value)
+                        for i in range(3)
+                    ]
 
-                repo_list_formatted = "\n".join(f"{key}: {value}" for key, value in repo_list_sorted)
-
-                formatted_date = thiscelldate.strftime("%d-%m-%Y")
-
-                if value == 0:
-                    message = f"No lines changed\non {formatted_date}"
-                elif value == 1:
-                    message = f"1 line changed\n on {formatted_date}\n\n{repo_list_formatted}"
+                    hex_color = "#" + "".join(f"{x:02X}" for x in interpolated_color)
+                    return hex_color
                 else:
-                    message = f"{value} lines changed\n on {formatted_date}\n\n{repo_list_formatted}"
+                    return zero_color
 
-                tabledata.append({
-                    "message": message,
-                    "grid_area": f"{weekday + 2} / {indexweeknumstuff + 2} / {weekday + 3} / {indexweeknumstuff + 3}",
-                    "darkcolor": value_to_color(value, "dark"),
-                    "lightcolor": value_to_color(value, "light")
-                })
+            tabledata = []
 
-        saved_data = {
-            "data": tabledata,
-            "last_updated": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-        }
+            for weekday in range(7):
+                for indexweeknumstuff in range(52):
+                    weeknumthiscell = headers[indexweeknumstuff]
+                    if weeknumthiscell > datetime.now().isocalendar()[1]:
+                        year = datetime.now().year - 1
+                    else:
+                        year = datetime.now().year
+                    first_day = date(year, 1, 1) + timedelta(weeks=weeknumthiscell-1)
+                    thiscelldate = first_day - timedelta(days=first_day.weekday()) + timedelta(days=weekday)
 
-        with open(os.path.join(BASE_DIR, "data", "homepagegraph", "graphdata.json"), "w") as f:
-            json.dump(saved_data, f, indent=4)
+                    celldata = data.get(datetime.strftime(thiscelldate, "%Y-%m-%d"), {"value": 0, "repos": {}})
+                    value = celldata.get("value", 0)
+                    repo_list = celldata.get("repos", {})
 
-        with open(os.path.join(BASE_DIR, "data", "homepagegraph", "headers.json"), "w") as f:
-            json.dump(headers, f, indent=4)
+                    repo_list_sorted = sorted(repo_list.items(), key=lambda x: x[1], reverse=True)
 
-        return "Lekker bezig", 201
+                    repo_list_formatted = "\n".join(f"{key}: {value}" for key, value in repo_list_sorted)
+
+                    formatted_date = thiscelldate.strftime("%d-%m-%Y")
+
+                    if value == 0:
+                        message = f"No lines changed\non {formatted_date}"
+                    elif value == 1:
+                        message = f"1 line changed\n on {formatted_date}\n\n{repo_list_formatted}"
+                    else:
+                        message = f"{value} lines changed\n on {formatted_date}\n\n{repo_list_formatted}"
+
+                    tabledata.append({
+                        "message": message,
+                        "grid_area": f"{weekday + 2} / {indexweeknumstuff + 2} / {weekday + 3} / {indexweeknumstuff + 3}",
+                        "darkcolor": value_to_color(value, "dark"),
+                        "lightcolor": value_to_color(value, "light")
+                    })
+
+            saved_data = {
+                "data": tabledata,
+                "last_updated": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            }
+
+            with open(os.path.join(BASE_DIR, "data", "homepagegraph", "graphdata.json"), "w") as f:
+                json.dump(saved_data, f, indent=4)
+
+            with open(os.path.join(BASE_DIR, "data", "homepagegraph", "headers.json"), "w") as f:
+                json.dump(headers, f, indent=4)
+
+            return "Lekker bezig", 201
+    return "No valid auth", 401
 
 
 

@@ -1,5 +1,8 @@
 .codebox {
     margin-bottom: 60px;
+    border: solid var(--front);
+    padding: 10px;
+    border-width: 1px 0px;
 }
 
 .codebox:last-child {
@@ -8,5 +11,11 @@
 
 .codebox h2 {
     font-size: 1.2em;
-    margin-bottom: 10px;
+    margin-bottom: 1em;
+    font-weight: 800;
+}
+
+code {
+    overflow-wrap: normal;
+    white-space: pre-line;
 }

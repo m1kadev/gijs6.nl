@@ -9,14 +9,9 @@
 }
 
 .libitem {
-    display: flex;
     flex-direction: row-reverse;
-    align-items: center;
-    gap: 5px;
     border: 1px var(--front) solid;
     padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
 }
 
 .libitem:hover {
