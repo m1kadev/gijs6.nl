@@ -40,10 +40,14 @@
             <button id="theme-toggle" aria-label="Toggle dark mode">
                 <i class="fa-solid fa-circle-half-stroke"></i> Toggle themes
             </button>
+            <button id="theme-reset" aria-label="Toggle dark mode">
+                <i class="fa-solid fa-rotate-right"></i> Reset themes
+            </button>
         </footer>
         <script>
             const toggleButton = document.getElementById("theme-toggle");
-            const currentTheme = localStorage.getItem("theme") || "dark";
+            const resetButton = document.getElementById("theme-reset");
+            const currentTheme = localStorage.getItem("theme") || "unset";
             document.documentElement.setAttribute("data-theme", currentTheme);
 
             toggleButton.addEventListener("click", () => {
@@ -51,6 +55,11 @@
                 const newTheme = theme === "dark" ? "light" : "dark";
                 document.documentElement.setAttribute("data-theme", newTheme);
                 localStorage.setItem("theme", newTheme);
+            });
+
+            resetButton.addEventListener("click", () => {
+                document.documentElement.setAttribute("data-theme", "unset");
+                localStorage.setItem("theme", "unset");
             });
         </script>
     </body>
