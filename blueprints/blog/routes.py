@@ -49,31 +49,34 @@ def blog_index():
 def generate_html(md_input):
     pattern = r"%ref%(.*?)%ref%"
 
-    references = []
+    refs = []
 
-    reference_number = 0
+    ref_number = 0
 
-    def parse_references(match):
-        nonlocal reference_number
+    def parse_refs(match):
+        nonlocal ref_number
         content = match.group(1)
         content_split = content.split("-#-")
         title = content_split[0]
         url = content_split[1]
-        reference_number += 1
-        references.append({
-            "title": title,
-            "url": url,
-            "number": reference_number
-        })
-        return f"<a href='#reference-url-{reference_number}' class='reference-inline' id='reference-inline-{reference_number}'>[{reference_number}]</a>"
+        ref_number += 1
+        refs.append({"title": title, "url": url, "number": ref_number})
+        return f"<a class='ref-inline' href='#ref-url-{ref_number}'>[{ref_number}]</a>"
 
-    md_input = re.sub(pattern, parse_references, md_input)
+    md_input = re.sub(pattern, parse_refs, md_input)
 
     html_output = commonmark.commonmark(md_input)
 
-    if references:
-        return html_output + "<div id='references'><span id='reference-title'>References</span>" + ''.join(f"<span class='reference-item'>[{item['number']}] <a class='reference-url' id='reference-url-{item['number']}' href='{item['url']}'>{commonmark.commonmark(item['title'])}</a></span>" for item in references) + "</div>"
-
+    if refs:
+        return (
+            html_output
+            + "<div id='refs'><span>References</span>"
+            + "".join(
+                f"<span class='ref-item'>[{item['number']}] <a id='ref-url-{item['number']}' href='{item['url']}'>{commonmark.commonmark(item['title'])}</a></span>"
+                for item in refs
+            )
+            + "</div>"
+        )
 
     return html_output
 
@@ -171,7 +174,7 @@ def generate_rss_feed():
     for post in posts_data:
         entry = feed.add_entry()
         entry.title(post["title"])
-        entry.link(href=f"http://gijs6.nl/blog/{post['slug']}")
+        entry.link(href=f"https://gijs6.nl/blog/{post['slug']}")
         entry.description(post["description"])
         entry.pubDate(post["date"])
         entry.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")
