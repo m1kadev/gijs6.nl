@@ -4,9 +4,9 @@ const puppeteer = require('puppeteer');
 
 const websites = [
     'https://gijs6.nl',
-    'https://ckv.gijs6.nl',
     'https://school.gijs6.nl',
-    'https://gijs6.nl/blog'
+    'https://gijs6.nl/blog',
+    'https://ckv.gijs6.nl',
 ];
 
 async function takeScreenshot(url) {

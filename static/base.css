@@ -73,17 +73,22 @@ header {
     margin-right: 1em;
     font-weight: 900;
     font-size: 1.2em;
+    transition: font-weight 300ms ease-in-out;
 }
 
 #logo sup {
     font-size: unset;
 }
 
+#logo:hover {
+    font-weight: 300
+}
+
 .menu-item {
     text-decoration: none;
     padding: 5px 0;
     font-weight: 400;
-    text-shadow: 1px 1px 1px transparent;
+    transition: 100ms padding ease;
 }
 
 .menu-item:hover, .menu-item.active {
@@ -177,12 +182,12 @@ a:hover {
 }
 
 h1 {
-    font-size: 1.5em;
+    font-size: 1.7em;
     font-weight: 800;
 }
 
 h2 {
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: 600;
 }
 

@@ -81,12 +81,47 @@
     },
     {
         "title": "Excitable cells",
-        "link": "https://jenevoldsen.com/posts/excitable-cells/",
+        "link": "https://jenevoldsen.com/posts/excitable-cells",
         "fa_icon_class": "fa-solid fa-heart-pulse"
     },
     {
         "title": "revealgo",
         "link": "https://github.com/yusukebe/revealgo",
         "fa_icon_class": "fa-solid fa-person-chalkboard"
+    },
+    {
+        "title": "Opte Project",
+        "link": "https://www.opte.org",
+        "fa_icon_class": "fa-solid fa-network-wired"
+    },
+    {
+        "title": "715-999-7483",
+        "link": "https://715-999-7483.com",
+        "fa_icon_class": "fa-solid fa-phone"
+    },
+    {
+        "title": "Kern Type",
+        "link": "https://type.method.ac",
+        "fa_icon_class": "fa-solid fa-font"
+    },
+    {
+        "title": "Typewriter simulator (from Shift Happens)",
+        "link": "https://shifthappens.site/typewriter",
+        "fa_icon_class": "fa-solid fa-keyboard"
+    },
+    {
+        "title": "Ancient Earth Globe",
+        "link": "https://dinosaurpictures.org/ancient-earth",
+        "fa_icon_class": "fa-solid fa-earth-europe"
+    },
+    {
+        "title": "WindowSwap",
+        "link": "https://www.window-swap.com/Window",
+        "fa_icon_class": "fa-solid fa-house-chimney-window"
+    },
+    {
+        "title": "Scan of the Month",
+        "link": "https://www.scanofthemonth.com",
+        "fa_icon_class": "fa-solid fa-x-ray"
     }
 ]

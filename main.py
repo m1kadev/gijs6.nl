@@ -171,10 +171,10 @@ def homepage_graph_api():
             def value_to_color(value, theme):
                 max_color="#06C749"
                 if theme == "light":
-                    min_color = "#ECFAF1"
+                    min_color = "#E8FFE8"
                     zero_color = "#FFFFFF"
                 else:
-                    min_color = "#000E05"
+                    min_color = "#001700"
                     zero_color = "#000000"
                 if value and value != 0:
                     value = int(value)
