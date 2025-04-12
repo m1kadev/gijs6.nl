@@ -1,7 +1,6 @@
 // Selenium in py didn't work, but puppeteer did, so here is some terrible JS :D
 
 const puppeteer = require('puppeteer');
-const fs = require('fs');
 
 const websites = [
     'https://gijs6.nl',
@@ -16,7 +15,7 @@ async function takeScreenshot(url) {
 
     await page.setViewport({ width: 1280, height: 720 });
 
-    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.goto(url, { waitUntil: 'networkidle0' });
 
     const filename = url.replace(/https?:\/\//, '').replace(/\//g, '_') + '.png';
 
@@ -24,10 +23,6 @@ async function takeScreenshot(url) {
     console.log(`Screenshot saved for ${url} as ${filename}`);
 
     await browser.close();
-}
-
-if (!fs.existsSync('./static/projectimages')) {
-    fs.mkdirSync('./static/projectimages');
 }
 
 (async () => {

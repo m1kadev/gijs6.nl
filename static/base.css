@@ -83,7 +83,7 @@ header {
     text-decoration: none;
     padding: 5px 0;
     font-weight: 400;
-    transition: 100ms padding ease;
+    text-shadow: 1px 1px 1px transparent;
 }
 
 .menu-item:hover, .menu-item.active {
@@ -126,9 +126,11 @@ footer {
 
 .theme-toggle  {
     padding: .7em;
-    border: 1px solid transparent;
+    border: 1px solid var(--front);
     font-size: .7em;
     margin-top: 20px;
+    background: var(--back);
+    color: var(--front);
 }
 
 .theme-toggle:hover {
@@ -136,30 +138,17 @@ footer {
     font-weight: 800;
 }
 
-#theme-dark {
-    background: black;
-    color: white;
+[data-theme="light"] #theme-light {
+    border-color: var(--blue);
 }
 
-#theme-light {
-    background: white;
-    color: black;
+[data-theme="dark"] #theme-dark {
+    border-color: var(--blue);
 }
 
-@media (prefers-color-scheme: light) {
-    #theme-system {
-        background: white;
-        color: black;
-    }
+[data-theme="system"] #theme-system {
+    border-color: var(--blue);
 }
-  
-@media (prefers-color-scheme: dark) {
-    #theme-system {
-        background: black;
-        color: white;
-    }
-}
-
 
 
 a:has(i) {
