@@ -19,18 +19,15 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: fit-content;
+    text-decoration: none;
 }
 
 .projname {
     text-decoration: underline;
 }
 
-.projcontainer a {
-    width: fit-content;
-    text-decoration: none;
-}
-
-.projcontainer a p {
+.projcontainer p {
     font-size: .8em;
     font-weight: 500;
 }

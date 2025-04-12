@@ -9,3 +9,8 @@ dekstop.ini
 **/desktop.ini
 
 auth.txt
+
+node_modules/
+
+package-lock.json
+package.json
