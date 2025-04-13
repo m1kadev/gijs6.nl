@@ -15,7 +15,8 @@ locale.setlocale(locale.LC_TIME, "nl_NL")
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.permanent_session_lifetime = timedelta(days=365)
+app.config['SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
