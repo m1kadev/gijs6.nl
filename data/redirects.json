@@ -2,5 +2,5 @@
     "school": "https://school.gijs6.nl",
     "contact": "mailto:gijs6@dupunkto.org",
     "home": "/",
-    "check/grade": "priv/grade"
+    "check/cijfer": "/priv/grade"
 }
