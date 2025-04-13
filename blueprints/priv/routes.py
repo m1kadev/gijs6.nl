@@ -21,8 +21,6 @@ def login_required(func):
             nextparam = None
             if "grade" in request.path:
                 nextparam = url_for("priv_bp.grade_check")
-            elif "homework" in request.path:
-                nextparam = url_for("priv_bp.homework_check")
             else:
                 nextparam = request.path 
             return redirect(url_for("priv_bp.login", next=nextparam))
@@ -64,14 +62,6 @@ def read_data_file(file_name):
 def grade_check():
     data = read_data_file("grade.json")
     return render_template("grade.html", **data)
-
-
-@priv_bp.route("/homework")
-@login_required
-def homework_check():
-    homework_data = read_data_file("homework.json")
-
-    return render_template("homework.html", homework=homework_data)
 
 ical_data = read_data_file("ical.json")
 first_ical_path = "/" + ical_data["path_first"]

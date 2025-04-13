@@ -16,7 +16,7 @@
     --front: light-dark(black, white);
     --back: light-dark(white, black);
 
-    --blue: light-dark(#1f72ad, #14a0c4)
+    --blue: light-dark(#4988b5, #14a0c4);
 }
 
 @media (prefers-color-scheme: light) {
@@ -172,13 +172,13 @@ i {
 }
 
 a {
-    text-decoration-color: #888;
     color: inherit;
     font-weight: 800;
+    text-decoration: #888 underline 1px;
 }
 
 a:hover {
-    text-decoration-color: var(--lightblue);
+    text-decoration-color: var(--blue);
 }
 
 h1 {
