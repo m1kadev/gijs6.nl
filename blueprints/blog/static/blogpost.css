@@ -4,7 +4,7 @@ main * {
 }
 
 main a {
-  color: var(--blue);
+  color: var(--lightblue);
 }
 
 main {
@@ -15,7 +15,7 @@ main {
 #post-info {
   margin: 2em 0;
   padding: 0 0.5em;
-  border-left: 2px solid var(--blue);
+  border-left: 2px solid var(--lightblue);
   font-size: 0.9em;
 }
 
@@ -35,7 +35,7 @@ main blockquote {
   margin: 0;
   padding: 0 1em;
   opacity: 0.8;
-  border-left: 0.25em solid var(--blue);
+  border-left: 0.25em solid var(--lightblue);
 }
 
 main code {
@@ -85,5 +85,5 @@ main#index {
 }
 
 #back-to-blog i {
-  color: var(--blue);
+  color: var(--lightblue);
 }

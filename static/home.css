@@ -28,7 +28,6 @@
     aspect-ratio: 1 / 1;
 }
 
-
 .cell::after {
     content: attr(data-message);
     position: absolute;
@@ -50,7 +49,7 @@
     display: unset;
 }
 
-#undergraph {
+#under-the-graph {
     font-size: .9em;
     color: #888;
     display: flex;

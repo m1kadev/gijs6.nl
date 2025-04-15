@@ -13,7 +13,7 @@
                 const lightButton = document.getElementById("theme-light");
                 const systemButton = document.getElementById("theme-system");
         
-                const currentTheme = localStorage.getItem("theme") || "system";
+                const currentTheme = localStorage.getItem("theme") || "system"; // If there is a theme saved in the local storage, use it, else just use the system theme
                 document.documentElement.setAttribute("data-theme", currentTheme);
         
                 darkButton.addEventListener("click", () => {
@@ -48,17 +48,17 @@
             <a href="mailto:gijs6@dupunkto.org" class="menu-item">/contact</a>
         </header>
 
+
         <main>
             {% block content %}{% endblock %}
         </main>
-
 
 
         <footer>
             <p id="madeby">Made by Gijs</p>
             {% block extra_footer %}{% endblock %}
             <p>Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (commited on {{ latest_commit_date }} UTC)</p>
-            <p>Deployed on {{ latest_deploy_date }} UTC</p>
+            <p>Last deployed on {{ latest_deploy_date }} UTC</p>
             <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
             <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>
             <p>View the <a href="https://github.com/Gijs6/site" target="_blank">source code on GitHub</a></p>
