@@ -122,9 +122,7 @@ def lib():
 def projects():
     return render_template("projects.html")
 
-@app.route("/colophon")
-def colofon():
-    return render_template("colophon.html")
+
 
 try:
     with open(os.path.join(BASE_DIR, "auth.txt"), "r") as f:
