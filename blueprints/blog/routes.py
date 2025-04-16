@@ -65,14 +65,14 @@ def generate_html(md_input):
 
     md_input = re.sub(pattern, parse_refs, md_input)
 
-    html_output = commonmark.commonmark(md_input)
+    html_output = "<article>" + commonmark.commonmark(md_input) + "</article>"
 
     if refs:
         return (
             html_output
-            + "<div id='refs'><span>References</span>"
+            + "<div id='refs'><span id='ref-section-title'>References</span>"
             + "".join(
-                f"<span class='ref-item'>[{item['number']}] <a id='ref-url-{item['number']}' href='{item['url']}'>{commonmark.commonmark(item['title'])}</a></span>"
+                f"<span class='ref-item'><span class='ref-num'>[{item['number']}]</span> <a id='ref-url-{item['number']}' href='{item['url']}'>{commonmark.commonmark(item['title'])}</a></span>"
                 for item in refs
             )
             + "</div>"

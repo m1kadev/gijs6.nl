@@ -1,4 +1,6 @@
-main * {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+main article * {
   margin: revert;
   padding: revert;
 }
@@ -9,7 +11,7 @@ main a {
 
 main {
   margin: 30px 0;
-  font-family: sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 #post-info {
@@ -39,7 +41,6 @@ main blockquote {
 }
 
 main code {
-  font-family: monospace;
   padding-inline: 0.3em;
   background-color: #777b805c;
   border-radius: 6px;
@@ -58,7 +59,7 @@ main code {
   gap: 0.2em;
 }
 
-#refs span:not(.ref-item) {
+#ref-section-title {
   font-size: 1.25em;
   font-weight: 800;
 }
@@ -73,9 +74,7 @@ main code {
   margin-block: 0;
 }
 
-#post-info,
-h1,
-main#index {
+#post-info, h1, main#index, main code, #ref-section-title, .ref-num {
   font-family: "Source Code Pro", monospace;
 }
 
