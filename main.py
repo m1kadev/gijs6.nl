@@ -163,35 +163,6 @@ def homepage_graph_api():
                 if weekprocessheaders > 52:
                     weekprocessheaders = 1
 
-
-            min_value = 0
-            max_value = int(max(item["value"] for item in data.values()))
-
-            def value_to_color(value, theme):
-                max_color="#06C749"
-                if theme == "light":
-                    min_color = "#E8FFE8"
-                    zero_color = "#FFFFFF"
-                else:
-                    min_color = "#001700"
-                    zero_color = "#000000"
-                if value and value != 0:
-                    value = int(value)
-                    normalized_value = max(0, min(1, (value - min_value) / (max_value - min_value)))
-
-                    min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
-                    max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
-
-                    interpolated_color = [
-                        int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value)
-                        for i in range(3)
-                    ]
-
-                    hex_color = "#" + "".join(f"{x:02X}" for x in interpolated_color)
-                    return hex_color
-                else:
-                    return zero_color
-
             tabledata = []
 
             for weekday in range(7):
@@ -223,10 +194,43 @@ def homepage_graph_api():
 
                     tabledata.append({
                         "message": message,
-                        "grid_area": f"{weekday + 2} / {indexweeknumstuff + 2} / {weekday + 3} / {indexweeknumstuff + 3}",
-                        "darkcolor": value_to_color(value, "dark"),
-                        "lightcolor": value_to_color(value, "light")
+                        "value": value,
+                        "grid_area": f"{weekday + 2} / {indexweeknumstuff + 2} / {weekday + 3} / {indexweeknumstuff + 3}"
                     })
+
+
+            min_value = 0
+            max_value = int(max(item["value"] for item in tabledata))
+
+            def value_to_color(value, theme):
+                max_color="#06C749"
+                if theme == "light":
+                    min_color = "#E8FAEE"
+                    zero_color = "#FFFFFF"
+                else:
+                    min_color = "#011207"
+                    zero_color = "#000000"
+                if value and value != 0:
+                    value = int(value)
+                    normalized_value = max(0, min(1, (value - min_value) / (max_value - min_value)))
+
+                    min_color_rgb = [int(min_color[i:i+2], 16) for i in (1, 3, 5)]
+                    max_color_rgb = [int(max_color[i:i+2], 16) for i in (1, 3, 5)]
+
+                    interpolated_color = [
+                        int(min_color_rgb[i] + (max_color_rgb[i] - min_color_rgb[i]) * normalized_value)
+                        for i in range(3)
+                    ]
+
+                    hex_color = "#" + "".join(f"{x:02X}" for x in interpolated_color)
+                    return hex_color
+                else:
+                    return zero_color
+
+            for cell in tabledata:
+                value = cell["value"]
+                cell["lightcolor"] = value_to_color(value, "light")
+                cell["darkcolor"] = value_to_color(value, "dark")
 
             saved_data = {
                 "data": tabledata,
