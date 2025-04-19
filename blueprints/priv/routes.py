@@ -40,15 +40,9 @@ def login():
             next_page = request.args.get("next", url_for("priv_bp.grade_check"))
             return redirect(next_page)
         else:
-            return render_template("login.html", error="Ongeldig wachtwoord!")
-
-    next_param = request.args.get("next")
-    if next_param:
-        message = "Het lijkt erop dat je een beveiligd deel van deze website wil bezoeken. Log in met je wachtwoord."
-    else:
-        message = "Ik weet niet wat je hier doet maar welkom! Log maar in denk ik?"
-
-    return render_template("login.html", tekst=message)
+            return render_template("login.html", error="Wrong! Lol!")
+        
+    return render_template("login.html")
 
 
 def read_data_file(file_name):

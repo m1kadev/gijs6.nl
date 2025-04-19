@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+body {
+    background: black;
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    font-family: "Source Code Pro", monospace;
+    font-size: clamp(.6em,2vw,1.2em);
+}
+
+#container {
+    max-width: 900px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    flex-grow: 1;
+}
+
+.block {
+    flex-grow: 1;
+    padding: 30px;
+    background: #155277;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.5em;
+    border-radius: 20px
+}
+
+#title-block {
+    flex-grow: 10;
+}
+
+#subject {
+    font-size: 1.75em;
+    font-weight: 700
+}
+
+#test-name {
+    font-size: 1.1em;
+    font-weight: 300;
+}
+
+#score-block {
+    padding: 30px 50px;
+    text-align: center;
+}
+
+#score {
+    font-size: 3.5em;
+    font-weight: 900;
+}
+
+#datetime {
+    font-weight: 300;
+}
+
+#average-block {
+    transition: opacity 300ms ease;
+    opacity: 0;
+}
+
+#new-average {
+    font-size: 1.5em;
+    font-weight: 800;
+}
+
+@media (max-width: 750px) {
+    .block {
+        padding: 15px !important
+    }
+}
