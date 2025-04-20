@@ -123,5 +123,10 @@
         "title": "Scan of the Month",
         "link": "https://www.scanofthemonth.com",
         "fa_icon_class": "fa-solid fa-x-ray"
+    },
+    {
+        "title": "Open Color",
+        "link": "https://yeun.github.io/open-color/",
+        "fa_icon_class": "fa-solid fa-palette"
     }
 ]
