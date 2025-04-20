@@ -32,6 +32,7 @@ async function refreshAllCollections() {
         const collectionDiv = document.createElement("div");
         collectionDiv.className = "collection";
         collectionDiv.dataset.collection = colTitle;
+        collectionDiv.style.order = -colList.length;
 
         // Collection header
         const collectionHeader = document.createElement("div");
@@ -42,8 +43,8 @@ async function refreshAllCollections() {
         titleSpan.className = "collection-title";
         titleSpan.textContent = colTitle;
         titleSpan.contentEditable = true;
-        collectionDiv.spellcheck = false;
-        collectionDiv.dataset.ltActive = "false"; // LanguageTool
+        titleSpan.spellcheck = false;
+        titleSpan.dataset.ltActive = "false"; // LanguageTool
         collectionHeader.appendChild(titleSpan);
 
         // Collection delete
@@ -66,7 +67,7 @@ async function refreshAllCollections() {
             itemDiv.dataset.listitemIndex = index;
 
             const checkSpan = document.createElement("span");
-            checkSpan.className = "list-item-check" + (listItem.check ? " checked" : "");
+            checkSpan.className = "list-item-check" + (listItem.checked ? " checked" : "");
             checkSpan.innerHTML = '<i class="fa-solid fa-check"></i>';
 
             const titleSpan = document.createElement("span");
@@ -203,7 +204,7 @@ async function refreshAllCollections() {
                     .catch((err) => {
                         statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
                     });
-            }, 2000); // wait 2 seconds after last input
+            }, 3500);
         });
     });
 
@@ -328,7 +329,7 @@ async function refreshAllCollections() {
                     .catch((err) => {
                         statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
                     });
-            }, 2000); // wait 2 seconds after last input
+            }, 3500); // wait 2 seconds after last input
         });
     });
 

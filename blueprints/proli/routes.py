@@ -44,9 +44,6 @@ def list_all():
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
 
-        
-        data = dict(sorted(data.items(), key=lambda item: len(item[1])))
-
         return jsonify(data)
     except Exception as e:
         return str(e), 500
@@ -63,7 +60,7 @@ def set_checked():
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
         
-        data[collection][int(listitem_index)]["check"] = checked
+        data[collection][int(listitem_index)]["checked"] = checked
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
@@ -154,12 +151,7 @@ def new_collection():
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         name = "".join(random.choices(chars, k=5))
 
-        data[f"Collection{name}"] = [{
-                "title": "Title",
-                "content": "Content",
-                "datetime": datetime.now(timezone.utc).isoformat(),
-                "checked": False,
-            }]
+        data[f"Collection{name}"] = []
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
