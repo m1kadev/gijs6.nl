@@ -42,7 +42,10 @@ def proli_login():
 def list_all():
     try:
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
-            data = json.load(jf)   
+            data = json.load(jf)
+
+        
+        data = dict(sorted(data.items(), key=lambda item: len(item[1])))
 
         return jsonify(data)
     except Exception as e:
@@ -151,7 +154,12 @@ def new_collection():
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         name = "".join(random.choices(chars, k=5))
 
-        data[f"Collection{name}"] = []
+        data[f"Collection{name}"] = [{
+                "title": "Title",
+                "content": "Content",
+                "datetime": datetime.now(timezone.utc).isoformat(),
+                "checked": False,
+            }]
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
