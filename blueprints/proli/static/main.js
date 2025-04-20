@@ -32,8 +32,6 @@ async function refreshAllCollections() {
         const collectionDiv = document.createElement("div");
         collectionDiv.className = "collection";
         collectionDiv.dataset.collection = colTitle;
-        collectionDiv.spellcheck = false;
-        collectionDiv.dataset.ltActive = "false"; 
 
         // Collection header
         const collectionHeader = document.createElement("div");
@@ -44,6 +42,8 @@ async function refreshAllCollections() {
         titleSpan.className = "collection-title";
         titleSpan.textContent = colTitle;
         titleSpan.contentEditable = true;
+        collectionDiv.spellcheck = false;
+        collectionDiv.dataset.ltActive = "false"; // LanguageTool
         collectionHeader.appendChild(titleSpan);
 
         // Collection delete
@@ -73,7 +73,7 @@ async function refreshAllCollections() {
             titleSpan.className = "list-item-title";
             titleSpan.contentEditable = true;
             titleSpan.spellcheck = false;
-            titleSpan.dataset.ltActive = "false"; 
+            titleSpan.dataset.ltActive = "false"; // LanguageTool
             titleSpan.textContent = listItem.title;
 
             const datetimeSpan = document.createElement("span");
@@ -84,7 +84,7 @@ async function refreshAllCollections() {
             contentSpan.className = "list-item-content";
             contentSpan.contentEditable = true;
             contentSpan.spellcheck = false;
-            contentSpan.dataset.ltActive = "false"; 
+            contentSpan.dataset.ltActive = "false"; // LanguageTool
             contentSpan.textContent = listItem.content;
 
             const deleteSpan = document.createElement("span");
