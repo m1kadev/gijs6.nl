@@ -242,8 +242,14 @@ header {
     opacity: .8;
 }
 
+[contenteditable="true"] {
+    border-bottom: transparent solid 1px;
+}
+
 [contenteditable="true"]:focus {
-    outline: #228be6 solid 2px;
+    border-color: #228be6;
+    outline: none;
+    width: fit-content;
 }
 
 @media (max-width: 600px) {
