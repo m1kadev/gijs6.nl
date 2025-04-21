@@ -11,13 +11,13 @@ proli_bp = Blueprint("proli_bp", __name__, template_folder="templates", static_f
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
-@login_required
 @proli_bp.route("/")
+@login_required
 def proli_index():
     return render_template("main.html")
 
-@login_required
 @proli_bp.route("/api/list_all", methods=["GET"])
+@login_required
 def list_all():
     try:
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
@@ -27,8 +27,8 @@ def list_all():
     except Exception as e:
         return str(e), 500
 
-@login_required
 @proli_bp.route("/api/set_checked", methods=["PUT"])
+@login_required
 def set_checked():
     try:
         data = request.get_json()
@@ -49,8 +49,8 @@ def set_checked():
     except Exception as e:
         return str(e), 500
 
-@login_required
 @proli_bp.route("/api/set_info", methods=["PUT"])
+@login_required
 def set_info():
     try:
         data = request.get_json()
@@ -77,8 +77,8 @@ def set_info():
     except Exception as e:
         return str(e), 500
 
-@login_required
 @proli_bp.route("/api/make_new", methods=["POST"])
+@login_required
 def make_new():
     try:
         data = request.get_json()
@@ -104,8 +104,8 @@ def make_new():
     except Exception as e:
         return str(e), 500
 
-@login_required
 @proli_bp.route("/api/delete_item", methods=["DELETE"])
+@login_required
 def delete_item():
     try:
         data = request.get_json()
@@ -125,8 +125,8 @@ def delete_item():
     except Exception as e:
         return str(e), 500
 
-@login_required
 @proli_bp.route("/api/new_collection", methods=["POST"])
+@login_required
 def new_collection():
     try:
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
@@ -144,8 +144,8 @@ def new_collection():
     except Exception as e:
         return str(e), 500
 
-@login_required
 @proli_bp.route("/api/rename_collection", methods=["PUT"])
+@login_required
 def rename_collection():
     try:
         data = request.get_json()
@@ -165,8 +165,8 @@ def rename_collection():
     except Exception as e:
         return str(e), 500
 
-@login_required
 @proli_bp.route("/api/delete_collection", methods=["DELETE"])
+@login_required
 def delete_collection():
     try:
         data = request.get_json()
