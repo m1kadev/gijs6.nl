@@ -1,7 +1,8 @@
-from flask import Flask, redirect, render_template, send_from_directory, url_for, request
+from flask import Flask, redirect, render_template, send_from_directory, url_for, request, session
 from collections import defaultdict
 from datetime import timedelta, datetime, date
 from werkzeug.security import check_password_hash
+from functools import wraps
 import json
 import locale
 import os
@@ -19,6 +20,9 @@ app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+with open(os.path.join(BASE_DIR, "password.txt"), "r") as f:
+    PASSWORD_HASH = f.read().strip()
 
 # Blueprints
 
@@ -104,6 +108,33 @@ def home():
     headers = [str(h).zfill(2) for h in headers]
 
     return render_template("home.html", graphdata=graphdata, headers=headers, last_updated=last_updated)
+
+
+def login_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect(url_for("login", next=request.path))
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        password = request.form.get("password")
+        if check_password_hash(PASSWORD_HASH, password):
+            session["logged_in"] = True
+            session.permanent = True
+
+            print(f"request.args {request.args}")
+
+            next_page = request.args.get("next")
+            return redirect(next_page)
+        else:
+            return render_template("login.html", error="Wrong! Lol!")
+        
+    return render_template("login.html")
 
 
 @app.route("/code")

@@ -9,6 +9,7 @@ dekstop.ini
 **/desktop.ini
 
 auth.txt
+password.txt
 
 node_modules/
 

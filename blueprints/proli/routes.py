@@ -1,43 +1,22 @@
-from flask import Blueprint, render_template, jsonify, request, session, redirect, url_for
+from flask import Blueprint, render_template, jsonify, request
 from datetime import datetime, timezone
-from werkzeug.security import check_password_hash
 import json
 import os
 import random
+
+from main import login_required
 
 proli_bp = Blueprint("proli_bp", __name__, template_folder="templates", static_folder="static")
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(BASE_DIR, "password.txt"), "r") as f:
-    PASSWORD_HASH = f.read().strip()
 
-
-@proli_bp.before_request
-def require_login():
-    if "login" not in request.url:
-        if not session.get("is_logged_in"):
-            return redirect(url_for("proli_bp.proli_login"))
-
-
+@login_required
 @proli_bp.route("/")
 def proli_index():
     return render_template("main.html")
 
-@proli_bp.route("/login", methods=["GET", "POST"])
-def proli_login():
-    if request.method == "POST":
-        password = request.form.get("password")
-        if check_password_hash(PASSWORD_HASH, password):
-            session["is_logged_in"] = True
-            session.permanent = True
-            return redirect(url_for("proli_bp.proli_index"))
-        else:
-            return render_template("login.html", error="Wrong! Lol!")
-        
-    return render_template("login.html")
-
-
+@login_required
 @proli_bp.route("/api/list_all", methods=["GET"])
 def list_all():
     try:
@@ -48,6 +27,7 @@ def list_all():
     except Exception as e:
         return str(e), 500
 
+@login_required
 @proli_bp.route("/api/set_checked", methods=["PUT"])
 def set_checked():
     try:
@@ -69,6 +49,7 @@ def set_checked():
     except Exception as e:
         return str(e), 500
 
+@login_required
 @proli_bp.route("/api/set_info", methods=["PUT"])
 def set_info():
     try:
@@ -96,6 +77,7 @@ def set_info():
     except Exception as e:
         return str(e), 500
 
+@login_required
 @proli_bp.route("/api/make_new", methods=["POST"])
 def make_new():
     try:
@@ -122,6 +104,7 @@ def make_new():
     except Exception as e:
         return str(e), 500
 
+@login_required
 @proli_bp.route("/api/delete_item", methods=["DELETE"])
 def delete_item():
     try:
@@ -142,6 +125,7 @@ def delete_item():
     except Exception as e:
         return str(e), 500
 
+@login_required
 @proli_bp.route("/api/new_collection", methods=["POST"])
 def new_collection():
     try:
@@ -160,6 +144,7 @@ def new_collection():
     except Exception as e:
         return str(e), 500
 
+@login_required
 @proli_bp.route("/api/rename_collection", methods=["PUT"])
 def rename_collection():
     try:
@@ -180,6 +165,7 @@ def rename_collection():
     except Exception as e:
         return str(e), 500
 
+@login_required
 @proli_bp.route("/api/delete_collection", methods=["DELETE"])
 def delete_collection():
     try:
