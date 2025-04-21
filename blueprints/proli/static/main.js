@@ -199,7 +199,6 @@ async function refreshAllCollections() {
                             statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
                             return;
                         }
-                        refreshAllCollections();
                     })
                     .catch((err) => {
                         statusMessage(`Fetch failed: ${err.message}`, "error", 4000);

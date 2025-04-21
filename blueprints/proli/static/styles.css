@@ -98,7 +98,7 @@ header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .collection-title {
@@ -242,14 +242,8 @@ header {
     opacity: .8;
 }
 
-[contenteditable="true"] {
-    border-bottom: transparent solid 1px;
-}
-
 [contenteditable="true"]:focus {
-    border-color: #228be6;
-    outline: none;
-    width: fit-content;
+    outline: #228be6 solid 2px;
 }
 
 @media (max-width: 600px) {
