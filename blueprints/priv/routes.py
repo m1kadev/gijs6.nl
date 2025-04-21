@@ -1,11 +1,10 @@
-from flask import Blueprint, Response, request, session, url_for, redirect, render_template
-from werkzeug.security import check_password_hash
+from flask import Blueprint, Response, render_template
 import os
 import json
 import requests
 import re
 
-from main import login_required
+from decorators import login_required
 
 priv_bp = Blueprint("priv_bp", __name__, template_folder="templates", static_folder="static")
 

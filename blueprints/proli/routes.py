@@ -4,7 +4,7 @@ import json
 import os
 import random
 
-from main import login_required
+from decorators import login_required
 
 proli_bp = Blueprint("proli_bp", __name__, template_folder="templates", static_folder="static")
 

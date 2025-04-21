@@ -1,11 +1,12 @@
 from flask import Flask, redirect, render_template, send_from_directory, url_for, request, session
 from collections import defaultdict
 from datetime import timedelta, datetime, date
-from werkzeug.security import check_password_hash
-from functools import wraps
+from werkzeug.security import check_password_hash, generate_password_hash
 import json
 import locale
 import os
+import random
+import string
 import subprocess
 
 # Blueprints
@@ -21,8 +22,18 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(BASE_DIR, "password.txt"), "r") as f:
-    PASSWORD_HASH = f.read().strip()
+try:
+    with open(os.path.join(BASE_DIR, "password.txt"), "r") as f:
+        PASSWORD_HASH = f.read().strip()
+except FileNotFoundError:
+    if __name__ == "__main__":
+        password = ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(25, 45)))
+        # Only in development. If this would be executed on production that would be very very bad...
+        print(f"\033[91mThere is no password registred. You can use the password '{password}' but since you do not have access to the JSON files needed to load most pages that are locked, it isn't a big deal\033[0m")
+        PASSWORD_HASH = generate_password_hash(password)
+    else:
+        raise FileNotFoundError
+    
 
 # Blueprints
 
@@ -108,15 +119,6 @@ def home():
     headers = [str(h).zfill(2) for h in headers]
 
     return render_template("home.html", graphdata=graphdata, headers=headers, last_updated=last_updated)
-
-
-def login_required(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        if not session.get("logged_in"):
-            return redirect(url_for("login", next=request.path))
-        return func(*args, **kwargs)
-    return wrapper
 
 
 @app.route("/login", methods=["GET", "POST"])
