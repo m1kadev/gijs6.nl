@@ -198,7 +198,9 @@ async function refreshAllCollections() {
                             const errorText = await response.text();
                             statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
                             return;
-                        }
+                        };
+                        
+                        statusMessage('Updated! <i class="fa-solid fa-repeat"></i>', "success", 2000);
                     })
                     .catch((err) => {
                         statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
@@ -247,28 +249,30 @@ async function refreshAllCollections() {
 
             const dBcollection = dBparent.dataset.collection;
             const dBlistitemIndex = dBparent.dataset.listitemIndex;
-
-            fetch("/proli/api/delete_item", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    collection: dBcollection,
-                    listitemIndex: dBlistitemIndex
-                }),
-            })
-                .then(async (response) => {
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
-                        return;
-                    }
-                    refreshAllCollections();
+            
+            if (window.confirm(`Do you really want to delete element ${dBlistitemIndex} from collection ${dBcollection}?`)) {
+                fetch("/proli/api/delete_item", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        collection: dBcollection,
+                        listitemIndex: dBlistitemIndex
+                    }),
                 })
-                .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
-                });
+                    .then(async (response) => {
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                            return;
+                        }
+                        refreshAllCollections();
+                    })
+                    .catch((err) => {
+                        statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                    });
+            }
         });
     });
 
@@ -341,26 +345,28 @@ async function refreshAllCollections() {
 
             const dCBcollection = dCBparent.dataset.collection;
 
-            fetch("/proli/api/delete_collection", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    collection: dCBcollection
-                }),
-            })
-                .then(async (response) => {
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
-                        return;
-                    }
-                    refreshAllCollections();
+            if (window.confirm(`Do you really want to delete collection ${dCBcollection} and all its elements?`)) {
+                fetch("/proli/api/delete_collection", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        collection: dCBcollection
+                    }),
                 })
-                .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
-                });
+                    .then(async (response) => {
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                            return;
+                        }
+                        refreshAllCollections();
+                    })
+                    .catch((err) => {
+                        statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                    });
+            }
         });
     });
 
