@@ -164,52 +164,61 @@ async function refreshAllCollections() {
 
     listItems.forEach(lI => {
         let debounceTimeout;
-
+    
+        const executeUpdate = () => {
+            clearTimeout(debounceTimeout);
+    
+            const title = lI.querySelector(".list-item-title").textContent;
+            const content = lI.querySelector(".list-item-content").textContent;
+    
+            const datetimeElement = lI.querySelector(".list-item-datetime");
+            const newDate = new Date().toISOString();
+            datetimeElement.textContent = newDate;
+    
+            const collection = lI.dataset.collection;
+            const listitemIndex = lI.dataset.listitemIndex;
+    
+            fetch("/proli/api/set_info", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    listitemIndex: listitemIndex,
+                    collection: collection,
+                    title: title,
+                    datetime: newDate,
+                    content: content,
+                }),
+            })
+            .then(async (response) => {
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                    return;
+                };
+                
+                statusMessage('Updated! <i class="fa-solid fa-repeat"></i>', "success", 2000);
+            })
+            .catch((err) => {
+                statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+            });
+        };
+    
         lI.addEventListener('input', function () {
             clearTimeout(debounceTimeout);
-
-            debounceTimeout = setTimeout(() => {
-                const title = lI.querySelector(".list-item-title").textContent;
-                const content = lI.querySelector(".list-item-content").textContent;
-
-                
-                const datetimeElement = lI.querySelector(".list-item-datetime");
-                const newDate = new Date().toISOString();
-                datetimeElement.textContent = newDate
-
-                const collection = lI.dataset.collection;
-                const listitemIndex = lI.dataset.listitemIndex;
-
-                fetch("/proli/api/set_info", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        listitemIndex: listitemIndex,
-                        collection: collection,
-                        title: title,
-                        datetime: newDate,
-                        content: content,
-                    }),
-                })
-                    .then(async (response) => {
-                        if (!response.ok) {
-                            const errorText = await response.text();
-                            statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
-                            return;
-                        };
-                        
-                        statusMessage('Updated! <i class="fa-solid fa-repeat"></i>', "success", 2000);
-                    })
-                    .catch((err) => {
-                        statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
-                    });
-            }, 3500);
+            debounceTimeout = setTimeout(executeUpdate, 3500);
+        });
+    
+        const inputs = lI.querySelectorAll(".list-item-title, .list-item-content");
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                executeUpdate();
+            });
         });
     });
 
-
+    
     const addItemElements = document.querySelectorAll(".add-list-item");
 
     addItemElements.forEach(aIE => {
@@ -301,38 +310,44 @@ async function refreshAllCollections() {
 
     collectionTitles.forEach(cT => {
         let debounceTimeout;
-
+    
+        const executeUpdate = () => {
+            clearTimeout(debounceTimeout);
+    
+            const cTParent = cT.parentElement.parentElement;
+            const collection = cTParent.dataset.collection;
+            const newName = cT.textContent;
+    
+            fetch("/proli/api/rename_collection", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    oldName: collection,
+                    newName: newName
+                }),
+            })
+            .then(async (response) => {
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                    return;
+                }
+                refreshAllCollections();
+            })
+            .catch((err) => {
+                statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+            });
+        };
+    
         cT.addEventListener('input', function () {
             clearTimeout(debounceTimeout);
-
-            debounceTimeout = setTimeout(() => {
-                const cTParent = cT.parentElement.parentElement;
-                const collection = cTParent.dataset.collection;
-
-                const newName = cT.textContent;
-
-                fetch("/proli/api/rename_collection", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        oldName: collection,
-                        newName: newName
-                    }),
-                })
-                    .then(async (response) => {
-                        if (!response.ok) {
-                            const errorText = await response.text();
-                            statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
-                            return;
-                        }
-                        refreshAllCollections();
-                    })
-                    .catch((err) => {
-                        statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
-                    });
-            }, 3500); // wait 2 seconds after last input
+            debounceTimeout = setTimeout(executeUpdate, 3500);
+        });
+    
+        cT.addEventListener('blur', () => {
+            executeUpdate();
         });
     });
 
