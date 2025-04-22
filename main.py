@@ -129,8 +129,6 @@ def login():
             session["logged_in"] = True
             session.permanent = True
 
-            print(f"request.args {request.args}")
-
             next_page = request.args.get("next")
             return redirect(next_page)
         else:

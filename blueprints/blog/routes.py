@@ -152,7 +152,6 @@ def generate_rss_feed():
                 lines = subprocess.check_output(["git", "log", "--format=%ct", "--", f"posts/{post}"], text=True, cwd=BASE_DIR).strip().split("\n")
                 date = datetime.fromtimestamp(int(lines[-1]), pytz.timezone("Europe/Amsterdam"))
                 timestamp = int(lines[-1])
-                print(f"{post}, {timestamp}")
             except (ValueError, IndexError):
                 # Not published posts
                 continue
