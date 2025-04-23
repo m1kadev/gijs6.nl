@@ -128,5 +128,10 @@
         "title": "Open Color",
         "link": "https://yeun.github.io/open-color/",
         "fa_icon_class": "fa-solid fa-palette"
+    },
+    {
+        "title": "Your Name In Landsat",
+        "link": "https://landsat.gsfc.nasa.gov/apps/YourNameInLandsat-main/",
+        "fa_icon_class": "fa-solid fa-satellite"
     }
 ]
