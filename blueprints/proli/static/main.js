@@ -259,7 +259,7 @@ async function refreshAllCollections() {
             const dBcollection = dBparent.dataset.collection;
             const dBlistitemIndex = dBparent.dataset.listitemIndex;
             
-            if (window.confirm(`Do you really want to delete element ${dBlistitemIndex} from collection ${dBcollection}?`)) {
+            if (window.confirm(`Do you really want to delete element #${dBlistitemIndex} from collection ${dBcollection}?`)) {
                 fetch("/proli/api/delete_item", {
                     method: "DELETE",
                     headers: {
