@@ -156,7 +156,8 @@ def generate_rss_feed():
                 # Not published posts
                 continue
 
-        html_content = html.escape(generate_html(file_content_clean))
+        html_content = generate_html(file_content_clean)
+        html_content = f"<![CDATA[{html_content}]]>"
 
         posts_data.append({
             "title": title,
@@ -185,4 +186,5 @@ def generate_rss_feed():
 def rss():
     feed = generate_rss_feed()
     rss_feed = feed.rss_str()
-    return Response(rss_feed, mimetype="application/xml")
+    return Response(rss_feed, content_type="application/rss+xml; charset=utf-8")
+
