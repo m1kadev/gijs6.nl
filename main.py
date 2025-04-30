@@ -123,19 +123,20 @@ def home():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        password = request.form.get("password")
-        if check_password_hash(PASSWORD_HASH, password):
-            session["logged_in"] = True
-            session.permanent = True
+    if not session.get("logged_in"):
+        if request.method == "POST":
+            password = request.form.get("password")
+            if check_password_hash(PASSWORD_HASH, password):
+                session["logged_in"] = True
+                session.permanent = True
 
-            next_page = request.args.get("next")
-            return redirect(next_page)
-        else:
-            return render_template("login.html", error="Wrong! Lol!")
-        
-    return render_template("login.html")
-
+                next_page = request.args.get("next")
+                return redirect(next_page)
+            else:
+                return render_template("login.html", error="Wrong! Lol!")
+            
+        return render_template("login.html")
+    return redirect("/")
 
 @app.route("/code")
 def code():

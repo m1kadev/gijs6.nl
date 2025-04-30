@@ -1,10 +1,23 @@
-from flask import session, redirect, url_for, request
+from flask import session, render_template, request, url_for
 from functools import wraps
 
 def login_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not session.get("logged_in"):
-            return redirect(url_for("login", next=request.path))
+            if "proli" in request.path:
+                fav = url_for("proli_bp.static", filename="fav.ico")
+            elif "grade" in request.path:
+                fav = url_for("priv_bp.static", filename="favs/grade.ico") 
+            else:
+                fav = url_for("static", filename="favs/login.ico")
+
+
+            next_page = request.args.get("next")
+            
+            if not next_page:
+               next_page = request.path
+
+            return render_template("login.html", fav=fav, next_page=next_page)
         return func(*args, **kwargs)
     return wrapper
