@@ -186,5 +186,5 @@ def generate_rss_feed():
 def rss():
     feed = generate_rss_feed()
     rss_feed = feed.rss_str()
-    return Response(rss_feed, content_type="application/rss+xml; charset=utf-8")
+    return Response(rss_feed, mimetype="application/xml; charset=utf-8")
 
