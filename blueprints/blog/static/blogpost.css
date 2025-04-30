@@ -40,7 +40,7 @@ main blockquote {
   border-left: 0.25em solid var(--lightblue);
 }
 
-main code {
+main p code {
   padding-inline: 0.3em;
   background-color: #777b805c;
   border-radius: 6px;
@@ -85,4 +85,11 @@ main code {
 
 #back-to-blog i {
   color: var(--lightblue);
+}
+
+pre:has(code) {
+  overflow: scroll;
+  border-radius: .5em;
+  background: light-dark(#dfe3d6, #201c29);
+  padding: 1em;
 }
