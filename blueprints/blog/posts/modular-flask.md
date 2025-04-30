@@ -4,15 +4,15 @@ title: Modular Flask
 
 # Building a Modular Website with Flask
 
-This site and this blog you're readintg is built using the *amazing* Python framework **Flask**. And yeah, I do mean amazing. It's simple, lightweight, flexible, and lets you get going super fast. But despite all that, for a long time, my site was... well, kind of a mess.
+This site and this blog you're reading is built using the *amazing* Python framework **Flask**. And yeah, I do mean amazing. It's simple, lightweight, flexible, and lets you get going superfast. But despite all that, for a long time, my site was... well, kind of a mess.
 
-See, I was managing a bunch of different projects on the same domain. Some blog stuff here, some API endpoints there and some random private school dasboard pages. It worked, technically. But maintaining it? *Absolute pain.*
+See, I was managing a bunch of different projects on the same domain. Some blog stuff here, some API endpoints there and some random private school dashboard pages. It worked, technically. But maintaining it? *Absolute pain.*
 
 I knew I needed something modular. Something that didn't involve scrolling through 1400 lines of spaghetti in one single Python file. And thankfully, Flask already had the perfect solution: **blueprints**.
 
 ## Before Blueprints
 
-My old `main.py` was a single 1400-line mess. A mix of routes, logic, utilities and way to many print statments. There was *no* structure. Every new route was just tacked on wherever I happened to have the cursor.
+My old `main.py` was a single 1400-line mess. A mix of routes, logic, utilities and way too many print statements. There was *no* structure. Every new route was just tacked on wherever I happened to have the cursor.
 
 ## Enter: Flask Blueprints
 
@@ -44,9 +44,9 @@ app = Flask(__name__)
 app.register_blueprint(simple_bp, url_prefix="/simple")
 ```
 
-And then your page is avaiable under `/simple/hello`!
+And then your page is available under `/simple/hello`!
 
-And the blueprint object can do almost everything that the app object can do, so you can registrer errorhandlers, context processors, before and after request functions, and you can even registrer blueprints inside blueprints.
+And the blueprint object can do almost everything that the app object can do, so you can register error handlers, context processors, before and after request functions, and you can even register blueprints inside blueprints.
 
 ## Making It Scalable
 
@@ -100,10 +100,10 @@ for bp, prefix in load_blueprints():
         print(f"An error occurred while trying to load {bp} as a blueprint: {e}")
 ```
 
-And the URl prefixes are just based on the folder names, so you don't have to declare names everywhere.
+And the URL prefixes are just based on the folder names, so you don't have to declare names everywhere.
 
 ## Final thoughts
 
-If you're using Flask for anything complex, just use blueprints. Don't wait until you have huge single Python file that somehow became your entire backend.
+If you're using Flask for anything complex, just use blueprints. Don't wait until you have a huge single Python file that somehow became your entire backend.
 
 Modularizing your Flask project doesn't just make the code cleaner, it makes it more enjoyable to work on. Which, if you've ever had to debug an endpoint in a 1.4k-line Python file, you know is kind of a big deal.
