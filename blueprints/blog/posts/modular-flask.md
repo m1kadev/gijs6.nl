@@ -29,7 +29,7 @@ from flask import Blueprint
 
 simple_bp = Blueprint("simple_bp", __name__, template_folder="templates")
 
-@simple_bp.route("/")
+@simple_bp.route("/hello")
 def index():
     return "Hello world!"
 ```
@@ -44,7 +44,9 @@ app = Flask(__name__)
 app.register_blueprint(simple_bp, url_prefix="/simple")
 ```
 
-And then your page is avaiable under `/simple/`!
+And then your page is avaiable under `/simple/hello`!
+
+And the blueprint object can do almost everything that the app object can do, so you can registrer errorhandlers, context processors, before and after request functions, and you can even registrer blueprints inside blueprints.
 
 ## Making It Scalable
 
