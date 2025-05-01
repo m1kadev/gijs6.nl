@@ -16,7 +16,7 @@ th:last-child {
 }
 
 tr th {
-    border-bottom-color: black;
+    border-bottom-color: white;
 }
 
 tr:last-child td {
@@ -63,7 +63,7 @@ th {
         3px 3px 7px 2px #0000001a,
         -1px -1px 1px 1px #0000001a;
     margin-top: 10px;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 10px;
     width: min-content;
     flex-direction: row;
@@ -71,10 +71,10 @@ th {
     cursor: pointer;
     height: fit-content;
     min-width: fit-content;
+    background: var(--lightblue);
 }
 
 #add-list-item:hover {
-    background: #f1f3f5;
     opacity: 0.8;
 }
 

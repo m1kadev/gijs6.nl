@@ -1,6 +1,13 @@
 from flask import Blueprint, render_template, jsonify, request
+import flask
+from dotenv import load_dotenv
 import os
 import json
+import pip
+import requests
+import sys
+import platform
+
 
 from decorators import login_required
 
@@ -13,36 +20,48 @@ while not os.path.isdir(os.path.join(project_dir, ".git")):
     project_dir = os.path.dirname(project_dir)
 project_dir =  os.path.abspath(project_dir)
 
-links = [
-    {
-        "url": "/priv/grade",
-        "title": "GradeCheck"
-    },
-    {
-        "url": "/admin/lib",
-        "title": "LibraryEditor"
-    },
-    {
-        "url": "/proli/",
-        "title": "ProLi"
-    }
-]
+
+
+
+load_dotenv()
+
+token = os.getenv("API_TOKEN")
+
 
 @admin_bp.route("/")
 @login_required
 def dashboard():
-    return render_template("dashboard.html", links=links)
+
+    general_info_response = requests.get("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/", headers={"Authorization": f"Token {token}"})
+    general_info_response.raise_for_status()
+
+    general_info = general_info_response.json
+
+
+    system_info = {
+        "os_name": platform.system(),
+        "os_version": platform.version(),
+        "os_release": platform.release(),
+        "machine": platform.machine(),
+        "architecture": platform.architecture(),
+        "processor": platform.processor(),
+        "system_uname": platform.uname()
+    }
+
+    version_info = {
+        "python_version": sys.version,
+        "flask_version": flask.__version__
+    }
 
 
 
 
+    return render_template("dashboard.html", general_info=general_info, system_info=system_info, version_info=version_info)
 
 
 
 
-
-
-
+# Libeditor
 
 @admin_bp.route("/lib")
 @login_required
@@ -52,7 +71,7 @@ def lib_editor():
 
 @admin_bp.route("/api/libeditor/list_all", methods=["GET"])
 @login_required
-def list_all():
+def lib_editor_list_all():
     try:
         with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
             data = json.load(jf)
@@ -63,7 +82,7 @@ def list_all():
 
 @admin_bp.route("/api/libeditor/set_info", methods=["PUT"])
 @login_required
-def set_info():
+def lib_editor_set_info():
     try:
         data = request.get_json()
 
@@ -91,7 +110,7 @@ def set_info():
 
 @admin_bp.route("/api/libeditor/make_new", methods=["POST"])
 @login_required
-def make_new():
+def lib_editor_make_new():
     try:
         with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
             data = json.load(jf)
@@ -113,7 +132,7 @@ def make_new():
 
 @admin_bp.route("/api/libeditor/delete_item", methods=["DELETE"])
 @login_required
-def delete_item():
+def lib_editor_delete_item():
     try:
         data = request.get_json()
 
@@ -130,4 +149,5 @@ def delete_item():
         return "Success", 200
     except Exception as e:
         return str(e), 500
+
 

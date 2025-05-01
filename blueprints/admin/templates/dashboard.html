@@ -9,9 +9,9 @@
 {% block content %}
     <h1>Dashboard</h1>
 
-    <div id="link-list">
-        {% for link in links %}
-            <a class="link-item" href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
-    </div>
+    {{ general_info }}
+
+    {{ system_info }}
+
+    {{ version_info }}
 {% endblock %}
