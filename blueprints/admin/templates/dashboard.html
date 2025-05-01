@@ -36,49 +36,44 @@
     </div>
 
     <script>
-        function reload(button) {
+        function handleAction(button, endpoint) {
             button.classList.add("loading");
-
-            fetch("/admin/api/dashboard/reload", {
-                method: "POST"
-            })
-                .then(async (response) => {
+    
+            fetch(endpoint, { method: "POST" })
+                .then(response => {
                     button.classList.remove("loading");
-                    button.classList.add("done");
-                    setTimeout(() => {
-                        button.classList.remove("done");
-                    }, 750);
+    
+                    if (response.ok) {
+                        button.classList.add("done");
+                        setTimeout(() => {
+                            button.classList.remove("done");
+                        }, 750);
+                    } else {
+                        button.classList.add("error");
+                        setTimeout(() => {
+                            button.classList.remove("error");
+                        }, 2000);
+                    }
                 })
-        };
-
-        function redeploy(button) {
-            button.classList.add("loading");
-
-            fetch("/admin/api/dashboard/redeploy", {
-                method: "POST"
-            })
-                .then(async (response) => {
+                .catch(() => {
                     button.classList.remove("loading");
-                    button.classList.add("done");
+                    button.classList.add("error");
                     setTimeout(() => {
-                        button.classList.remove("done");
-                    }, 750);
-                })
-        };
-
-        function disable(button) {
-            button.classList.add("loading");
-
-            fetch("/admin/api/dashboard/disable", {
-                method: "POST"
-            })
-                .then(async (response) => {
-                    button.classList.remove("loading");
-                    button.classList.add("done");
-                    setTimeout(() => {
-                        button.classList.remove("done");
-                    }, 750);
-                })
+                        button.classList.remove("error");
+                    }, 2000);
+                });
         }
-    </script>
+    
+        function reload(button) {
+            handleAction(button, "/admin/api/dashboard/reload");
+        }
+    
+        function redeploy(button) {
+            handleAction(button, "/admin/api/dashboard/redeploy");
+        }
+    
+        function disable(button) {
+            handleAction(button, "/admin/api/dashboard/disable");
+        }
+    </script>    
 {% endblock %}

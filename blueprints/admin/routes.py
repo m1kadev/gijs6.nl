@@ -162,7 +162,7 @@ def dashboard_redeploy():
 @login_required
 def dashboard_disable():
     try:
-        response = requests.get("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/disable/", headers={"Authorization": f"Token {token}"})
+        response = requests.post("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/disable/", headers={"Authorization": f"Token {token}"})
         response.raise_for_status()
 
         return "Success", 200
