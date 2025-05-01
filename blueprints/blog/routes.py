@@ -4,7 +4,6 @@ from feedgen.feed import FeedGenerator
 import subprocess
 import os
 import commonmark
-import html
 import yaml
 import pytz
 import re

@@ -1,6 +1,5 @@
 from flask import Flask, redirect, render_template, send_from_directory, url_for, request, session
-from collections import defaultdict
-from datetime import timedelta, datetime, date
+from datetime import timedelta, datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
 import locale
@@ -144,9 +143,26 @@ def code():
 
 @app.route("/lib")
 def lib():
-    with open(os.path.join(BASE_DIR, "data", "libdata.json"), "r") as file:
-        libdata = json.load(file)
-    
+    try:
+        with open(os.path.join(BASE_DIR, "data", "libdata.json"), "r") as file:
+            libdata = json.load(file)
+    except FileNotFoundError:
+        libdata = [{
+            "title": "Lorem Picsum",
+            "link": "https://picsum.photos",
+            "icon": "fa-solid fa-camera"
+        },
+        {
+            "title": "BiNaS online",
+            "link": "https://archive.org/details/BiNaSpdf/mode/1up",
+            "icon": "fa-solid fa-flask-vial"
+        },
+        {
+            "title": "Dimensions",
+            "link": "https://dimensions.com",
+            "icon": "fa-solid fa-up-right-and-down-left-from-center"
+        }]
+
     return render_template("lib.html", data=libdata)
 
 
