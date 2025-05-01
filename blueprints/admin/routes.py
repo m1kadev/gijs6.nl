@@ -1,0 +1,133 @@
+from flask import Blueprint, render_template, jsonify, request
+import os
+import json
+
+from decorators import login_required
+
+admin_bp = Blueprint("admin_bp", __name__, template_folder="templates", static_folder="static")
+
+BASE_DIR = os.path.dirname(__file__)
+
+project_dir = os.path.dirname(__file__)
+while not os.path.isdir(os.path.join(project_dir, ".git")):
+    project_dir = os.path.dirname(project_dir)
+project_dir =  os.path.abspath(project_dir)
+
+links = [
+    {
+        "url": "/priv/grade",
+        "title": "GradeCheck"
+    },
+    {
+        "url": "/admin/lib",
+        "title": "LibraryEditor"
+    },
+    {
+        "url": "/proli/",
+        "title": "ProLi"
+    }
+]
+
+@admin_bp.route("/")
+@login_required
+def dashboard():
+    return render_template("dashboard.html", links=links)
+
+
+
+
+
+
+
+
+
+
+
+
+@admin_bp.route("/lib")
+@login_required
+def lib_editor():
+    return render_template("lib_editor.html")
+
+
+@admin_bp.route("/api/libeditor/list_all", methods=["GET"])
+@login_required
+def list_all():
+    try:
+        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
+            data = json.load(jf)
+
+        return jsonify(data)
+    except Exception as e:
+        return str(e), 500
+
+@admin_bp.route("/api/libeditor/set_info", methods=["PUT"])
+@login_required
+def set_info():
+    try:
+        data = request.get_json()
+
+        listitem_index = data.get("listitemIndex")
+
+        title = data.get("title")
+        url = data.get("url")
+        icon = data.get("icon")
+
+        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
+            data = json.load(jf)
+        
+        data[int(listitem_index)]["title"] = title
+        data[int(listitem_index)]["link"] = url
+        data[int(listitem_index)]["icon"] = icon
+
+
+        with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
+            json.dump(data, jf, indent=4)
+        
+        return "Success", 200
+    except Exception as e:
+        return str(e), 500
+    
+
+@admin_bp.route("/api/libeditor/make_new", methods=["POST"])
+@login_required
+def make_new():
+    try:
+        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
+            data = json.load(jf)
+        
+        data.append(
+            {
+                "title": "TITLE",
+                "link": "URL",
+                "icon": "fa-solid fa-arrow-up-right-from-square"
+            }
+        )
+
+        with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
+            json.dump(data, jf, indent=4)
+
+        return "Success", 200
+    except Exception as e:
+        return str(e), 500
+
+@admin_bp.route("/api/libeditor/delete_item", methods=["DELETE"])
+@login_required
+def delete_item():
+    try:
+        data = request.get_json()
+
+        listitem_index = data.get("listitemIndex")
+
+        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
+            data = json.load(jf)
+        
+        data.pop(int(listitem_index))
+
+        with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
+            json.dump(data, jf, indent=4)
+        
+        return "Success", 200
+    except Exception as e:
+        return str(e), 500
+

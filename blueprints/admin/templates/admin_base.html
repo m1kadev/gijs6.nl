@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Home{% endblock %} - Admin</title>
+        <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/base.css') }}">
+        <link rel="icon" href="{{ url_for('admin_bp.static', filename='favs/admin.ico') }}">
+        <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+        
+        {% block extra_headers %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <a href="/admin/" id="header-logo">Admin</a>
+            <nav>
+                <a href="/admin/" class="menu-item{% if request.path == '/admin/' %} active{% endif %}">Dashboard <i class="fa-solid fa-table-list"></i></a>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/lib_editor.css') }}">
+    <script src="{{ url_for('admin_bp.static', filename='scripts/lib.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>LibEditor</h1>
+
+    <div id="status"></div>
+
+    <table id="item-table"></table>
+
+    <div id="add-list-item"><i class="fa-solid fa-plus"></i> Add list item</div>
+{% endblock %}

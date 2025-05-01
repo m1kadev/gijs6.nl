@@ -16,7 +16,7 @@
         {% for item in data %}
             <a href="{{ item.link }}" class="libitem" descript="{{ item.popupdescript }}">
                 <div class="libitemtxt">{{ item.title | safe }}</div>
-                <i class="{{ item.fa_icon_class if item.fa_icon_class else 'fa-solid fa-arrow-up-right-from-square' }}"></i>
+                <i class="{{ item.icon if item.icon else 'fa-solid fa-arrow-up-right-from-square' }}"></i>
             </a>
         {% endfor %}
     </div>
