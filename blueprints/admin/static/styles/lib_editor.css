@@ -1,6 +1,6 @@
 table {
     border-collapse: collapse;
-    font-size: .85em;
+    font-size: 0.85em;
     width: 100%;
 }
 
@@ -10,7 +10,8 @@ th {
     border-right: 1px #ccc dotted;
 }
 
-td:last-child, th:last-child {
+td:last-child,
+th:last-child {
     border-right: 0;
 }
 
@@ -55,11 +56,12 @@ th {
     color: white;
 }
 
-
 #add-list-item {
     display: flex;
     gap: 5px;
-    box-shadow: 3px 3px 7px 2px #0000001a, -1px -1px 1px 1px #0000001a;
+    box-shadow:
+        3px 3px 7px 2px #0000001a,
+        -1px -1px 1px 1px #0000001a;
     margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
@@ -73,9 +75,17 @@ th {
 
 #add-list-item:hover {
     background: #f1f3f5;
-    opacity: .8;
+    opacity: 0.8;
 }
 
 .list-item-iconpreview {
     margin-left: 10px;
+}
+
+.list-item-delete {
+    cursor: pointer;
+}
+
+.list-item-delete:hover {
+    color: #f03e3e;
 }
