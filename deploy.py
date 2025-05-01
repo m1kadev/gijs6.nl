@@ -40,7 +40,7 @@ def remove_dev_blocks(file_path, start_comment, end_comment):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(updated_content)
 
-for root, dirs, files in os.walk("."):
+for root, dirs, files in os.walk(BASE_DIR):
     dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
 
     for file in files:
