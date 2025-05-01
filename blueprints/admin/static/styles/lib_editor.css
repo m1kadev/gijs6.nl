@@ -89,3 +89,11 @@ th {
 .list-item-delete:hover {
     color: #f03e3e;
 }
+
+#item-table span {
+    padding: 5px;
+}
+
+[contenteditable="true"]:focus {
+    outline: #228be6 solid 2px;
+}
