@@ -3,13 +3,13 @@ import os
 import re
 import subprocess
 
+# Change to the directory where the script is located dynamically
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
 # Fetch and reset repo
-
-subprocess.run(["git", "stash"], check=True)
-
-subprocess.run(["git", "fetch"], check=True)
+subprocess.run(["git", "fetch"], check=True, cwd=BASE_DIR)
 print("Fetched")
-subprocess.run(["git", "reset", "--hard", "origin/main"], check=True)
+subprocess.run(["git", "reset", "--hard", "origin/main"], check=True, cwd=BASE_DIR)
 print("Updated files")
 
 # Directories and files to exclude
@@ -53,11 +53,8 @@ for root, dirs, files in os.walk("."):
             if start_comment and end_comment:
                 remove_dev_blocks(file_path, start_comment, end_comment)
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-
 with open(os.path.join(BASE_DIR, "data", "last_deploy.txt"), "w") as file:
     file.write(datetime.now().strftime("%d-%m-%Y at %H:%M:%S"))
-
 
 subprocess.run(["touch", "/var/www/www_gijs6_nl_wsgi.py"], check=True)
 print("Redeployed page")

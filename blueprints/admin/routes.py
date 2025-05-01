@@ -152,7 +152,7 @@ def dashboard_reload():
 def dashboard_redeploy():
     try:
         script_path = os.path.join(project_dir, "deploy.py")
-        result = subprocess.run([sys.executable, script_path])
+        subprocess.run(["python", script_path], capture_output=True, text=True, check=True)
 
         return "Success", 200
     except Exception as e:
