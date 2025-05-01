@@ -32,7 +32,7 @@ async function refreshAllCollections() {
         const collectionDiv = document.createElement("div");
         collectionDiv.className = "collection";
         collectionDiv.dataset.collection = colTitle;
-        collectionDiv.style.order = -colList.length;
+        collectionDiv.style.order = -colList.filter((item) => !item.checked).length;
 
         // Collection header
         const collectionHeader = document.createElement("div");
