@@ -3,10 +3,11 @@ import flask
 from dotenv import load_dotenv
 import os
 import json
-import pip
+import jinja2
 import requests
 import sys
 import platform
+import subprocess
 
 
 from decorators import login_required
@@ -31,33 +32,15 @@ token = os.getenv("API_TOKEN")
 @admin_bp.route("/")
 @login_required
 def dashboard():
-
-    general_info_response = requests.get("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/", headers={"Authorization": f"Token {token}"})
-    general_info_response.raise_for_status()
-
-    general_info = general_info_response.json
-
-
-    system_info = {
-        "os_name": platform.system(),
-        "os_version": platform.version(),
-        "os_release": platform.release(),
-        "machine": platform.machine(),
-        "architecture": platform.architecture(),
-        "processor": platform.processor(),
-        "system_uname": platform.uname()
-    }
+    os_info = platform.platform()
 
     version_info = {
-        "python_version": sys.version,
-        "flask_version": flask.__version__
+        "Python": platform.python_version(),
+        "Flask": flask.__version__,
+        "Jinja": jinja2.__version__
     }
 
-
-
-
-    return render_template("dashboard.html", general_info=general_info, system_info=system_info, version_info=version_info)
-
+    return render_template("dashboard.html", os_info=os_info, version_info=version_info)
 
 
 
@@ -151,3 +134,37 @@ def lib_editor_delete_item():
         return str(e), 500
 
 
+
+@admin_bp.route("/api/dashboard/reload", methods=["POST"])
+@login_required
+def dashboard_reload():
+    try:
+        response = requests.post("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/reload/", headers={"Authorization": f"Token {token}"})
+        response.raise_for_status()
+        
+        return "Success", 200
+    except Exception as e:
+        print(e)
+        return str(e), 500
+
+@admin_bp.route("/api/dashboard/redeploy", methods=["POST"])
+@login_required
+def dashboard_redeploy():
+    try:
+        script_path = os.path.join(project_dir, "deploy.py")
+        result = subprocess.run([sys.executable, script_path])
+
+        return "Success", 200
+    except Exception as e:
+        return str(e), 500
+
+@admin_bp.route("/api/dashboard/disable", methods=["POST"])
+@login_required
+def dashboard_disable():
+    try:
+        response = requests.get("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/disable/", headers={"Authorization": f"Token {token}"})
+        response.raise_for_status()
+
+        return "Success", 200
+    except Exception as e:
+        return str(e), 500

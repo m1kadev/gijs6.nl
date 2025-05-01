@@ -1,23 +1,69 @@
-#link-list {
+#blocks-container {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 20px;
+}
+
+.block {
+    padding: 20px 10px;
+    font-weight: 500;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+.block-version-version {
+    font-size: 2.25em;
+    font-weight: 800;
+}
+
+.block-version-Python {
+    background: #4584b6;
+}
+
+.block-version-Flask {
+    background: #218ea2;
+}
+
+.block-version-Jinja {
+    background: #b41717;
+}
+
+.block-version-os {
+    background: #454659;
+}
+
+.block-version-os .block-version-version {
+    font-size: 1.5em;
+}
+
+#site-actions-container {
+    display: flex;
+    flex-direction: column;
     gap: 10px;
-    margin-top: 25px;
-    font-size: 1.2em;
+    justify-content: space-between;
 }
 
-.link-item {
-    border: 1px black solid;
-    border-radius: 10px;
-    color: inherit;
-    text-decoration: none;
-    padding: 10px;
+.button.loading {
+    opacity: 0.3;
+    animation: pulse 1.5s infinite ease-in-out;
+    cursor: not-allowed;
 }
 
-.link-item:hover {
-    background: black;
-    color: white;
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.button.done {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--white);
 }

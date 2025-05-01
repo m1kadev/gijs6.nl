@@ -9,9 +9,76 @@
 {% block content %}
     <h1>Dashboard</h1>
 
-    {{ general_info }}
+    <div id="blocks-container">
+        {% for title, version in version_info.items() %}
+            <div class="block block-version block-version-{{ title }}">
+                <span class="block-version-title">{{ title }}</span>
+                <span class="block-version-version">{{ version }}</span>
+            </div>
+        {% endfor %}
+        <div class="block block-version block-version-os">
+            <span class="block-version-title">OS</span>
+            <span class="block-version-version">{{ os_info }}</span>
+        </div>
+        <div id="site-actions-container">
+            <button class="button site-action" onclick="reload(this)">
+                <i class="fa-solid fa-rotate"></i> Reload
+            </button>
+        
+            <button class="button site-action" onclick="redeploy(this)">
+                <i class="fa-solid fa-download"></i> Redeploy
+            </button>
+        
+            <button class="button site-action" onclick="disable(this)">
+                <i class="fa-solid fa-ban"></i> Disable
+            </button>
+        </div>
+    </div>
 
-    {{ system_info }}
+    <script>
+        function reload(button) {
+            button.classList.add("loading");
 
-    {{ version_info }}
+            fetch("/admin/api/dashboard/reload", {
+                method: "POST"
+            })
+                .then(async (response) => {
+                    button.classList.remove("loading");
+                    button.classList.add("done");
+                    setTimeout(() => {
+                        button.classList.remove("done");
+                    }, 750);
+                })
+        };
+
+        function redeploy(button) {
+            button.classList.add("loading");
+
+            fetch("/admin/api/dashboard/redeploy", {
+                method: "POST"
+            })
+                .then(async (response) => {
+                    button.classList.remove("loading");
+                    button.classList.add("done");
+                    setTimeout(() => {
+                        button.classList.remove("done");
+                    }, 750);
+                })
+        };
+
+        function disable(button) {
+            button.classList.add("loading");
+
+            fetch("/admin/api/dashboard/disable", {
+                method: "POST"
+            })
+                .then(async (response) => {
+                    button.classList.remove("loading");
+                    button.classList.add("done");
+                    setTimeout(() => {
+                        button.classList.remove("done");
+                    }, 750);
+                })
+        }
+    </script>
 {% endblock %}

@@ -10,7 +10,7 @@ subprocess.run(["git", "reset", "--hard", "origin/main"], check=True)
 print("Updated files")
 
 # Directories and files to exclude
-EXCLUDE_DIRS = [".venv", ".git", "__pycache__"]
+EXCLUDE_DIRS = [".venv", ".git", "__pycache__", ".venv", "venv", "node_modules"]
 EXCLUDE_FILES = ["deploy.py"]
 
 def get_comment_syntax(filename):
