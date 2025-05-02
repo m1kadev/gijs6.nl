@@ -87,6 +87,16 @@ async function refreshAllCollections() {
             contentSpan.dataset.ltActive = "false"; // LanguageTool
             contentSpan.textContent = listItem.content;
 
+            if (listItem.title == "Title" && listItem.content == "Content") {
+                itemDiv.classList.add("new-list-item");
+                setTimeout(() => {
+                    itemDiv.classList.remove("new-list-item");
+                }, 500);
+            }
+            
+           
+
+
             const deleteSpan = document.createElement("span");
             deleteSpan.className = "list-item-delete";
             deleteSpan.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
