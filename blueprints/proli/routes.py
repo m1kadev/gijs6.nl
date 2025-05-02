@@ -23,7 +23,9 @@ def list_all():
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
 
-        return jsonify(data)
+        data_sorted = dict(sorted(data.items()))
+
+        return jsonify(data_sorted)
     except Exception as e:
         return str(e), 500
 
@@ -31,11 +33,11 @@ def list_all():
 @login_required
 def set_checked():
     try:
-        data = request.get_json()
+        req_data = request.get_json()
 
-        collection = data.get("collection")
-        listitem_index = data.get("listitemIndex")
-        checked = data.get("checked")
+        collection = req_data.get("collection")
+        listitem_index = req_data.get("listitemIndex")
+        checked = req_data.get("checked")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
@@ -53,14 +55,14 @@ def set_checked():
 @login_required
 def set_info():
     try:
-        data = request.get_json()
+        req_data = request.get_json()
 
-        collection = data.get("collection")
-        listitem_index = data.get("listitemIndex")
+        collection = req_data.get("collection")
+        listitem_index = req_data.get("listitemIndex")
 
-        title = data.get("title")
-        datetime = data.get("datetime")
-        content = data.get("content")
+        title = req_data.get("title")
+        datetime = req_data.get("datetime")
+        content = req_data.get("content")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
@@ -81,9 +83,9 @@ def set_info():
 @login_required
 def make_new():
     try:
-        data = request.get_json()
+        req_data = request.get_json()
 
-        collection = data.get("collection")
+        collection = req_data.get("collection")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
@@ -108,10 +110,10 @@ def make_new():
 @login_required
 def delete_item():
     try:
-        data = request.get_json()
+        req_data = request.get_json()
 
-        collection = data.get("collection")
-        listitem_index = data.get("listitemIndex")
+        collection = req_data.get("collection")
+        listitem_index = req_data.get("listitemIndex")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
@@ -148,10 +150,10 @@ def new_collection():
 @login_required
 def rename_collection():
     try:
-        data = request.get_json()
+        req_data = request.get_json()
 
-        old_name = data.get("oldName")
-        new_name = data.get("newName")
+        old_name = req_data.get("oldName")
+        new_name = req_data.get("newName")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
@@ -169,9 +171,9 @@ def rename_collection():
 @login_required
 def delete_collection():
     try:
-        data = request.get_json()
+        req_data = request.get_json()
 
-        collection = data.get("collection")
+        collection = req_data.get("collection")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
