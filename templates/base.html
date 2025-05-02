@@ -43,6 +43,7 @@
             <a href="/projects" class="menu-item{% if request.path == '/projects' %} active{% endif %}">/projects</a>
             <a href="/lib" class="menu-item{% if request.path == '/lib' %} active{% endif %}">/library</a>
             <a href="/code" class="menu-item{% if request.path == '/code' %} active{% endif %}">/code</a>
+            <a href="/colophon" class="menu-item{% if request.path == '/colophon' %} active{% endif %}">/colophon</a>
             <a href="/school" class="menu-item">/school</a>
             <a href="/contact" class="menu-item">/contact</a>
         </header>
@@ -56,7 +57,7 @@
         <footer>
             <p id="madeby">Made by Gijs</p>
             {% block extra_footer %}{% endblock %}
-            <p>Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (commited on {{ latest_commit_date }} UTC)</p>
+            <p>Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (committed on {{ latest_commit_date }} UTC)</p>
             <p>Last deployed on {{ latest_deploy_date }} UTC</p>
             <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
             <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>

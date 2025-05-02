@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Colophon{% endblock %}
+
+{% block extra_headers %}
+    <style>
+        pre {
+            margin: auto;
+            width: min-content;
+        }
+        
+        p {
+            margin-block: 1em;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <div id="pagetitle">
+        <h1>Colophon</h1>
+    </div>
+    <pre id="logo-ascii">
+                                                        6666   
+                                                      666  666 
+                                                     66        
+        6666          666        666                666        
+      666   66        666        666                666666666  
+    666                                    666      666     66 
+    66            6666666   66666666    666   666   66       66
+    66    66666        66        666    66           66     66 
+    66       66        66        666     6666666       66666   
+    666      66        66        666           66              
+     6666   666        66        666   666     66              
+        66666          66        666      66666                
+                                 666                           
+                            6666666                            
+    </pre>
+    <p>This site is built with the <em>amazing</em> Python framework <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and with the awesome templating engine <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>. The webapp is hosted with a WSGI server over at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a>.<br>
+    I know that I could just probably really easily use an <abbr title="static site generator">SSG</abbr>, but I just want to be able to do ridiculous things :D. So all of the pages are simply self-written HTML, which kinda works.</p>
+    
+    <p>All the source code of this site (including my blog, ProLi (my custom to-do list), GradeCheck and just some random APIs) is available on <a href="https://github.com/Gijs6/gijs6.nl" target="_blank">GitHub</a>. All the source code and all original other content is available under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a>, because I don't want to restrict how others can use my code, and I really don't want to deal with the mess that is copyright law.</p>
+
+    <p>This site uses a <a href="https://github.com/Gijs6/gijs6.nl/blob/main/static/base.css" target="_blank"></a>really simple custom theme. The main design of this site was inspired by <a href="https://github.com/b2a3e8/jekyll-theme-console" target="_blank">this Jekyll theme</a>, and several page layouts were inspired by <a href="https://geheimesite.nl/">this site (by my friend Robin)</a>.</p>
+{% endblock %}

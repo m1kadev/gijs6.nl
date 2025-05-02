@@ -170,6 +170,9 @@ def lib():
 def projects():
     return render_template("projects.html")
 
+@app.route("/colophon")
+def colophon():
+    return render_template("colophon.html")
 
 @app.errorhandler(404)
 def not_found(e):
