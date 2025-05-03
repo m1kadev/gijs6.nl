@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request
 import flask
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 import os
 import json
@@ -201,8 +201,15 @@ http_method_colors = {
 @admin_bp.route("/log")
 @login_required
 def logview():
+    today = datetime.now(timezone.utc).strftime('%d %b')
+    return render_template("logview.html", today=today)
+
+
+@admin_bp.route("/api/logview/listall")
+@login_required
+def logview_listall():
     days_ago = request.args.get("days_ago")
-    formatted_suffix = f".{days_ago}" + (".gz" if days_ago != "1" else "") if days_ago else ""
+    formatted_suffix = f".{days_ago}" + (".gz" if days_ago != "1" else "") if days_ago and days_ago != "0" else ""
 
     try:
         with open(f"/var/log/www.gijs6.nl.access.log{formatted_suffix}") as f:
@@ -237,10 +244,33 @@ def logview():
             log_dict["status_color"] = http_status_colors.get(log_dict["status_code"][0], "gray")
             log_dict["method_color"] = http_method_colors.get(log_dict["method"], "gray")
             log_dict["datetime"] = datetime.strptime(log_dict["datetime"], "%d/%b/%Y:%H:%M:%S %z").strftime("%d %b %H:%M:%S")
-            log_dict["referrer"] = re.sub(r"https://www\.gijs6\.nl", "...", log_dict["referrer"]) if log_dict["referrer"] != "-" else "None"
+            log_dict["referrer"] = re.sub(r"https://www\.gijs6\.nl", "~", log_dict["referrer"]) if log_dict["referrer"] != "-" else "None"
             #log_dict["referrer"] = re.sub(r"https?://(www\.)?gijs6\.nl", "", log_dict["referrer"])
             finallog.append(log_dict)
-    
-    print(finallog)
 
-    return render_template("logview.html", log=finallog)
+    
+    path = request.args.get("path")
+    methods = request.args.get("methods")
+    statuses = request.args.get("statuses")
+
+    if methods:
+        methods_list = methods.split(",")
+    else:
+        methods_list = []
+
+    if statuses:
+        statuses_list = statuses.split(",")
+    else:
+        statuses_list = []
+
+    print(statuses)
+
+    def checkList(list, key):
+        if list and key:
+            return key in list
+        else:
+            return True
+
+    finallog = [logitem for logitem in finallog if path in logitem["path"] and checkList(methods_list, logitem["method"]) and checkList(statuses_list, logitem["status_code"][0])]
+
+    return jsonify(finallog)

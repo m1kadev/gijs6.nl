@@ -28,3 +28,55 @@
     background: var(--red);
     color: var(--white);
 }
+
+#filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, auto));
+    gap: 50px;
+}
+
+#filters h2 {
+    margin-bottom: 10px;
+}
+
+#filters > div > div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#filters label {
+    border: 1px solid var(--gray);
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+#filters label:has(input[type='checkbox']:checked) {
+    background: var(--green);
+    color: var(--back);
+    border-color: var(--green);
+}
+
+#filters input[type='checkbox'] {
+    width: 0;
+    height: 0;
+}
+
+#filters input[type='search'] {
+    border-radius: 100px;
+    border: none;
+    padding: 5px 10px;
+    background: var(--white);
+}
+
+#date-filter h2 {
+    margin-bottom: 10px;
+}
+
+#date-filter-input {
+    border-radius: 100px;
+    border: none;
+    padding: 5px;
+}

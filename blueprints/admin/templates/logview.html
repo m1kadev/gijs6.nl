@@ -5,38 +5,64 @@
 {% block extra_headers %}
     <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/logview.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/table.css') }}">
+    <script src="{{ url_for('admin_bp.static', filename='scripts/logview.js') }}"></script>
 {% endblock %}
 
 {% block content %}
     <h1>LogView</h1>
 
-    <table>
-        <tr>
-            <th>Method</th>
-            <th>Path</th>
-            <th>Status</th>
-            <th>Datetime</th>
-            <th>IP</th>
-            <th>User agent</th>
-            <th>Referrer</th>
-            <th>Protocol</th>
-            <th>Size</th>
-            <th>Response time</th>
-        </tr>
+    <div id="date-filter">
+        <h2>Date</h2>
+        <input type="date" id="date-filter-input" data-days-ago="0">
+    </div>
 
-        {% for row in log %}
+    <div id="filters">
+        <div id="method-filter">
+            <h2>Method</h2>
+            <div>
+                <label><input type="checkbox" value="GET">GET</label>
+                <label><input type="checkbox" value="POST">POST</label>
+                <label><input type="checkbox" value="PUT">PUT</label>
+                <label><input type="checkbox" value="DELETE">DELETE</label>
+                <label><input type="checkbox" value="PATCH">PATCH</label>
+                <label><input type="checkbox" value="HEAD">HEAD</label>
+                <label><input type="checkbox" value="OPTIONS">OPTIONS</label>   
+            </div>
+        </div>
+        <div id="status-filter">
+            <h2>Status</h2>
+            <div>
+                <label><input type="checkbox" value="1">1xx</label>
+                <label><input type="checkbox" value="2">2xx</label>
+                <label><input type="checkbox" value="3">3xx</label>
+                <label><input type="checkbox" value="4">4xx</label>
+                <label><input type="checkbox" value="5">5xx</label>
+            </div>
+        </div>
+        <div id="path-filter">
+            <h2>Path</h2>
+            <input type="search" />
+        </div>
+    </div>
+
+    <table>
+        <thead>
             <tr>
-                <td><span class="marked bg-{{ row.method_color}}">{{ row.method }}</span></td>
-                <td>{{ row.path }}</td>
-                <td><span class="marked bg-{{ row.status_color}}">{{ row.status }}</span></td>
-                <td>{{ row.datetime }}</td>
-                <td>{{ row.ip }}</td>
-                <td>{{ row.user_agent }}</td>
-                <td>{{ row.referrer }}</td>
-                <td>{{ row.protocol }}</td>
-                <td>{{ row.size }}</td>
-                <td>{{ row.response_time }}</td>
+                <th>Method</th>
+                <th>Path</th>
+                <th>Status</th>
+                <th>Datetime</th>
+                <th>IP</th>
+                <th>User agent</th>
+                <th>Referrer</th>
+                <th>Protocol</th>
+                <th>Size</th>
+                <th>Response time</th>
             </tr>
-        {% endfor %}
+        </thead>
+        
+        <tbody>
+        </tbody>
+
     </table>
 {% endblock %}
