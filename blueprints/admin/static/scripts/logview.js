@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", function() {
             url += "&statuses=" + statuses.join(",");
         }
 
+        
+        statusMessage('Updating table... <i class="fa-solid fa-repeat"></i>', "success", 2000);
+
         fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -40,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             })
             .catch(error => {
-                console.error("Error:", error);
+                statusMessage(`Error: ${error}`, "error", 4000);
             });
     };
 

@@ -85,6 +85,32 @@ button {
     cursor: pointer;
 }
 
+#status {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-item {
+    padding: 10px;
+    font-weight: 500;
+    border-radius: 10px;
+    animation: 500ms fadein forwards;
+}
+
+.status-item.status-success {
+    background: #40c057;
+    color: white;
+}
+
+.status-item.status-error {
+    background: #f03e3e;
+    color: white;
+}
+
 @keyframes fadein {
     from {
         opacity: 0;

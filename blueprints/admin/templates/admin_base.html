@@ -7,6 +7,25 @@
         <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/base.css') }}">
         <link rel="icon" href="{{ url_for('admin_bp.static', filename='favs/admin.ico') }}">
         <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+
+        <script>
+        function statusMessage(message, type, sleep) {
+            const container = document.getElementById("status")
+        
+            const messageElement = document.createElement("div")
+            messageElement.className = "status-item status-" + type;
+            messageElement.innerHTML = message;
+        
+            container.appendChild(messageElement);
+        
+            setTimeout(() => {
+                messageElement.style.animation = "500ms fadeout forwards"
+                setTimeout(() => {
+                    container.removeChild(messageElement);
+                }, 500);
+            }, sleep);
+        }
+        </script>
         
         {% block extra_headers %}{% endblock %}
     </head>
@@ -25,6 +44,8 @@
         </header>
 
         <main>
+            <div id="status"></div>
+
             {% block content %}{% endblock %}
         </main>
     </body>

@@ -1,20 +1,3 @@
-function statusMessage(message, type, sleep) {
-    const container = document.getElementById("status")
-
-    const messageElement = document.createElement("div")
-    messageElement.className = "status-item status-" + type;
-    messageElement.innerHTML = message;
-
-    container.appendChild(messageElement);
-
-    setTimeout(() => {
-        messageElement.style.animation = "500ms fadeout forwards"
-        setTimeout(() => {
-            container.removeChild(messageElement);
-        }, 500);
-    }, sleep);
-}
-
 async function refreshAllItems() {
     const response = await fetch("/admin/api/libeditor/list_all");
     if (!response.ok) {

@@ -48,6 +48,13 @@
                         setTimeout(() => {
                             button.classList.remove("done");
                         }, 750);
+
+                        setTimeout(() => {
+                            statusMessage('Refreshing in 3 seconds... <i class="fa-solid fa-repeat"></i>', "success", 2000);
+                            setTimeout(() => {
+                                window.location.reload(true);
+                            }, 3000);
+                        }, 250); 
                     } else {
                         button.classList.add("error");
                         setTimeout(() => {
