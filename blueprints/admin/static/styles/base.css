@@ -16,10 +16,12 @@
     --yellow: #ffa630;
     --red: #e65039;
     --green: #06c749;
+    
+    --back: #181c20;
 }
 
 body {
-    background: #181c20;
+    background: var(--back);
     color: var(--white);
     font-family: "Montserrat", sans-serif;
     padding: 30px;

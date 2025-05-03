@@ -1,0 +1,38 @@
+table {
+    border-collapse: separate;
+    font-size: 0.85em;
+    table-layout: auto;
+    width: auto;
+}
+
+tr:has(th) {
+    position: sticky;
+    top: 0;
+}
+
+th {
+    border-bottom: 2px solid white;
+    background: var(--back);
+    
+}
+
+td {
+    border-bottom: 1px #bdbdbd solid;
+}
+
+td,
+th {
+    border-right: 1px #ccc dotted;
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+td:last-child,
+th:last-child {
+    border-right: 0;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}

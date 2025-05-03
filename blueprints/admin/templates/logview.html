@@ -1,0 +1,42 @@
+{% extends "admin_base.html" %}
+
+{% block title %}LogView{% endblock %}
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/logview.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/table.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>LogView</h1>
+
+    <table>
+        <tr>
+            <th>Method</th>
+            <th>Path</th>
+            <th>Status</th>
+            <th>Datetime</th>
+            <th>IP</th>
+            <th>User agent</th>
+            <th>Referrer</th>
+            <th>Protocol</th>
+            <th>Size</th>
+            <th>Response time</th>
+        </tr>
+
+        {% for row in log %}
+            <tr>
+                <td><span class="marked bg-{{ row.method_color}}">{{ row.method }}</span></td>
+                <td>{{ row.path }}</td>
+                <td><span class="marked bg-{{ row.status_color}}">{{ row.status }}</span></td>
+                <td>{{ row.datetime }}</td>
+                <td>{{ row.ip }}</td>
+                <td>{{ row.user_agent }}</td>
+                <td>{{ row.referrer }}</td>
+                <td>{{ row.protocol }}</td>
+                <td>{{ row.size }}</td>
+                <td>{{ row.response_time }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
