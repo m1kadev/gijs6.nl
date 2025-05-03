@@ -10,6 +10,7 @@ import re
 import platform
 import subprocess
 import http
+import gzip
 
 
 from decorators import login_required
@@ -212,8 +213,12 @@ def logview_listall():
 
     try:
         path = f"/var/log/www.gijs6.nl.access.log{formatted_suffix}"
-        with open(f"/var/log/www.gijs6.nl.access.log{formatted_suffix}", encoding="utf-8") as f:
-            loglines = f.readlines()
+        if "gz" in path:
+            with gzip.open(path, "rt") as log_gz_file:
+                loglines = log_gz_file.readlines()
+        else:
+            with open(f"/var/log/www.gijs6.nl.access.log{formatted_suffix}", encoding="utf-8") as f:
+                loglines = f.readlines()
     except FileNotFoundError:
         try:
             with open(os.path.join(BASE_DIR, "data", "log.txt")) as f:
