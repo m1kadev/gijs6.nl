@@ -69,12 +69,12 @@ def generate_html(md_input):
     if refs:
         return (
             html_output
-            + "<div id='refs'><span id='ref-section-title'>References</span>"
+            + "<section id='refs'><h2>References</h2><ol>"
             + "".join(
-                f"<span class='ref-item'><span class='ref-num'>[{item['number']}]</span> <a id='ref-url-{item['number']}' href='{item['url']}'>{commonmark.commonmark(item['title'])}</a></span>"
+                f"<li><a id='ref-url-{item['number']}' href='{item['url']}'>{re.sub(r'</?p>', '', commonmark.commonmark(item['title']))}</a></li>"
                 for item in refs
             )
-            + "</div>"
+            + "</ol></section>"
         )
 
     return html_output
