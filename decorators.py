@@ -20,7 +20,7 @@ def login_required(func):
             next_page = request.args.get("next")
             
             if not next_page:
-               next_page = request.path
+               next_page = request.url
 
             return render_template("login.html", fav=fav, next_page=next_page)
         return func(*args, **kwargs)

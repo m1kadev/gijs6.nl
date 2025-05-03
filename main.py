@@ -176,10 +176,14 @@ def colophon():
 
 @app.errorhandler(404)
 def not_found(e):
+    path = request.path.strip("/")
+    
+    if "api" in path:
+        return "That URL was not found.", 404
+
     with open(os.path.join(BASE_DIR, "data", "redirects.json"), "r") as file:
         redirects = json.load(file)
 
-    path = request.path.strip("/")
     if path in redirects:
         return redirect(redirects[path], code=308)
     return render_template("404.html", e=e), 404
