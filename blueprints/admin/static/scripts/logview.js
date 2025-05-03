@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <td><span class="marked bg-${log.status_color}">${log.status}</span></td>
                         <td>${log.datetime}</td>
                         <td>${log.ip}</td>
-                        <td>${log.user_agent}</td>
+                        <td>${log.user_agent_formatted}</td>
                         <td>${log.referrer}</td>
                         <td>${log.protocol}</td>
                         <td>${log.size}</td>

@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request
 import flask
 from datetime import datetime
+from ua_parser import parse
 from dotenv import load_dotenv
 import os
 import json
@@ -249,6 +250,17 @@ def logview_listall():
             log_dict["status_color"] = http_status_colors.get(log_dict["status_code"][0], "gray")
             log_dict["method_color"] = http_method_colors.get(log_dict["method"], "gray")
             log_dict["datetime"] = datetime.strptime(log_dict["datetime"], "%d/%b/%Y:%H:%M:%S %z").strftime("%d %b %H:%M:%S")
+
+
+            ua = parse(log_dict["user_agent"])
+            user_agent_formatted = f"{getattr(ua.user_agent, 'family', '?')} {getattr(ua.user_agent, 'major', '?')} - {getattr(ua.os, 'family', '?')} {getattr(ua.os, 'major', '?')} - {getattr(ua.device, 'brand', '?')} {getattr(ua.device, 'family', '?')} ({getattr(ua.device, 'model', '?')})"
+            
+            if user_agent_formatted.count('?') > 3:
+                log_dict["user_agent_formatted"] = ua.string
+            else:
+                log_dict["user_agent_formatted"] = user_agent_formatted
+
+
             log_dict["referrer"] = re.sub(r"https://www\.gijs6\.nl", "~", log_dict["referrer"]) if log_dict["referrer"] != "-" else "None"
             #log_dict["referrer"] = re.sub(r"https?://(www\.)?gijs6\.nl", "", log_dict["referrer"])
             finallog.append(log_dict)
