@@ -71,12 +71,12 @@
     background: var(--white);
 }
 
-#date-filter h2 {
+#lognum-filter h2 {
     margin-bottom: 10px;
 }
 
-#date-filter-input {
+#lognum-input {
     border-radius: 100px;
     border: none;
-    padding: 5px;
+    padding: 5px 15px;
 }

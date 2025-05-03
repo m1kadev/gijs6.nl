@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request
 import flask
-from datetime import datetime, timezone
+from datetime import datetime
 from dotenv import load_dotenv
 import os
 import json
@@ -201,25 +201,25 @@ http_method_colors = {
 @admin_bp.route("/log")
 @login_required
 def logview():
-    today = datetime.now(timezone.utc).strftime('%d %b')
-    return render_template("logview.html", today=today)
+    return render_template("logview.html")
 
 
 @admin_bp.route("/api/logview/listall")
 @login_required
 def logview_listall():
-    days_ago = request.args.get("days_ago")
-    formatted_suffix = f".{days_ago}" + (".gz" if days_ago != "1" else "") if days_ago and days_ago != "0" else ""
+    log_num = request.args.get("log_num")
+    formatted_suffix = f".{log_num}" + (".gz" if log_num != "1" else "") if log_num and log_num != "0" else ""
 
     try:
-        with open(f"/var/log/www.gijs6.nl.access.log{formatted_suffix}") as f:
+        path = f"/var/log/www.gijs6.nl.access.log{formatted_suffix}"
+        with open(f"/var/log/www.gijs6.nl.access.log{formatted_suffix}", encoding="utf-8") as f:
             loglines = f.readlines()
     except FileNotFoundError:
         try:
             with open(os.path.join(BASE_DIR, "data", "log.txt")) as f:
                 loglines = f.readlines()
         except FileNotFoundError:
-            loglines = ['123.123.123.123 - - [02/May/2025:02:46:44 +0000] "GET /wp-includes HTTP/1.1" 404 4046 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" "123.123.123.123" response-time=0.001']
+            loglines = [f'999.999.999.999 - - [31/Dec/9999:23:59:59 +0000] "ERROR ERROR ERROR" 999 999 "-" "FILENOTFOUND: {path}" "999.999.999.999" response-time=ERROR']
     
 
     pattern = re.compile(
@@ -262,8 +262,6 @@ def logview_listall():
         statuses_list = statuses.split(",")
     else:
         statuses_list = []
-
-    print(statuses)
 
     def checkList(list, key):
         if list and key:
