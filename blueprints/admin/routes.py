@@ -240,7 +240,7 @@ def logview_listall():
 
         if match:
             log_dict = match.groupdict()
-            log_dict["status"] = f"{log_dict["status_code"]} {status_code_dict.get(int(log_dict["status_code"]), "UNKNOWN")}"
+            log_dict["status"] = f"{log_dict['status_code']} {status_code_dict.get(int(log_dict['status_code']), 'UNKNOWN')}"
             log_dict["status_color"] = http_status_colors.get(log_dict["status_code"][0], "gray")
             log_dict["method_color"] = http_method_colors.get(log_dict["method"], "gray")
             log_dict["datetime"] = datetime.strptime(log_dict["datetime"], "%d/%b/%Y:%H:%M:%S %z").strftime("%d %b %H:%M:%S")
