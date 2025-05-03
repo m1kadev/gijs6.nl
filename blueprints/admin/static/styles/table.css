@@ -36,3 +36,7 @@ th:last-child {
 tr:last-child td {
     border-bottom: none;
 }
+
+.text-left {
+    text-align: left;
+}

@@ -4,6 +4,7 @@
 
 {% block extra_headers %}
     <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/table.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -34,6 +35,27 @@
             </button>
         </div>
     </div>
+
+    <table id="commits">
+        <thead>
+            <tr>
+                <th>Datetime</th>
+                <th>Message</th>
+                <th>Hash</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for commit in commits %}
+                <tr>
+                    <td>{{ commit.datetime }}</td>
+                    <td class="text-left">{{ commit.message }}</td>
+                    <td>{{ commit.hash }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
 
     <script>
         function handleAction(button, endpoint) {

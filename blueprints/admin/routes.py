@@ -47,7 +47,19 @@ def dashboard():
         "Jinja": jinja2.__version__
     }
 
-    return render_template("dashboard.html", os_info=os_info, version_info=version_info)
+    result = subprocess.check_output(["git", "log", "-n 50", '--pretty=format:%h|%s|%ad', '--date=iso'], text=True, cwd=project_dir)
+    
+    commits = []
+    for line in result.strip().split('\n'):
+        short_hash, message, datetime = line.split('|', 3)
+        commits.append({
+            "hash": short_hash.strip(),
+            "message": message.strip(),
+            "datetime": datetime.strip()
+        })
+
+
+    return render_template("dashboard.html", os_info=os_info, version_info=version_info, commits=commits)
 
 
 
