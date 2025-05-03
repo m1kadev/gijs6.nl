@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request
+from flask import Blueprint, render_template, jsonify, request, current_app
 import flask
 from datetime import datetime
 from ua_parser import parse
@@ -24,7 +24,6 @@ project_dir = os.path.dirname(__file__)
 while not os.path.isdir(os.path.join(project_dir, ".git")):
     project_dir = os.path.dirname(project_dir)
 project_dir =  os.path.abspath(project_dir)
-
 
 
 
@@ -57,8 +56,6 @@ def dashboard():
             "message": message.strip(),
             "datetime": datetime.strip()
         })
-
-
     return render_template("dashboard.html", os_info=os_info, version_info=version_info, commits=commits)
 
 
@@ -80,7 +77,7 @@ def dashboard_reload():
 def dashboard_redeploy():
     try:
         script_path = os.path.join(project_dir, "deploy.py")
-        subprocess.check_output(["python", script_path], capture_output=True, text=True, check=True)
+        subprocess.check_output(["python", script_path], text=True)
 
         return "Success", 200
     except Exception as e:
@@ -98,6 +95,24 @@ def dashboard_disable():
         return str(e), 500
 
 
+@admin_bp.route("/api/dashboard/list_urls")
+@login_required
+def dashboard_list_urls():
+    urls = []
+    for rule in current_app.url_map.iter_rules():
+        #if ('.' in rule.endpoint and "blog" not in rule.endpoint) or "<" in rule.rule:
+        #    continue
+        if "<" in rule.rule or "api" in rule.rule or "kodo" in rule.rule:
+            continue
+
+        urls.append({
+            "url": rule.rule,
+            "method": [method for method in rule.methods if method not in ("OPTIONS", "HEAD")][0],
+            "endpoint": rule.endpoint
+        })
+
+    
+    return jsonify(urls)
 
 
 
@@ -278,7 +293,7 @@ def logview_listall():
             finallog.append(log_dict)
 
     
-    path = request.args.get("path")
+    path = request.args.get("path", "None")
     methods = request.args.get("methods")
     statuses = request.args.get("statuses")
 
@@ -300,4 +315,4 @@ def logview_listall():
 
     finallog = [logitem for logitem in finallog if path in logitem["path"] and checkList(methods_list, logitem["method"]) and checkList(statuses_list, logitem["status_code"][0])]
 
-    return jsonify(finallog)
+    return jsonify(finallog.reverse())

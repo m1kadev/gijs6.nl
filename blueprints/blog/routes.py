@@ -125,7 +125,7 @@ def blog_post(slug):
 def generate_rss_feed():
     feed = FeedGenerator()
     feed.title("Gijs6 - Blog")
-    feed.link(href="http://gijs6.nl/blog", rel="self")
+    feed.link(href="http://www.gijs6.nl/blog", rel="self")
     feed.description("My own blog")
     feed.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")
     feed.language("en")
@@ -173,7 +173,7 @@ def generate_rss_feed():
     for post in posts_data:
         entry = feed.add_entry()
         entry.title(post["title"])
-        entry.link(href=f"https://gijs6.nl/blog/{post['slug']}")
+        entry.link(href=f"https://www.gijs6.nl/blog/{post['slug']}")
         entry.description(post["description"])
         entry.pubDate(post["date"])
         entry.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")

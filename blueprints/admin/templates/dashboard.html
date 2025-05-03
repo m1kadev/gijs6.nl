@@ -5,6 +5,7 @@
 {% block extra_headers %}
     <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/table.css') }}">
+    <script src="{{ url_for('admin_bp.static', filename='scripts/dashboard.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -36,73 +37,40 @@
         </div>
     </div>
 
-    <table id="commits">
-        <thead>
-            <tr>
-                <th>Datetime</th>
-                <th>Message</th>
-                <th>Hash</th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            {% for commit in commits %}
+
+    <div id="tables-container">
+        <table id="urls">
+            <thead>
                 <tr>
-                    <td>{{ commit.datetime }}</td>
-                    <td class="text-left">{{ commit.message }}</td>
-                    <td>{{ commit.hash }}</td>
+                    <th>Endpoint</th>
+                    <th>Status</th>
                 </tr>
-            {% endfor %}
-        </tbody>
+            </thead>
+            
+            <tbody>
+            </tbody>
 
-    </table>
+        </table>
 
-    <script>
-        function handleAction(button, endpoint) {
-            button.classList.add("loading");
-    
-            fetch(endpoint, { method: "POST" })
-                .then(response => {
-                    button.classList.remove("loading");
-    
-                    if (response.ok) {
-                        button.classList.add("done");
-                        setTimeout(() => {
-                            button.classList.remove("done");
-                        }, 750);
+        <table id="commits">
+            <thead>
+                <tr>
+                    <th>Datetime</th>
+                    <th>Message</th>
+                    <th>Hash</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for commit in commits %}
+                    <tr>
+                        <td>{{ commit.datetime }}</td>
+                        <td class="text-left">{{ commit.message }}</td>
+                        <td>{{ commit.hash }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
 
-                        setTimeout(() => {
-                            statusMessage('Refreshing in 3 seconds... <i class="fa-solid fa-repeat"></i>', "success", 2000);
-                            setTimeout(() => {
-                                window.location.reload(true);
-                            }, 3000);
-                        }, 250); 
-                    } else {
-                        button.classList.add("error");
-                        setTimeout(() => {
-                            button.classList.remove("error");
-                        }, 2000);
-                    }
-                })
-                .catch(() => {
-                    button.classList.remove("loading");
-                    button.classList.add("error");
-                    setTimeout(() => {
-                        button.classList.remove("error");
-                    }, 2000);
-                });
-        }
-    
-        function reload(button) {
-            handleAction(button, "/admin/api/dashboard/reload");
-        }
-    
-        function redeploy(button) {
-            handleAction(button, "/admin/api/dashboard/redeploy");
-        }
-    
-        function disable(button) {
-            handleAction(button, "/admin/api/dashboard/disable");
-        }
-    </script>    
+        </table>
+    </div>
 {% endblock %}
