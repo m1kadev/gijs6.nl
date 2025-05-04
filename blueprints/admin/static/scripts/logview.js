@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 let tableBody = document.querySelector("table tbody");
                 tableBody.innerHTML = "";
 
-                data.forEach(log => {
+                data.reverse().forEach(log => {
                     let row = document.createElement("tr");
 
                     row.innerHTML = `

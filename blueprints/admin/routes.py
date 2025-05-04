@@ -315,4 +315,4 @@ def logview_listall():
 
     finallog = [logitem for logitem in finallog if path in logitem["path"] and checkList(methods_list, logitem["method"]) and checkList(statuses_list, logitem["status_code"][0])]
 
-    return jsonify(finallog.reverse())
+    return jsonify(finallog)

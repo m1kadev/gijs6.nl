@@ -79,7 +79,7 @@ main {
 button {
     border: 1px solid #cecece;
     background: #cecece;
-    padding: 0.4em;
+    padding: 10px 15px;
     color: black;
     font-weight: 600;
     cursor: pointer;

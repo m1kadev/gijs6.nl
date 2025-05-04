@@ -1,10 +1,9 @@
 .marked {
     font-weight: 700;
-    padding: 5px;
+    padding: 5px 10px;
     display: inline-block;
-    width: 100%;
-
     color: var(--back);
+    border-radius: 5px;
 }
 
 .bg-green {

@@ -4,6 +4,10 @@
     gap: 20px;
 }
 
+#blocks-container > * {
+    border-radius: 5px;
+}
+
 .block {
     padding: 20px 10px;
     font-weight: 500;
@@ -44,6 +48,11 @@
     flex-direction: column;
     gap: 10px;
     justify-content: space-between;
+}
+
+#site-actions-container button {
+    font-size: 1em;
+    border-radius: 5px;
 }
 
 .button.loading {
@@ -90,11 +99,10 @@
 
 .marked {
     font-weight: 700;
-    padding: 5px;
+    padding: 5px 10px;
     display: inline-block;
-    width: 100%;
-
     color: var(--back);
+    border-radius: 5px;
 }
 
 .bg-green {
