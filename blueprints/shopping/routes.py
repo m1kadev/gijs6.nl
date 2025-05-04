@@ -90,14 +90,12 @@ def set_info():
 
         title = req_data.get("title")
         datetime = req_data.get("datetime")
-        content = req_data.get("content")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
         
         data[int(listitem_index)]["title"] = title
         data[int(listitem_index)]["datetime"] = datetime
-        data[int(listitem_index)]["content"] = content
 
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
@@ -116,7 +114,6 @@ def make_new():
         data.append(
             {
                 "title": "Title",
-                "content": "Content",
                 "datetime": datetime.now(timezone.utc).isoformat(),
                 "checked": False,
             }

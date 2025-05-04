@@ -46,15 +46,8 @@ async function refreshAllItems() {
         const datetimeSpan = document.createElement("span");
         datetimeSpan.className = "list-item-datetime";
         datetimeSpan.textContent = listItem.datetime;
-
-        const contentSpan = document.createElement("span");
-        contentSpan.className = "list-item-content";
-        contentSpan.contentEditable = true;
-        contentSpan.spellcheck = false;
-        contentSpan.dataset.ltActive = "false"; // LanguageTool
-        contentSpan.textContent = listItem.content;
-
-        if (listItem.title == "Title" && listItem.content == "Content") {
+    
+        if (listItem.title == "Title") {
             itemDiv.classList.add("new-list-item");
             setTimeout(() => {
                 itemDiv.classList.remove("new-list-item");
@@ -68,7 +61,6 @@ async function refreshAllItems() {
         itemDiv.appendChild(checkSpan);
         itemDiv.appendChild(titleSpan);
         itemDiv.appendChild(datetimeSpan);
-        itemDiv.appendChild(contentSpan);
         itemDiv.appendChild(deleteSpan);
 
         container.appendChild(itemDiv);
@@ -76,7 +68,7 @@ async function refreshAllItems() {
 
     const addItemDiv = document.createElement("div");
     addItemDiv.className = "list-item add-list-item";
-    addItemDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Add list item';
+    addItemDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Item toevoegen';
 
     container.appendChild(addItemDiv);
 
@@ -125,7 +117,6 @@ async function refreshAllItems() {
             clearTimeout(debounceTimeout);
 
             const title = lI.querySelector(".list-item-title").textContent;
-            const content = lI.querySelector(".list-item-content").textContent;
 
             const datetimeElement = lI.querySelector(".list-item-datetime");
             const newDate = new Date().toISOString();
@@ -142,7 +133,6 @@ async function refreshAllItems() {
                     listitemIndex: listitemIndex,
                     title: title,
                     datetime: newDate,
-                    content: content,
                 }),
             })
                 .then(async (response) => {
@@ -164,7 +154,7 @@ async function refreshAllItems() {
             debounceTimeout = setTimeout(executeUpdate, 3500);
         });
 
-        const inputs = lI.querySelectorAll(".list-item-title, .list-item-content");
+        const inputs = lI.querySelectorAll(".list-item-title");
         inputs.forEach((input) => {
             input.addEventListener("blur", () => {
                 executeUpdate();
