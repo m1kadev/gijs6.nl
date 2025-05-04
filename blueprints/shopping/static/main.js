@@ -16,7 +16,7 @@ function statusMessage(message, type, sleep) {
 }
 
 async function refreshAllItems() {
-    const response = await fetch("/shopping/api/list_all");
+    const response = await fetch("/boodschappen/api/list_all");
     if (!response.ok) {
         const errorText = await response.text();
         statusMessage(`Error ${response.status}: ${errorText}`, "error", 8000);
@@ -82,7 +82,7 @@ async function refreshAllItems() {
 
             const isNowChecked = !cB.classList.contains("checked");
 
-            fetch("/shopping/api/set_checked", {
+            fetch("/boodschappen/api/set_checked", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -124,7 +124,7 @@ async function refreshAllItems() {
 
             const listitemIndex = lI.dataset.listitemIndex;
 
-            fetch("/shopping/api/set_info", {
+            fetch("/boodschappen/api/set_info", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -166,7 +166,7 @@ async function refreshAllItems() {
 
     addItemElements.forEach((aIE) => {
         aIE.addEventListener("click", function () {
-            fetch("/shopping/api/make_new", {
+            fetch("/boodschappen/api/make_new", {
                 method: "POST",
             })
                 .then(async (response) => {
@@ -194,7 +194,7 @@ async function refreshAllItems() {
             const dBlistitemIndex = dBparent.dataset.listitemIndex;
 
             if (window.confirm(`Wil je echt item #${dBlistitemIndex} '${title}' verwijderen?`)) {
-                fetch("/shopping/api/delete_item", {
+                fetch("/boodschappen/api/delete_item", {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

@@ -43,14 +43,14 @@
     font-size: 1.5em;
 }
 
-#site-actions-container {
+.site-actions-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: space-between;
 }
 
-#site-actions-container button {
+.site-actions-container button {
     font-size: 1em;
     border-radius: 5px;
 }

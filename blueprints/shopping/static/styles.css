@@ -14,6 +14,7 @@ body {
 
 header {
     margin-bottom: 30px;
+    text-align: center;
 }
 
 #page-header {
@@ -60,6 +61,8 @@ header {
 #item-container {
     display: flex;
     flex-direction: column;
+    max-width: 600px;
+    margin: auto;
 }
 
 @keyframes fadein {
