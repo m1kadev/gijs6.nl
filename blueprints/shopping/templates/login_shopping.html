@@ -5,35 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inloggen</title>
     <link rel="icon" type="image/x-icon" href="{{ fav }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('shopping_bp.static', filename='fav.ico') }}">
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        
         :root {
-            color-scheme: light dark;
-        }
-
-        @media (prefers-color-scheme: light) {
-          :root {
-            --foreground: #000;
-            --background: #fff;
-          }
-        }
-
-        @media (prefers-color-scheme: dark) {
-          :root {
-            --foreground: #fff;
-            --background: #000;
-          }
+            --foreground: black;
+            --background: white;
         }
 
         body {
             justify-items: center;
-            padding: clamp(25px, 2.5%, 50px);
+            padding: 30px;
             margin: 0;
             font-family: monospace;
-            color: var(--foreground);
         }
+
         .container {
             max-width: clamp(750px, 50%, 1500px);
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
         }
 
         h1, p {
@@ -48,29 +44,31 @@
             box-sizing: border-box;
             display: flex;
             align-items: stretch;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: flex-start;
             gap: 30px;
             margin-top: 20px;
-            max-width: 100%;
+            max-width: min(500px, 100%);
             flex-wrap: wrap;
         }
 
-        input[type="password"] {
-            padding: 0.5rem;
-            border: 0.15rem solid var(--foreground);
+        input {
+            padding: 0.5em;
+            border: 1px solid var(--foreground);
             border-radius: 10px;
             flex-grow: 1;
-            font-size: 1.25rem;
-            max-width: min(300px, 100%);
-            box-sizing: border-box;
+            font-size: 1.5em;
+        }
+
+        input[type="password"] {
+            letter-spacing: 3px;
         }
 
         button {
-            padding: 0.5rem;
+            padding: 0.5em;
             background-color: var(--foreground);
             color: var(--background);
-            border: 0.15rem solid var(--foreground);
+            border: 1px solid var(--foreground);
             border-radius: 10px;
             transition: 250ms all ease;
             font-size: 1.25em;
@@ -85,11 +83,7 @@
         #err {
             color: red;
             font-weight: 800;
-            margin-top: 1rem;
-        }
-
-        #homelink {
-            margin-top: 1rem;
+            margin-top: 1em;
         }
     </style>
 </head>
@@ -97,7 +91,8 @@
     <div class="container">
     <h1>Inloggen bij boodschappenlisjt</h1>
     <form method="POST" action="/boodschappen/login">
-        <input type="password" id="password" name="password" required>
+        <input type="text" placeholder="Gebruikersnaam" id="username" name="username" required>
+        <input type="password" placeholder="Wachtwoord" id="password" name="password" required>
         <button type="submit">Jaja</button>
     </form>
     {% if error %}

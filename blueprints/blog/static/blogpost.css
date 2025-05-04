@@ -1,108 +1,110 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 main article * {
-  margin: revert;
-  padding: revert;
+    margin: revert;
+    padding: revert;
 }
 
 main a {
-  color: var(--lightblue);
+    color: var(--lightblue);
 }
 
 main {
-  margin: 30px 0;
-  font-family: "Montserrat", sans-serif;
+    margin: 30px 0;
+    font-family: "Montserrat", sans-serif;
 }
 
 #post-info {
-  margin: 2em 0;
-  padding: 0 0.5em;
-  border-left: 2px solid var(--lightblue);
-  font-size: 0.9em;
+    margin: 2em 0;
+    padding: 0 0.5em;
+    border-left: 2px solid var(--lightblue);
+    font-size: 0.9em;
 }
 
 #post-info p {
-  margin-block: 0.25em;
+    margin-block: 0.25em;
 }
 
 .menu-itemtxt {
-  font-weight: 800;
+    font-weight: 800;
 }
 
 main strong {
-  font-weight: 800;
+    font-weight: 800;
 }
 
 main blockquote {
-  margin: 0;
-  padding: 0 1em;
-  opacity: 0.8;
-  border-left: 0.25em solid var(--lightblue);
+    margin: 0;
+    padding: 0 1em;
+    opacity: 0.8;
+    border-left: 0.25em solid var(--lightblue);
 }
 
 main p code {
-  padding-inline: 0.3em;
-  background-color: #777b805c;
-  border-radius: 6px;
+    padding-inline: 0.3em;
+    background-color: #777b805c;
+    border-radius: 6px;
 }
 
 .ref-inline {
-  vertical-align: super;
-  font-size: 0.75em;
-  text-decoration: none;
+    vertical-align: super;
+    font-size: 0.75em;
+    text-decoration: none;
 }
 
-#post-info, h1, main#index, main code, #refs h2, .ref-num {
-  font-family: "Source Code Pro", monospace;
+#post-info,
+h1,
+main#index,
+main code,
+#refs h2,
+.ref-num {
+    font-family: "Source Code Pro", monospace;
 }
 
 #back-to-blog {
-  margin-block-end: 1.5em;
-  color: var(--front);
+    margin-block-end: 1.5em;
+    color: var(--front);
 }
 
 #back-to-blog i {
-  color: var(--lightblue);
+    color: var(--lightblue);
 }
 
 pre:has(code) {
-  overflow: scroll;
-  border-radius: .5em;
-  background: light-dark(#dfe3d6, #201c29);
-  padding: 1em;
+    overflow: scroll;
+    border-radius: 0.5em;
+    background: light-dark(#dfe3d6, #201c29);
+    padding: 1em;
 }
 
-
-
 #refs {
-  margin-top: 2.5em;
+    margin-top: 2.5em;
 }
 
 #refs h2 {
-  font-size: 1.25em;
-  font-weight: 800;
+    font-size: 1.25em;
+    font-weight: 800;
 }
 
 #refs ol li * {
-  margin-block: 0;
+    margin-block: 0;
 }
 
 #refs ol {
-  list-style-type: none;
-  counter-reset: item;
-  padding-left: 0;
+    list-style-type: none;
+    counter-reset: item;
+    padding-left: 0;
 }
 
 #refs ol li {
-  counter-increment: item;
-  margin: 0.5em 0;
-  position: relative;
-  padding-left: 2em;
+    counter-increment: item;
+    margin: 0.5em 0;
+    position: relative;
+    padding-left: 2em;
 }
 
 #refs ol li::before {
-  content: "[" counter(item) "] ";
-  position: absolute;
-  left: 0;
+    content: "[" counter(item) "] ";
+    position: absolute;
+    left: 0;
 }
-

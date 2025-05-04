@@ -83,7 +83,6 @@
     color: var(--red);
 }
 
-
 #tables-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(500px, auto));
@@ -93,9 +92,6 @@
 #tables-container > * {
     height: fit-content;
 }
-
-
-
 
 .marked {
     font-weight: 700;
@@ -126,4 +122,3 @@
     background: var(--red);
     color: var(--white);
 }
-

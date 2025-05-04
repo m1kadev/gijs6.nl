@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import datetime, timezone
+from datetime import datetime
+import pytz
 import json
 import string
 import os
@@ -28,17 +29,18 @@ except FileNotFoundError:
 
 @shopping_bp.before_request
 def login_check():
-    if "login" not in request.path:
-        if not session.get("logged_in_shopping"):
+    if "login" not in request.path and "static" not in request.path:
+        if not session.get("shopping_logged_in"):
             return redirect(url_for("shopping_bp.login"))
 
 @shopping_bp.route("/login", methods=["GET", "POST"])
 def login():
-    if not session.get("logged_in_shopping"):
+    if not session.get("shopping_logged_in"):
         if request.method == "POST":
             password = request.form.get("password")
             if check_password_hash(PASSWORD_HASH, password):
-                session["logged_in_shopping"] = True
+                session["shopping_logged_in"] = True
+                session["shopping_user"] = request.form.get("username")
                 session.permanent = True
 
                 return redirect(url_for("shopping_bp.shopping_index"))
@@ -87,16 +89,16 @@ def set_info():
     try:
         req_data = request.get_json()
 
-        listitem_index = req_data.get("listitemIndex")
+        user = session["shopping_user"]
 
+        listitem_index = req_data.get("listitemIndex")
         title = req_data.get("title")
-        datetime = req_data.get("datetime")
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
         
         data[int(listitem_index)]["title"] = title
-        data[int(listitem_index)]["datetime"] = datetime
+        data[int(listitem_index)]["info"] = f"{datetime.now(pytz.timezone("Europe/Amsterdam")).isoformat()}, {user}"
 
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
@@ -111,11 +113,13 @@ def make_new():
     try:
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
+
+        user = session["shopping_user"]
         
         data.append(
             {
                 "title": "Title",
-                "datetime": datetime.now(timezone.utc).isoformat(),
+                "info": f"{datetime.now(pytz.timezone("Europe/Amsterdam")).isoformat()}, {user}",
                 "checked": False,
             }
         )
@@ -145,6 +149,32 @@ def delete_item():
         return "Success", 200
     except Exception as e:
         return str(e), 500
+    
+@shopping_bp.route("/api/delete_all", methods=["DELETE"])
+def delete_all():
+    try:
+        with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
+            json.dump([], jf, indent=4)
+        
+        return "Success", 200
+    except Exception as e:
+        return str(e), 500
+
+@shopping_bp.route("/api/delete_checked", methods=["DELETE"])
+def delete_checked():
+    try:
+        with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
+            data = json.load(jf)
+        
+        data = [item for item in data if not item["checked"]]
+        
+        with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
+            json.dump(data, jf, indent=4)
+        
+        return "Success", 200
+    except Exception as e:
+        return str(e), 500
+
 
 if __name__ == "__main__":
     shopping_bp.run(port=1000, debug=True)

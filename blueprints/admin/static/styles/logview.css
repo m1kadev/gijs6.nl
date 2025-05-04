@@ -52,18 +52,18 @@
     font-weight: 600;
 }
 
-#filters label:has(input[type='checkbox']:checked) {
+#filters label:has(input[type="checkbox"]:checked) {
     background: var(--green);
     color: var(--back);
     border-color: var(--green);
 }
 
-#filters input[type='checkbox'] {
+#filters input[type="checkbox"] {
     width: 0;
     height: 0;
 }
 
-#filters input[type='search'] {
+#filters input[type="search"] {
     border-radius: 100px;
     border: none;
     padding: 5px 10px;

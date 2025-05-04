@@ -27,50 +27,58 @@ async function refreshAllItems() {
     const container = document.getElementById("item-container");
     container.innerHTML = "";
 
-    data.forEach((listItem, index) => {
-        const itemDiv = document.createElement("div");
-        itemDiv.className = "list-item";
-        itemDiv.dataset.listitemIndex = index;
+    if (data.length === 0) {
+        const addItemDiv = document.createElement("div");
+        addItemDiv.id = "no-items";
+        addItemDiv.innerHTML = 'Geen items gevonden... <i class="fa-solid fa-face-frown"></i>';
 
-        const checkSpan = document.createElement("span");
-        checkSpan.className = "list-item-check" + (listItem.checked ? " checked" : "");
-        checkSpan.innerHTML = '<i class="fa-solid fa-check"></i>';
+        container.appendChild(addItemDiv);
+    } else {
+        data.forEach((listItem, index) => {
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "list-item";
+            itemDiv.dataset.listitemIndex = index;
 
-        const titleSpan = document.createElement("span");
-        titleSpan.className = "list-item-title";
-        titleSpan.contentEditable = true;
-        titleSpan.spellcheck = false;
-        titleSpan.dataset.ltActive = "false"; // LanguageTool
-        titleSpan.textContent = listItem.title;
+            const checkSpan = document.createElement("span");
+            checkSpan.className = "list-item-check" + (listItem.checked ? " checked" : "");
+            checkSpan.innerHTML = '<i class="fa-solid fa-check"></i>';
 
-        const datetimeSpan = document.createElement("span");
-        datetimeSpan.className = "list-item-datetime";
-        datetimeSpan.textContent = listItem.datetime;
-    
-        if (listItem.title == "Title") {
-            itemDiv.classList.add("new-list-item");
-            setTimeout(() => {
-                itemDiv.classList.remove("new-list-item");
-            }, 500);
-        }
+            const titleSpan = document.createElement("span");
+            titleSpan.className = "list-item-title";
+            titleSpan.contentEditable = true;
+            titleSpan.spellcheck = false;
+            titleSpan.dataset.ltActive = "false"; // LanguageTool
+            titleSpan.textContent = listItem.title;
 
-        const deleteSpan = document.createElement("span");
-        deleteSpan.className = "list-item-delete";
-        deleteSpan.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+            const infoSpan = document.createElement("span");
+            infoSpan.className = "list-item-info";
+            infoSpan.textContent = listItem.info;
 
-        itemDiv.appendChild(checkSpan);
-        itemDiv.appendChild(titleSpan);
-        itemDiv.appendChild(datetimeSpan);
-        itemDiv.appendChild(deleteSpan);
+            if (listItem.title == "Title") {
+                itemDiv.classList.add("new-list-item");
+                setTimeout(() => {
+                    itemDiv.classList.remove("new-list-item");
+                }, 500);
+            }
 
-        container.appendChild(itemDiv);
-    });
+            const deleteSpan = document.createElement("span");
+            deleteSpan.className = "list-item-delete";
+            deleteSpan.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
-    const addItemDiv = document.createElement("div");
-    addItemDiv.className = "list-item add-list-item";
-    addItemDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Item toevoegen';
+            itemDiv.appendChild(checkSpan);
+            itemDiv.appendChild(titleSpan);
+            itemDiv.appendChild(infoSpan);
+            itemDiv.appendChild(deleteSpan);
 
-    container.appendChild(addItemDiv);
+            container.appendChild(itemDiv);
+        });
+
+        const addItemDiv = document.createElement("button");
+        addItemDiv.id = "add-list-item";
+        addItemDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Item toevoegen';
+
+        container.appendChild(addItemDiv);
+    }
 
     const checkBoxes = document.querySelectorAll(".list-item-check");
 
@@ -118,10 +126,6 @@ async function refreshAllItems() {
 
             const title = lI.querySelector(".list-item-title").textContent;
 
-            const datetimeElement = lI.querySelector(".list-item-datetime");
-            const newDate = new Date().toISOString();
-            datetimeElement.textContent = newDate;
-
             const listitemIndex = lI.dataset.listitemIndex;
 
             fetch("/boodschappen/api/set_info", {
@@ -132,7 +136,6 @@ async function refreshAllItems() {
                 body: JSON.stringify({
                     listitemIndex: listitemIndex,
                     title: title,
-                    datetime: newDate,
                 }),
             })
                 .then(async (response) => {
@@ -162,25 +165,61 @@ async function refreshAllItems() {
         });
     });
 
-    const addItemElements = document.querySelectorAll(".add-list-item");
+    const addItemElement = document.getElementById("add-list-item");
 
-    addItemElements.forEach((aIE) => {
-        aIE.addEventListener("click", function () {
-            fetch("/boodschappen/api/make_new", {
-                method: "POST",
+    addItemElement.addEventListener("click", function () {
+        fetch("/boodschappen/api/make_new", {
+            method: "POST",
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                    return;
+                }
+                refreshAllItems();
             })
-                .then(async (response) => {
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
-                        return;
-                    }
-                    refreshAllItems();
-                })
-                .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
-                });
-        });
+            .catch((err) => {
+                statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+            });
+    });
+
+    const deleteAll = document.getElementById("delete-all");
+
+    deleteAll.addEventListener("click", function () {
+        fetch("/boodschappen/api/delete_all", {
+            method: "DELETE",
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                    return;
+                }
+                refreshAllItems();
+            })
+            .catch((err) => {
+                statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+            });
+    });
+
+    const deleteChecked = document.getElementById("delete-checked");
+
+    deleteChecked.addEventListener("click", function () {
+        fetch("/boodschappen/api/delete_checked", {
+            method: "DELETE",
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                    return;
+                }
+                refreshAllItems();
+            })
+            .catch((err) => {
+                statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+            });
     });
 
     const deleteButtons = document.querySelectorAll(".list-item-delete");

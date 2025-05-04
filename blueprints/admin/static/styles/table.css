@@ -12,7 +12,6 @@ tr:has(th) {
 th {
     border-bottom: 2px solid white;
     background: var(--back);
-    
 }
 
 td {

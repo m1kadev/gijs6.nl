@@ -1,13 +1,13 @@
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async function () {
     const tableBody = document.querySelector("table tbody");
 
     const http_status_colors = {
-        "1": "blue",
-        "2": "green",
-        "3": "blue",
-        "4": "yellow",
-        "5": "red"
-    }
+        1: "blue",
+        2: "green",
+        3: "blue",
+        4: "yellow",
+        5: "red",
+    };
 
     try {
         const response = await fetch("/admin/api/dashboard/list_urls");
@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                 const statusCode = res.status;
 
                 const statusCodeFirstDigit = statusCode.toString().charAt(0);
-                const status_color = http_status_colors[statusCodeFirstDigit]
-                
+                const status_color = http_status_colors[statusCodeFirstDigit];
+
                 const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${urlitem.url}</td>
@@ -35,18 +35,16 @@ document.addEventListener("DOMContentLoaded", async function() {
         for (const urlitem of urlitemdata) {
             fetchData(urlitem);
         }
-
     } catch (error) {
         console.error("Error fetching URL list:", error);
     }
 });
 
-
 function handleAction(button, endpoint) {
     button.classList.add("loading");
 
     fetch(endpoint, { method: "POST" })
-        .then(response => {
+        .then((response) => {
             button.classList.remove("loading");
 
             if (response.ok) {
@@ -60,7 +58,7 @@ function handleAction(button, endpoint) {
                     setTimeout(() => {
                         window.location.reload(true);
                     }, 3000);
-                }, 250); 
+                }, 250);
             } else {
                 button.classList.add("error");
                 setTimeout(() => {
@@ -92,4 +90,3 @@ function redeploy(button) {
 function disable(button) {
     handleAction(button, "/admin/api/dashboard/disable");
 }
-

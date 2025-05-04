@@ -1,14 +1,14 @@
 function statusMessage(message, type, sleep) {
-    const container = document.getElementById("status")
+    const container = document.getElementById("status");
 
-    const messageElement = document.createElement("div")
+    const messageElement = document.createElement("div");
     messageElement.className = "status-item status-" + type;
     messageElement.innerHTML = message;
 
     container.appendChild(messageElement);
 
     setTimeout(() => {
-        messageElement.style.animation = "500ms fadeout forwards"
+        messageElement.style.animation = "500ms fadeout forwards";
         setTimeout(() => {
             container.removeChild(messageElement);
         }, 500);
@@ -93,9 +93,6 @@ async function refreshAllCollections() {
                     itemDiv.classList.remove("new-list-item");
                 }, 500);
             }
-            
-           
-
 
             const deleteSpan = document.createElement("span");
             deleteSpan.className = "list-item-delete";
@@ -117,7 +114,7 @@ async function refreshAllCollections() {
         listContainer.appendChild(addItemDiv);
         collectionDiv.appendChild(listContainer);
         container.appendChild(collectionDiv);
-    };
+    }
 
     const addCollectionDiv = document.createElement("div");
     addCollectionDiv.id = "add-collection";
@@ -125,13 +122,10 @@ async function refreshAllCollections() {
     addCollectionDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Add collection';
 
     container.appendChild(addCollectionDiv);
-    
 
-
-        
     const checkBoxes = document.querySelectorAll(".list-item-check");
 
-    checkBoxes.forEach(cB => {
+    checkBoxes.forEach((cB) => {
         cB.addEventListener("click", function () {
             const parent = cB.parentElement;
 
@@ -148,7 +142,7 @@ async function refreshAllCollections() {
                 body: JSON.stringify({
                     checked: isNowChecked,
                     collection: collection,
-                    listitemIndex: listitemIndex
+                    listitemIndex: listitemIndex,
                 }),
             })
                 .then(async (response) => {
@@ -162,31 +156,29 @@ async function refreshAllCollections() {
                 .catch((err) => {
                     statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
                 });
-            
 
-            cB.classList.toggle("checked")
+            cB.classList.toggle("checked");
         });
     });
 
-
     const listItems = document.querySelectorAll(".list-item");
 
-    listItems.forEach(lI => {
+    listItems.forEach((lI) => {
         let debounceTimeout;
-    
+
         const executeUpdate = () => {
             clearTimeout(debounceTimeout);
-    
+
             const title = lI.querySelector(".list-item-title").textContent;
             const content = lI.querySelector(".list-item-content").textContent;
-    
+
             const datetimeElement = lI.querySelector(".list-item-datetime");
             const newDate = new Date().toISOString();
             datetimeElement.textContent = newDate;
-    
+
             const collection = lI.dataset.collection;
             const listitemIndex = lI.dataset.listitemIndex;
-    
+
             fetch("/proli/api/set_info", {
                 method: "PUT",
                 headers: {
@@ -200,37 +192,36 @@ async function refreshAllCollections() {
                     content: content,
                 }),
             })
-            .then(async (response) => {
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
-                    return;
-                };
-                
-                statusMessage('Updated! <i class="fa-solid fa-repeat"></i>', "success", 2000);
-            })
-            .catch((err) => {
-                statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
-            });
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                        return;
+                    }
+
+                    statusMessage('Updated! <i class="fa-solid fa-repeat"></i>', "success", 2000);
+                })
+                .catch((err) => {
+                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                });
         };
-    
-        lI.addEventListener('input', function () {
+
+        lI.addEventListener("input", function () {
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(executeUpdate, 3500);
         });
-    
+
         const inputs = lI.querySelectorAll(".list-item-title, .list-item-content");
-        inputs.forEach(input => {
-            input.addEventListener('blur', () => {
+        inputs.forEach((input) => {
+            input.addEventListener("blur", () => {
                 executeUpdate();
             });
         });
     });
 
-    
     const addItemElements = document.querySelectorAll(".add-list-item");
 
-    addItemElements.forEach(aIE => {
+    addItemElements.forEach((aIE) => {
         aIE.addEventListener("click", function () {
             const aIEParent = aIE.parentElement;
             const aIECollection = aIEParent.dataset.collection;
@@ -241,7 +232,7 @@ async function refreshAllCollections() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    collection: aIECollection
+                    collection: aIECollection,
                 }),
             })
                 .then(async (response) => {
@@ -258,16 +249,15 @@ async function refreshAllCollections() {
         });
     });
 
-
     const deleteButtons = document.querySelectorAll(".list-item-delete");
 
-    deleteButtons.forEach(dB => {
+    deleteButtons.forEach((dB) => {
         dB.addEventListener("click", function () {
             const dBparent = dB.parentElement;
 
             const dBcollection = dBparent.dataset.collection;
             const dBlistitemIndex = dBparent.dataset.listitemIndex;
-            
+
             if (window.confirm(`Do you really want to delete element #${dBlistitemIndex} from collection ${dBcollection}?`)) {
                 fetch("/proli/api/delete_item", {
                     method: "DELETE",
@@ -276,7 +266,7 @@ async function refreshAllCollections() {
                     },
                     body: JSON.stringify({
                         collection: dBcollection,
-                        listitemIndex: dBlistitemIndex
+                        listitemIndex: dBlistitemIndex,
                     }),
                 })
                     .then(async (response) => {
@@ -294,12 +284,11 @@ async function refreshAllCollections() {
         });
     });
 
-
     const addCollection = document.getElementById("add-collection");
 
     addCollection.addEventListener("click", function () {
         fetch("/proli/api/new_collection", {
-            method: "POST"
+            method: "POST",
         })
             .then(async (response) => {
                 if (!response.ok) {
@@ -314,19 +303,18 @@ async function refreshAllCollections() {
             });
     });
 
-
     const collectionTitles = document.querySelectorAll(".collection-title");
 
-    collectionTitles.forEach(cT => {
+    collectionTitles.forEach((cT) => {
         let debounceTimeout;
-    
+
         const executeUpdate = () => {
             clearTimeout(debounceTimeout);
-    
+
             const cTParent = cT.parentElement.parentElement;
             const collection = cTParent.dataset.collection;
             const newName = cT.textContent;
-    
+
             fetch("/proli/api/rename_collection", {
                 method: "PUT",
                 headers: {
@@ -334,36 +322,35 @@ async function refreshAllCollections() {
                 },
                 body: JSON.stringify({
                     oldName: collection,
-                    newName: newName
+                    newName: newName,
                 }),
             })
-            .then(async (response) => {
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
-                    return;
-                }
-                refreshAllCollections();
-            })
-            .catch((err) => {
-                statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
-            });
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                        return;
+                    }
+                    refreshAllCollections();
+                })
+                .catch((err) => {
+                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                });
         };
-    
-        cT.addEventListener('input', function () {
+
+        cT.addEventListener("input", function () {
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(executeUpdate, 3500);
         });
-    
-        cT.addEventListener('blur', () => {
+
+        cT.addEventListener("blur", () => {
             executeUpdate();
         });
     });
 
-
     const deleteCollectionButtons = document.querySelectorAll(".collection-delete");
 
-    deleteCollectionButtons.forEach(dCB => {
+    deleteCollectionButtons.forEach((dCB) => {
         dCB.addEventListener("click", function () {
             const dCBparent = dCB.parentElement.parentElement;
 
@@ -376,7 +363,7 @@ async function refreshAllCollections() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        collection: dCBcollection
+                        collection: dCBcollection,
                     }),
                 })
                     .then(async (response) => {
@@ -395,8 +382,7 @@ async function refreshAllCollections() {
     });
 
     statusMessage('Refreshed! <i class="fa-solid fa-repeat"></i>', "success", 2000);
-};
-
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     refreshAllCollections();

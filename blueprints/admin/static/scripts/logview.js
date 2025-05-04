@@ -1,7 +1,7 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     function updateTable() {
-        let methods = Array.from(document.querySelectorAll("#method-filter input[type='checkbox']:checked")).map(box => box.value)
-        let statuses = Array.from(document.querySelectorAll("#status-filter input[type='checkbox']:checked")).map(box => box.value)
+        let methods = Array.from(document.querySelectorAll("#method-filter input[type='checkbox']:checked")).map((box) => box.value);
+        let statuses = Array.from(document.querySelectorAll("#status-filter input[type='checkbox']:checked")).map((box) => box.value);
 
         let path = document.querySelector("#path-filter input").value;
 
@@ -15,16 +15,15 @@ document.addEventListener("DOMContentLoaded", function() {
             url += "&statuses=" + statuses.join(",");
         }
 
-        
         statusMessage('Updating table... <i class="fa-solid fa-repeat"></i>', "success", 2000);
 
         fetch(url)
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 let tableBody = document.querySelector("table tbody");
                 tableBody.innerHTML = "";
 
-                data.reverse().forEach(log => {
+                data.reverse().forEach((log) => {
                     let row = document.createElement("tr");
 
                     row.innerHTML = `
@@ -42,10 +41,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     tableBody.appendChild(row);
                 });
             })
-            .catch(error => {
+            .catch((error) => {
                 statusMessage(`Error: ${error}`, "error", 4000);
             });
-    };
+    }
 
     updateTable();
 
