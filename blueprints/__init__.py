@@ -13,11 +13,13 @@ def load_blueprints():
                 try:
                     module = importlib.import_module(module_path)
 
+                    url_prefix = getattr(module, "URL_PREFIX", f"/{file_item.name}")
+
                     for attr in dir(module):
                         if attr.endswith("_bp"):
                             bp = getattr(module, attr)
-                            blueprints.append((bp, f"/{file_item.name}"))
+                            blueprints.append((bp, url_prefix))
                 except Exception as e:
-                    print(f"An error occured while trying to load {module_path}: {e}")
+                    print(f"An error occurred while trying to load {module_path}: {e}")
 
     return blueprints

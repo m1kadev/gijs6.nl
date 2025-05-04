@@ -8,6 +8,7 @@ import random
 
 
 shopping_bp = Blueprint("shopping_bp", __name__, template_folder="templates", static_folder="static")
+URL_PREFIX = "/boodschappen"
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
