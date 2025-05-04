@@ -145,7 +145,7 @@ async function refreshAllItems() {
                         return;
                     }
 
-                    statusMessage('Updated! <i class="fa-solid fa-repeat"></i>', "success", 2000);
+                    refreshAllItems();
                 })
                 .catch((err) => {
                     statusMessage(`Fetch failed: ${err.message}`, "error", 4000);

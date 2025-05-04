@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, send_from_directory, url_for
 from datetime import timedelta, datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
-# import locale
+import locale
 import os
 import random
 import string
@@ -12,7 +12,7 @@ import subprocess
 from blueprints import load_blueprints
 
 
-# locale.setlocale(locale.LC_TIME, "nl_NL")
+locale.setlocale(locale.LC_TIME, "nl_NL")
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
