@@ -11,10 +11,14 @@ import re
 import platform
 import subprocess
 import http
+import locale
 import gzip
 
 
 from decorators import login_required
+
+locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+
 
 admin_bp = Blueprint("admin_bp", __name__, template_folder="templates", static_folder="static")
 
@@ -245,83 +249,86 @@ def logview():
 @admin_bp.route("/api/logview/listall")
 @login_required
 def logview_listall():
-    log_num = request.args.get("log_num")
-    formatted_suffix = f".{log_num}" + (".gz" if log_num != "1" else "") if log_num and log_num != "0" else ""
-
     try:
-        path = f"/var/log/www.gijs6.nl.access.log{formatted_suffix}"
-        if "gz" in path:
-            with gzip.open(path, "rt") as log_gz_file:
-                loglines = log_gz_file.readlines()
-        else:
-            with open(f"/var/log/www.gijs6.nl.access.log{formatted_suffix}", encoding="utf-8") as f:
-                loglines = f.readlines()
-    except FileNotFoundError:
+        log_num = request.args.get("log_num")
+        formatted_suffix = f".{log_num}" + (".gz" if log_num != "1" else "") if log_num and log_num != "0" else ""
+
         try:
-            with open(os.path.join(BASE_DIR, "data", "log.txt")) as f:
-                loglines = f.readlines()
-        except FileNotFoundError:
-            loglines = [f'999.999.999.999 - - [31/Dec/9999:23:59:59 +0000] "ERROR ERROR ERROR" 999 999 "-" "FILENOTFOUND: {path}" "999.999.999.999" response-time=ERROR']
-    
-
-    pattern = re.compile(
-        r'(?P<ip>\d+\.\d+\.\d+\.\d+)\s+- - '
-        r'\[(?P<datetime>[^\]]+)\] '
-        r'"(?P<method>\w+) (?P<path>[^ ]+) (?P<protocol>[^"]+)" '
-        r'(?P<status_code>\d+) (?P<size>\d+) '
-        r'"(?P<referrer>[^"]*)" '
-        r'"(?P<user_agent>[^"]*)" '
-        r'"(?P<alt_ip>[^"]+)" '
-        r'response-time=(?P<response_time>[\d\.]+)'
-    )
-
-    finallog = []
-    
-    for line in loglines:
-        match = pattern.match(line)
-
-        if match:
-            log_dict = match.groupdict()
-            log_dict["status"] = f"{log_dict['status_code']} {status_code_dict.get(int(log_dict['status_code']), 'UNKNOWN')}"
-            log_dict["status_color"] = http_status_colors.get(log_dict["status_code"][0], "gray")
-            log_dict["method_color"] = http_method_colors.get(log_dict["method"], "gray")
-            log_dict["datetime"] = datetime.strptime(log_dict["datetime"], "%d/%b/%Y:%H:%M:%S %z").strftime("%d %b %H:%M:%S")
-
-
-            ua = parse(log_dict["user_agent"])
-            user_agent_formatted = f"{getattr(ua.user_agent, 'family', '?')} {getattr(ua.user_agent, 'major', '?')} - {getattr(ua.os, 'family', '?')} {getattr(ua.os, 'major', '?')} - {getattr(ua.device, 'brand', '?')} {getattr(ua.device, 'family', '?')} ({getattr(ua.device, 'model', '?')})"
-            
-            if user_agent_formatted.count('?') > 3:
-                log_dict["user_agent_formatted"] = ua.string
+            path = f"/var/log/www.gijs6.nl.access.log{formatted_suffix}"
+            if "gz" in path:
+                with gzip.open(path, "rt") as log_gz_file:
+                    loglines = log_gz_file.readlines()
             else:
-                log_dict["user_agent_formatted"] = user_agent_formatted
+                with open(f"/var/log/www.gijs6.nl.access.log{formatted_suffix}", encoding="utf-8") as f:
+                    loglines = f.readlines()
+        except FileNotFoundError:
+            try:
+                with open(os.path.join(BASE_DIR, "data", "log.txt")) as f:
+                    loglines = f.readlines()
+            except FileNotFoundError:
+                loglines = [f'999.999.999.999 - - [31/Dec/9999:23:59:59 +0000] "ERROR ERROR ERROR" 999 999 "-" "FILENOTFOUND: {path}" "999.999.999.999" response-time=ERROR']
+        
+
+        pattern = re.compile(
+            r'(?P<ip>\d+\.\d+\.\d+\.\d+)\s+- - '
+            r'\[(?P<datetime>[^\]]+)\] '
+            r'"(?P<method>\w+) (?P<path>[^ ]+) (?P<protocol>[^"]+)" '
+            r'(?P<status_code>\d+) (?P<size>\d+) '
+            r'"(?P<referrer>[^"]*)" '
+            r'"(?P<user_agent>[^"]*)" '
+            r'"(?P<alt_ip>[^"]+)" '
+            r'response-time=(?P<response_time>[\d\.]+)'
+        )
+
+        finallog = []
+        
+        for line in loglines:
+            match = pattern.match(line)
+
+            if match:
+                log_dict = match.groupdict()
+                log_dict["status"] = f"{log_dict['status_code']} {status_code_dict.get(int(log_dict['status_code']), 'UNKNOWN')}"
+                log_dict["status_color"] = http_status_colors.get(log_dict["status_code"][0], "gray")
+                log_dict["method_color"] = http_method_colors.get(log_dict["method"], "gray")
+                log_dict["datetime"] = datetime.strptime(log_dict["datetime"], "%d/%b/%Y:%H:%M:%S %z").strftime("%d %b %H:%M:%S")
 
 
-            log_dict["referrer"] = re.sub(r"https://www\.gijs6\.nl", "~", log_dict["referrer"]) if log_dict["referrer"] != "-" else "None"
-            #log_dict["referrer"] = re.sub(r"https?://(www\.)?gijs6\.nl", "", log_dict["referrer"])
-            finallog.append(log_dict)
+                ua = parse(log_dict["user_agent"])
+                user_agent_formatted = f"{getattr(ua.user_agent, 'family', '?')} {getattr(ua.user_agent, 'major', '?')} - {getattr(ua.os, 'family', '?')} {getattr(ua.os, 'major', '?')} - {getattr(ua.device, 'brand', '?')} {getattr(ua.device, 'family', '?')} ({getattr(ua.device, 'model', '?')})"
+                
+                if user_agent_formatted.count('?') > 3:
+                    log_dict["user_agent_formatted"] = ua.string
+                else:
+                    log_dict["user_agent_formatted"] = user_agent_formatted
 
-    
-    path = request.args.get("path", "None")
-    methods = request.args.get("methods")
-    statuses = request.args.get("statuses")
 
-    if methods:
-        methods_list = methods.split(",")
-    else:
-        methods_list = []
+                log_dict["referrer"] = re.sub(r"https://www\.gijs6\.nl", "~", log_dict["referrer"]) if log_dict["referrer"] != "-" else "None"
+                #log_dict["referrer"] = re.sub(r"https?://(www\.)?gijs6\.nl", "", log_dict["referrer"])
+                finallog.append(log_dict)
 
-    if statuses:
-        statuses_list = statuses.split(",")
-    else:
-        statuses_list = []
+        
+        path = request.args.get("path", "")
+        methods = request.args.get("methods")
+        statuses = request.args.get("statuses")
 
-    def checkList(list, key):
-        if list and key:
-            return key in list
+        if methods:
+            methods_list = methods.split(",")
         else:
-            return True
+            methods_list = []
 
-    finallog = [logitem for logitem in finallog if path in logitem["path"] and checkList(methods_list, logitem["method"]) and checkList(statuses_list, logitem["status_code"][0])]
+        if statuses:
+            statuses_list = statuses.split(",")
+        else:
+            statuses_list = []
 
-    return jsonify(finallog)
+        def checkList(list, key):
+            if list and key:
+                return key in list
+            else:
+                return True
+
+        finallog = [logitem for logitem in finallog if path in logitem["path"] and checkList(methods_list, logitem["method"]) and checkList(statuses_list, logitem["status_code"][0])]
+
+        return jsonify(finallog)
+    except Exception as e:
+        return str(e), 500
