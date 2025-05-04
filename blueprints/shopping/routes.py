@@ -98,7 +98,7 @@ def set_info():
             data = json.load(jf)
         
         data[int(listitem_index)]["title"] = title
-        data[int(listitem_index)]["info"] = f"{datetime.now(pytz.timezone("Europe/Amsterdam")).isoformat()}, {user}"
+        data[int(listitem_index)]["info"] = f"{datetime.now(pytz.timezone('Europe/Amsterdam')).isoformat()}, {user}"
 
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
@@ -119,7 +119,7 @@ def make_new():
         data.append(
             {
                 "title": "Title",
-                "info": f"{datetime.now(pytz.timezone("Europe/Amsterdam")).isoformat()}, {user}",
+                "info": f"{datetime.now(pytz.timezone('Europe/Amsterdam')).isoformat()}, {user}",
                 "checked": False,
             }
         )

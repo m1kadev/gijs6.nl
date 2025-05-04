@@ -72,13 +72,13 @@ async function refreshAllItems() {
 
             container.appendChild(itemDiv);
         });
-
-        const addItemDiv = document.createElement("button");
-        addItemDiv.id = "add-list-item";
-        addItemDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Item toevoegen';
-
-        container.appendChild(addItemDiv);
     }
+
+    const addItemDiv = document.createElement("button");
+    addItemDiv.id = "add-list-item";
+    addItemDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Item toevoegen';
+
+    container.appendChild(addItemDiv);
 
     const checkBoxes = document.querySelectorAll(".list-item-check");
 

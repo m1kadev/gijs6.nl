@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                    <td>${urlitem.url}</td>
+                    <td><a href=${urlitem.url}>${urlitem.url}</a></td>
                     <td><span class="marked bg-${status_color}">${statusCode}</span></td>
                 `;
                 tableBody.appendChild(row);

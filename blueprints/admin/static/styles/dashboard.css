@@ -46,8 +46,7 @@
 .site-actions-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    justify-content: space-between;
+    gap: 30px;
 }
 
 .site-actions-container button {

@@ -128,3 +128,12 @@ button {
         opacity: 0;
     }
 }
+
+a {
+    color: inherit;
+    text-decoration-color: var(--lightblue);
+}
+
+a:hover {
+    color: var(--lightblue);
+}
