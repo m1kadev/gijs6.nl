@@ -77,8 +77,12 @@ function handleAction(button, endpoint) {
         });
 }
 
-function reload(button) {
-    handleAction(button, "/admin/api/dashboard/reload");
+function softreload(button) {
+    handleAction(button, "/admin/api/dashboard/softreload");
+}
+
+function forcereload(button) {
+    handleAction(button, "/admin/api/dashboard/forcereload");
 }
 
 function redeploy(button) {

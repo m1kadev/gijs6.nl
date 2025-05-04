@@ -58,11 +58,20 @@ def dashboard():
         })
     return render_template("dashboard.html", os_info=os_info, version_info=version_info, commits=commits)
 
-
-
-@admin_bp.route("/api/dashboard/reload", methods=["POST"])
+@admin_bp.route("/api/dashboard/softreload", methods=["POST"])
 @login_required
-def dashboard_reload():
+def dashboard_softreload():
+    try:
+        subprocess.run(["touch", "/var/www/www_gijs6_nl_wsgi.py"], check=True)
+        
+        return "Success", 200
+    except Exception as e:
+        print(e)
+        return str(e), 500
+
+@admin_bp.route("/api/dashboard/forcereload", methods=["POST"])
+@login_required
+def dashboard_forcereload():
     try:
         response = requests.post("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/reload/", headers={"Authorization": f"Token {token}"})
         response.raise_for_status()

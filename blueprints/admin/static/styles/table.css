@@ -2,7 +2,6 @@ table {
     border-collapse: separate;
     font-size: 0.85em;
     table-layout: auto;
-    width: min-content;
 }
 
 tr:has(th) {
