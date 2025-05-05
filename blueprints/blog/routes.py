@@ -187,10 +187,10 @@ def generate_rss_feed():
 def rss():
     feed = generate_rss_feed()
     rss_feed = feed.rss_str(pretty=True)
-    return Response(rss_feed, mimetype="application/xml; charset=utf-8")
+    return Response(rss_feed, mimetype="application/xml")
 
 @blog_bp.route("/atom.xml")
 def atom():
     feed = generate_rss_feed()
     atom_feed = feed.atom_str(pretty=True)
-    return Response(atom_feed, mimetype="application/xml; charset=utf-8")
+    return Response(atom_feed, mimetype="application/xml")
