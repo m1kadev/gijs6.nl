@@ -125,7 +125,9 @@ def blog_post(slug):
 def generate_rss_feed():
     feed = FeedGenerator()
     feed.title("Gijs6 - Blog")
-    feed.link(href="http://www.gijs6.nl/blog", rel="self")
+    feed.id("http://www.gijs6.nl/blog")
+    feed.link(href="http://www.gijs6.nl/blog/rss.xml", rel="self", type="application/rss+xml")
+    feed.link(href="http://www.gijs6.nl/blog/atom.xml", rel="self", type="application/atom+xml")
     feed.description("My own blog")
     feed.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")
     feed.language("en")
@@ -156,7 +158,6 @@ def generate_rss_feed():
                 continue
 
         html_content = generate_html(file_content_clean)
-        html_content = f"<![CDATA[{html_content}]]>"
 
         posts_data.append({
             "title": title,
@@ -173,8 +174,9 @@ def generate_rss_feed():
     for post in posts_data:
         entry = feed.add_entry()
         entry.title(post["title"])
+        entry.id(f"https://www.gijs6.nl/blog/{post['slug']}")
         entry.link(href=f"https://www.gijs6.nl/blog/{post['slug']}")
-        entry.description(post["description"])
+        entry.content(post["description"], type="html")
         entry.pubDate(post["date"])
         entry.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")
 
@@ -184,6 +186,11 @@ def generate_rss_feed():
 @blog_bp.route("/rss.xml")
 def rss():
     feed = generate_rss_feed()
-    rss_feed = feed.rss_str()
+    rss_feed = feed.rss_str(pretty=True)
     return Response(rss_feed, mimetype="application/xml; charset=utf-8")
 
+@blog_bp.route("/atom.xml")
+def atom():
+    feed = generate_rss_feed()
+    atom_feed = feed.atom_str(pretty=True)
+    return Response(atom_feed, mimetype="application/xml; charset=utf-8")
