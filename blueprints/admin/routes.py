@@ -68,7 +68,7 @@ def dashboard_softreload():
     try:
         subprocess.run(["touch", "/var/www/www_gijs6_nl_wsgi.py"], check=True)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         print(e)
         return str(e), 500
@@ -80,7 +80,7 @@ def dashboard_forcereload():
         response = requests.post("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/reload/", headers={"Authorization": f"Token {token}"})
         response.raise_for_status()
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         print(e)
         return str(e), 500
@@ -92,7 +92,7 @@ def dashboard_redeploy():
         script_path = os.path.join(project_dir, "deploy.py")
         subprocess.check_output(["python", script_path], text=True)
 
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -103,7 +103,7 @@ def dashboard_disable():
         response = requests.post("https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/disable/", headers={"Authorization": f"Token {token}"})
         response.raise_for_status()
 
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -171,7 +171,7 @@ def libeditor_set_info():
         with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
     
@@ -194,7 +194,7 @@ def libeditor_make_new():
         with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
             json.dump(data, jf, indent=4)
 
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -214,7 +214,7 @@ def libeditor_delete_item():
         with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 

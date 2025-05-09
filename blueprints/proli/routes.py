@@ -47,7 +47,7 @@ def set_checked():
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -75,7 +75,7 @@ def set_info():
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -102,7 +102,7 @@ def make_new():
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
 
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -123,7 +123,7 @@ def delete_item():
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -142,7 +142,7 @@ def new_collection():
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -163,7 +163,7 @@ def rename_collection():
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
@@ -183,7 +183,7 @@ def delete_collection():
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
         
-        return "Success", 200
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
 
