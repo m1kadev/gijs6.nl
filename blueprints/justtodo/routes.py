@@ -42,7 +42,7 @@ def login():
 
                 return redirect(url_for("jstd_bp.jstd_index"))
             else:
-                return render_template("login_jstd.html", error="FOUT")
+                return render_template("login_jstd.html", error="WRONG LOL")
             
         return render_template("login_jstd.html")
     return redirect(url_for("jstd_bp.jstd_index"))

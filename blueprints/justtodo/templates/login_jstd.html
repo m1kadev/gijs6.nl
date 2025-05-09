@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inloggen</title>
+    <title>Login</title>
     <link rel="icon" type="image/x-icon" href="{{ fav }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('shopping_bp.static', filename='fav.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('jstd_bp.static', filename='fav.ico') }}">
     <style>
         * {
             box-sizing: border-box;
@@ -89,10 +89,10 @@
 </head>
 <body>
     <div class="container">
-    <h1>Inloggen bij boodschappenlisjt</h1>
+    <h1>Login Just to-do</h1>
     <form method="POST" action="/justtodo/login">
-        <input type="password" placeholder="Wachtwoord" id="password" name="password" required>
-        <button type="submit">Jaja</button>
+        <input type="password" placeholder="password" id="password" name="password" required>
+        <button type="submit">Go!</button>
     </form>
     {% if error %}
         <p id="err">{{ error }}</p>

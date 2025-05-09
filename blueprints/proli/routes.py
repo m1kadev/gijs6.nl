@@ -14,7 +14,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 @proli_bp.route("/")
 @login_required
 def proli_index():
-    return render_template("main.html")
+    return render_template("proli_main.html")
 
 @proli_bp.route("/api/list_all", methods=["GET"])
 @login_required
