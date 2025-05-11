@@ -43,7 +43,7 @@
 
 body {
     background-color: var(--back);
-    height: 100vh;
+    min-height: 100vh;
     color: var(--front);
     font-family: "Source Code Pro", sans-serif;
     display: flex;
