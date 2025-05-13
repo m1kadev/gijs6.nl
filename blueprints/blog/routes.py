@@ -155,7 +155,8 @@ def generate_rss_feed():
                 timestamp = int(lines[-1])
             except (ValueError, IndexError):
                 # Not published posts
-                continue
+                date = datetime.now(pytz.timezone("Europe/Amsterdam"))
+                timestamp = date.timestamp()
 
         html_content = generate_html(file_content_clean)
 
