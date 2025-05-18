@@ -1,4 +1,4 @@
-#projlists {
+ul {
     padding: revert;
 }
 
@@ -6,20 +6,11 @@
     font-weight: 700;
 }
 
-.projimg {
-    width: 40vw;
-    margin-top: 10px;
-}
-
-#projlists li {
-    margin-bottom: 30px;
+ul li {
+    margin-bottom: 20px;
 }
 
 .projcontainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: fit-content;
     text-decoration: none;
 }
 

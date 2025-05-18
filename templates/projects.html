@@ -9,64 +9,70 @@
 {% block content %}
     <div id="pagetitle">
         <h1>Projects</h1>
-        <h2>Some of the projects I have made or that I have contributed to.</h2>
+        <h2>Here are some of the projects I've worked on or contributed to :D</h2>
     </div>
 
-    <ul id="projlists">
+    <ul>
+        <!-- main projects -->
         <li>
-            <a href="/" target="_blank" class="projcontainer">
-                <span class="projname">This site</span>
-                <p>My own site. There isn't relly much to see but it looks quite nice, I hope.</p>
-                <img class="projimg" src="{{ url_for('static', filename='projectimages/gijs6.nl.png') }}">
+            <a href="https://git.dupunkto.org/~dupunkto/somtomorrow" target="_blank" class="projcontainer">
+                <span class="projname">Somtomorrow</span>
+                <p>A better web client for Somtoday</p>
             </a>
         </li>
         <li>
-            <a href="/blog" target="_blank" class="projcontainer">
-                <span class="projname">My blog</span>
-                <p>The place I talk (or rant) about many diffrent things.</p>
-                <img class="projimg" src="{{ url_for('static', filename='projectimages/gijs6.nl_blog.png') }}">
+            <a href="https://github.com/dupunkto/havas" target="_blank" class="projcontainer">
+                <span class="projname">Havas</span>
+                <p>A prototype web app for displaying, managing, and editing news articles. </p>
+            </a>
+        </li>
+        <li>
+            <a href="https://github.com/Gijs6/Barium" target="_blank" class="projcontainer">
+                <span class="projname">Barium</span>
+                <p>A simple static site generator</p>
+            </a>
+        </li>
+
+        <!-- sites -->
+        <li>
+            <a href="/" target="_blank" class="projcontainer">
+                <span class="projname">This very site</span>
             </a>
         </li>
         <li>
             <a href="https://ckv.gijs6.nl" target="_blank" class="projcontainer">
                 <span class="projname">My CKV-site</span>
-                <p>My site for CKV (<em>culturele en kunstzinnige vorming</em>, so basically "culture and art"). I could have just built it in Wix, like everyone else, but I decided to <s>make my life more difficult</s> do everything myself.</p>
-                <img class="projimg" src="{{ url_for('static', filename='projectimages/ckv.gijs6.nl.png') }}">
-            </a>
-        </li>
-        <li>
-            <a href="https://github.com/Gijs6/GSS" target="_blank" class="projcontainer">
-                <span class="projname">GSS</span>
-                <p>A little tool to not only beautify CSS but also make the order of the CSS nicer.</p>
-                <img class="projimg" src="{{ url_for('static', filename='projectimages/gss.png') }}">
-            </a>
-        </li>
-        <li>
-            <a href="https://github.com/Gijs6/Meliag" target="_blank" class="projcontainer">
-                <span class="projname">Meliag</span>
-                <p>A site to display data about trains in a nice way.</p>
-                <img class="projimg" src="{{ url_for('static', filename='projectimages/meliag.png') }}">
+                <p>My site for CKV (<em>culturele en kunstzinnige vorming</em>). Not a huge project, but I love the design!</p>
             </a>
         </li>
         <li>
             <a href="https://school.gijs6.nl" target="_blank" class="projcontainer">
                 <span class="projname"><em>Leermiddelenoverzicht</em></span>
-                <p>A site to collect learning recoures and my <em>samenvattingen</em>.</p>
-                <img class="projimg" src="{{ url_for('static', filename='projectimages/school.gijs6.nl.png') }}">
+                <p>All my <em>samenvattingen</em> (summaries) and other study resources.</p>
             </a>
         </li>
+
+        <!-- a bit older projects -->
+        <li>
+            <a href="https://github.com/Gijs6/Meliag" target="_blank" class="projcontainer">
+                <span class="projname">Meliag</span>
+                <p>A nice UI built around the NS API to display all kinds of data about trains in a nice and clear way</p>
+            </a>
+        </li>
+        <li>
+            <a href="https://github.com/Gijs6/GSS" target="_blank" class="projcontainer">
+                <span class="projname">GSS</span>
+                <p>A tool to prettify CSS by formatting and ordering it (WIP)</p>
+            </a>
+        </li>
+
+        <!-- just‑for‑fun -->
         <li>
             <a href="https://git.dupunkto.org/~dupunkto/kodo" target="_blank" class="projcontainer">
                 <span class="projname">Kodo</span>
                 <p>A game inside a QR-code.</p>
             </a>
         </li>
-        <li>
-            <a href="https://git.dupunkto.org/~dupunkto/somtomorrow" target="_blank" class="projcontainer">
-                <span class="projname">Somtomorrow</span>
-                <p>A better web client for Somtoday</p>
-                <img class="projimg" src="{{ url_for('static', filename='projectimages/somtomorrow.png') }}">
-            </a>
-        </li>
     </ul>
+    <p>For other projects, you can view the Git repos over at my <a href="https://github.com/Gijs6" target="_blank">GitHub profile</a> or at <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>.</p>
 {% endblock %}
