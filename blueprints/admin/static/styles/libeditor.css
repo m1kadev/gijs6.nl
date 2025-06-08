@@ -33,7 +33,7 @@
 }
 
 #item-table span {
-    padding: 5px;
+    padding: 5px 20px;
 }
 
 [contenteditable="true"]:focus {
