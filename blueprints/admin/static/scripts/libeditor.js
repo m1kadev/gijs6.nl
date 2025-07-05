@@ -84,7 +84,7 @@ async function refreshAllItems() {
 
             const iconInput = lI.querySelector(".list-item-icon").textContent;
             const match = iconInput.match(/"([^"]*)"/);
-            const icon = match ? match[1] : html;
+            const icon = match ? match[1] : iconInput;
 
             const listitemIndex = lI.dataset.listitemIndex;
 
