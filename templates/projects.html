@@ -2,77 +2,52 @@
 
 {% block title %}Projects{% endblock %}
 
-{% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='projects.css') }}">
-{% endblock %}
-
 {% block content %}
-    <div id="pagetitle">
+    <div class="page-header">
         <h1>Projects</h1>
-        <h2>Here are some of the projects I've worked on or contributed to :D</h2>
+        <p>Here are some of the projects I've worked on or contributed to</p>
     </div>
 
     <ul>
         <!-- main projects -->
         <li>
-            <a href="https://git.dupunkto.org/~dupunkto/somtomorrow" target="_blank" class="projcontainer">
-                <span class="projname">Somtomorrow</span>
-                <p>A better web client for Somtoday</p>
+            <a href="https://git.dupunkto.org/~dupunkto/somtomorrow" target="_blank" class="projects-project">
+                <strong class="projects-project-name">Somtomorrow</strong>:
+                <span class="projects-project-description">A better web client for Somtoday</span>
             </a>
         </li>
         <li>
-            <a href="https://git.dupunkto.org/~dupunkto/havas" target="_blank" class="projcontainer">
-                <span class="projname">Havas</span>
-                <p>A prototype web app for displaying, managing, and editing news articles. </p>
+            <a href="https://git.dupunkto.org/~dupunkto/havas" target="_blank" class="projects-project">
+                <strong class="projects-project-name">Havas</strong>:
+                <span class="projects-project-description">A prototype CMS news articles.</span>
             </a>
         </li>
         <li>
-            <a href="https://github.com/Gijs6/Barium" target="_blank" class="projcontainer">
-                <span class="projname">Barium</span>
-                <p>A simple static site generator</p>
+            <a href="https://github.com/Gijs6/Barium" target="_blank" class="projects-project">
+                <strong class="projects-project-name">Barium</strong>:
+                <span class="projects-project-description">A simple static site generator</span>
             </a>
         </li>
 
         <!-- sites -->
         <li>
-            <a href="https://github.com/Gijs6/gijs6.nl" target="_blank" class="projcontainer">
-                <span class="projname">This very site</span>
+            <a href="https://github.com/Gijs6/gijs6.nl" target="_blank" class="projects-project">
+                <strong class="projects-project-name">This very site</strong>
             </a>
         </li>
         <li>
-            <a href="https://ckv.gijs6.nl" target="_blank" class="projcontainer">
-                <span class="projname">My CKV-site</span>
-                <p>My site for CKV (<em lang="nl">culturele en kunstzinnige vorming</em>). Not a huge project, but I love the design!</p>
+            <a href="https://ckv.gijs6.nl" target="_blank" class="projects-project">
+                <strong class="projects-project-name">My CKV-site</strong>
+                <span class="projects-project-description">My site for CKV (<em lang="nl">culturele en kunstzinnige vorming</em>). Not a huge project, but I love the design!</span>
             </a>
         </li>
         <li>
-            <a href="https://school.gijs6.nl" target="_blank" class="projcontainer">
-                <span class="projname"><em lang="nl">Leermiddelenoverzicht</em></span>
-                <p>All my <em lang="nl">samenvattingen</em> (summaries) and other study resources.</p>
-            </a>
-        </li>
-
-        <!-- a bit older projects -->
-        <li>
-            <a href="https://github.com/Gijs6/Meliag" target="_blank" class="projcontainer">
-                <span class="projname">Meliag</span>
-                <p>A nice UI built around the NS API to display all kinds of data about trains in a nice and clear way</p>
-            </a>
-        </li>
-        <li>
-            <a href="https://github.com/Gijs6/GSS" target="_blank" class="projcontainer">
-                <span class="projname">GSS</span>
-                <p>A tool to prettify CSS by formatting and ordering it (WIP)</p>
-            </a>
-        </li>
-
-        <!-- just‑for‑fun -->
-        <li>
-            <a href="https://git.dupunkto.org/~dupunkto/kodo" target="_blank" class="projcontainer">
-                <span class="projname">Kodo</span>
-                <p>A game inside a QR-code.</p>
+            <a href="https://school.gijs6.nl" target="_blank" class="projects-project">
+                <strong class="projects-project-name"><em lang="nl">Leermiddelenoverzicht</em></strong>:
+                <span class="projects-project-description">All my <em lang="nl">samenvattingen</em> (summaries) and other study resources.</span>
             </a>
         </li>
     </ul>
+
     <p>For other projects, you can view the Git repos over at my <a href="https://github.com/Gijs6" target="_blank">GitHub profile</a> or at <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>.</p>
 {% endblock %}
