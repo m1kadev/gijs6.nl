@@ -79,6 +79,7 @@ header {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     grid-template-rows: masonry;
     gap: 30px;
+    display: grid;
 }
 
 .collection {
