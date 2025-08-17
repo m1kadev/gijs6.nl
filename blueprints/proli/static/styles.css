@@ -76,9 +76,8 @@ header {
 }
 
 #collection-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-rows: masonry;
     gap: 30px;
 }
 
@@ -92,8 +91,7 @@ header {
     padding: 20px;
     border-radius: 10px;
     flex-grow: 1;
-    width: min-content;
-    min-width: 500px;
+    width: 100%;
 }
 
 .collection-header {
