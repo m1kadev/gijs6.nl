@@ -1,6 +1,5 @@
 ---
 title: Goodbye Google Docs; hello Markdown
-date: 2025-04-07
 ---
 
 # Goodbye Google Documents; hello Markdown

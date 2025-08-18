@@ -1,6 +1,5 @@
 ---
 title: Introduction
-date: 2025-04-06
 ---
 
 # Introduction
