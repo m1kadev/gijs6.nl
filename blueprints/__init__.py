@@ -1,6 +1,7 @@
 import os
 import importlib
 
+
 def load_blueprints():
     blueprints = []
     base_path = os.path.dirname(__file__)

@@ -66,7 +66,8 @@ async function refreshAllCollections() {
             itemDiv.dataset.listitemIndex = index;
 
             const checkSpan = document.createElement("span");
-            checkSpan.className = "list-item-check" + (listItem.checked ? " checked" : "");
+            checkSpan.className =
+                "list-item-check" + (listItem.checked ? " checked" : "");
             checkSpan.innerHTML = '<i class="fa-solid fa-check"></i>';
 
             const titleSpan = document.createElement("span");
@@ -119,7 +120,8 @@ async function refreshAllCollections() {
     const addCollectionDiv = document.createElement("div");
     addCollectionDiv.id = "add-collection";
     addCollectionDiv.className = "collection";
-    addCollectionDiv.innerHTML = '<i class="fa-solid fa-plus"></i> Add collection';
+    addCollectionDiv.innerHTML =
+        '<i class="fa-solid fa-plus"></i> Add collection';
 
     container.appendChild(addCollectionDiv);
 
@@ -137,24 +139,32 @@ async function refreshAllCollections() {
             fetch("/proli/api/set_checked", {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     checked: isNowChecked,
                     collection: collection,
-                    listitemIndex: listitemIndex,
-                }),
+                    listitemIndex: listitemIndex
+                })
             })
                 .then(async (response) => {
                     if (!response.ok) {
                         const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                        statusMessage(
+                            `Error ${response.status}: ${errorText}`,
+                            "error",
+                            4000
+                        );
                         return;
                     }
                     refreshAllCollections();
                 })
                 .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                    statusMessage(
+                        `Fetch failed: ${err.message}`,
+                        "error",
+                        4000
+                    );
                 });
 
             cB.classList.toggle("checked");
@@ -182,27 +192,39 @@ async function refreshAllCollections() {
             fetch("/proli/api/set_info", {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     listitemIndex: listitemIndex,
                     collection: collection,
                     title: title,
                     datetime: newDate,
-                    content: content,
-                }),
+                    content: content
+                })
             })
                 .then(async (response) => {
                     if (!response.ok) {
                         const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                        statusMessage(
+                            `Error ${response.status}: ${errorText}`,
+                            "error",
+                            4000
+                        );
                         return;
                     }
 
-                    statusMessage('Updated! <i class="fa-solid fa-repeat"></i>', "success", 2000);
+                    statusMessage(
+                        'Updated! <i class="fa-solid fa-repeat"></i>',
+                        "success",
+                        2000
+                    );
                 })
                 .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                    statusMessage(
+                        `Fetch failed: ${err.message}`,
+                        "error",
+                        4000
+                    );
                 });
         };
 
@@ -211,7 +233,9 @@ async function refreshAllCollections() {
             debounceTimeout = setTimeout(executeUpdate, 3500);
         });
 
-        const inputs = lI.querySelectorAll(".list-item-title, .list-item-content");
+        const inputs = lI.querySelectorAll(
+            ".list-item-title, .list-item-content"
+        );
         inputs.forEach((input) => {
             input.addEventListener("blur", () => {
                 executeUpdate();
@@ -229,22 +253,30 @@ async function refreshAllCollections() {
             fetch("/proli/api/make_new", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    collection: aIECollection,
-                }),
+                    collection: aIECollection
+                })
             })
                 .then(async (response) => {
                     if (!response.ok) {
                         const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                        statusMessage(
+                            `Error ${response.status}: ${errorText}`,
+                            "error",
+                            4000
+                        );
                         return;
                     }
                     refreshAllCollections();
                 })
                 .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                    statusMessage(
+                        `Fetch failed: ${err.message}`,
+                        "error",
+                        4000
+                    );
                 });
         });
     });
@@ -258,27 +290,39 @@ async function refreshAllCollections() {
             const dBcollection = dBparent.dataset.collection;
             const dBlistitemIndex = dBparent.dataset.listitemIndex;
 
-            if (window.confirm(`Do you really want to delete element #${dBlistitemIndex} from collection ${dBcollection}?`)) {
+            if (
+                window.confirm(
+                    `Do you really want to delete element #${dBlistitemIndex} from collection ${dBcollection}?`
+                )
+            ) {
                 fetch("/proli/api/delete_item", {
                     method: "DELETE",
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
                         collection: dBcollection,
-                        listitemIndex: dBlistitemIndex,
-                    }),
+                        listitemIndex: dBlistitemIndex
+                    })
                 })
                     .then(async (response) => {
                         if (!response.ok) {
                             const errorText = await response.text();
-                            statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                            statusMessage(
+                                `Error ${response.status}: ${errorText}`,
+                                "error",
+                                4000
+                            );
                             return;
                         }
                         refreshAllCollections();
                     })
                     .catch((err) => {
-                        statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                        statusMessage(
+                            `Fetch failed: ${err.message}`,
+                            "error",
+                            4000
+                        );
                     });
             }
         });
@@ -288,12 +332,16 @@ async function refreshAllCollections() {
 
     addCollection.addEventListener("click", function () {
         fetch("/proli/api/new_collection", {
-            method: "POST",
+            method: "POST"
         })
             .then(async (response) => {
                 if (!response.ok) {
                     const errorText = await response.text();
-                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                    statusMessage(
+                        `Error ${response.status}: ${errorText}`,
+                        "error",
+                        4000
+                    );
                     return;
                 }
                 refreshAllCollections();
@@ -318,23 +366,31 @@ async function refreshAllCollections() {
             fetch("/proli/api/rename_collection", {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     oldName: collection,
-                    newName: newName,
-                }),
+                    newName: newName
+                })
             })
                 .then(async (response) => {
                     if (!response.ok) {
                         const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                        statusMessage(
+                            `Error ${response.status}: ${errorText}`,
+                            "error",
+                            4000
+                        );
                         return;
                     }
                     refreshAllCollections();
                 })
                 .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                    statusMessage(
+                        `Fetch failed: ${err.message}`,
+                        "error",
+                        4000
+                    );
                 });
         };
 
@@ -348,7 +404,8 @@ async function refreshAllCollections() {
         });
     });
 
-    const deleteCollectionButtons = document.querySelectorAll(".collection-delete");
+    const deleteCollectionButtons =
+        document.querySelectorAll(".collection-delete");
 
     deleteCollectionButtons.forEach((dCB) => {
         dCB.addEventListener("click", function () {
@@ -356,32 +413,48 @@ async function refreshAllCollections() {
 
             const dCBcollection = dCBparent.dataset.collection;
 
-            if (window.confirm(`Do you really want to delete collection ${dCBcollection} and all its elements?`)) {
+            if (
+                window.confirm(
+                    `Do you really want to delete collection ${dCBcollection} and all its elements?`
+                )
+            ) {
                 fetch("/proli/api/delete_collection", {
                     method: "DELETE",
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        collection: dCBcollection,
-                    }),
+                        collection: dCBcollection
+                    })
                 })
                     .then(async (response) => {
                         if (!response.ok) {
                             const errorText = await response.text();
-                            statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                            statusMessage(
+                                `Error ${response.status}: ${errorText}`,
+                                "error",
+                                4000
+                            );
                             return;
                         }
                         refreshAllCollections();
                     })
                     .catch((err) => {
-                        statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                        statusMessage(
+                            `Fetch failed: ${err.message}`,
+                            "error",
+                            4000
+                        );
                     });
             }
         });
     });
 
-    statusMessage('Refreshed! <i class="fa-solid fa-repeat"></i>', "success", 2000);
+    statusMessage(
+        'Refreshed! <i class="fa-solid fa-repeat"></i>',
+        "success",
+        2000
+    );
 }
 
 document.addEventListener("DOMContentLoaded", () => {

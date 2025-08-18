@@ -91,25 +91,33 @@ async function refreshAllItems() {
             fetch("/admin/api/libeditor/set_info", {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     listitemIndex,
                     title,
                     url,
-                    icon,
-                }),
+                    icon
+                })
             })
                 .then(async (response) => {
                     if (!response.ok) {
                         const errorText = await response.text();
-                        statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                        statusMessage(
+                            `Error ${response.status}: ${errorText}`,
+                            "error",
+                            4000
+                        );
                         return;
                     }
                     refreshAllItems();
                 })
                 .catch((err) => {
-                    statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                    statusMessage(
+                        `Fetch failed: ${err.message}`,
+                        "error",
+                        4000
+                    );
                 });
         };
 
@@ -118,7 +126,9 @@ async function refreshAllItems() {
             debounceTimeout = setTimeout(executeUpdate, 3500);
         });
 
-        const inputs = lI.querySelectorAll(".list-item-title, .list-item-url, .list-item-icon");
+        const inputs = lI.querySelectorAll(
+            ".list-item-title, .list-item-url, .list-item-icon"
+        );
         inputs.forEach((input) => {
             input.addEventListener("blur", () => {
                 executeUpdate();
@@ -130,12 +140,16 @@ async function refreshAllItems() {
 
     addItemElement.addEventListener("click", function () {
         fetch("/admin/api/libeditor/make_new", {
-            method: "POST",
+            method: "POST"
         })
             .then(async (response) => {
                 if (!response.ok) {
                     const errorText = await response.text();
-                    statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                    statusMessage(
+                        `Error ${response.status}: ${errorText}`,
+                        "error",
+                        4000
+                    );
                     return;
                 }
                 refreshAllItems();
@@ -152,32 +166,48 @@ async function refreshAllItems() {
             const dBparent = dB.parentElement.parentElement;
             const dBlistitemIndex = dBparent.dataset.listitemIndex;
 
-            if (window.confirm(`Do you really want to delete element #${dBlistitemIndex}?`)) {
+            if (
+                window.confirm(
+                    `Do you really want to delete element #${dBlistitemIndex}?`
+                )
+            ) {
                 fetch("/admin/api/libeditor/delete_item", {
                     method: "DELETE",
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        listitemIndex: dBlistitemIndex,
-                    }),
+                        listitemIndex: dBlistitemIndex
+                    })
                 })
                     .then(async (response) => {
                         if (!response.ok) {
                             const errorText = await response.text();
-                            statusMessage(`Error ${response.status}: ${errorText}`, "error", 4000);
+                            statusMessage(
+                                `Error ${response.status}: ${errorText}`,
+                                "error",
+                                4000
+                            );
                             return;
                         }
                         refreshAllItems();
                     })
                     .catch((err) => {
-                        statusMessage(`Fetch failed: ${err.message}`, "error", 4000);
+                        statusMessage(
+                            `Fetch failed: ${err.message}`,
+                            "error",
+                            4000
+                        );
                     });
             }
         });
     });
 
-    statusMessage('Refreshed! <i class="fa-solid fa-repeat"></i>', "success", 2000);
+    statusMessage(
+        'Refreshed! <i class="fa-solid fa-repeat"></i>',
+        "success",
+        2000
+    );
 }
 
 document.addEventListener("DOMContentLoaded", () => {

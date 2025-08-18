@@ -1,4 +1,12 @@
-from flask import Blueprint, render_template, jsonify, request, session, redirect, url_for
+from flask import (
+    Blueprint,
+    render_template,
+    jsonify,
+    request,
+    session,
+    redirect,
+    url_for,
+)
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, timezone
 import json
@@ -6,7 +14,9 @@ import os
 import string
 import random
 
-jstd_bp = Blueprint("jstd_bp", __name__, template_folder="templates", static_folder="static")
+jstd_bp = Blueprint(
+    "jstd_bp", __name__, template_folder="templates", static_folder="static"
+)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,9 +26,15 @@ try:
         PASSWORD_HASH = f.read().strip()
 except FileNotFoundError:
     if __name__ == "__main__":
-        password = ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(25, 45)))
+        password = "".join(
+            random.choices(
+                string.ascii_letters + string.digits, k=random.randint(25, 45)
+            )
+        )
         # Only in development. If this would be executed on production that would be very very bad...
-        print(f"\033[91mThere is no password registred for the JSTD. You can use the password '{password}'.\033[0m")
+        print(
+            f"\033[91mThere is no password registred for the JSTD. You can use the password '{password}'.\033[0m"
+        )
         PASSWORD_HASH = generate_password_hash(password)
     else:
         raise FileNotFoundError
@@ -43,13 +59,15 @@ def login():
                 return redirect(url_for("jstd_bp.jstd_index"))
             else:
                 return render_template("login_jstd.html", error="WRONG LOL")
-            
+
         return render_template("login_jstd.html")
     return redirect(url_for("jstd_bp.jstd_index"))
+
 
 @jstd_bp.route("/")
 def jstd_index():
     return render_template("main.html")
+
 
 @jstd_bp.route("/api/list_all", methods=["GET"])
 def list_all():
@@ -63,6 +81,7 @@ def list_all():
     except Exception as e:
         return str(e), 500
 
+
 @jstd_bp.route("/api/set_checked", methods=["PUT"])
 def set_checked():
     try:
@@ -74,15 +93,16 @@ def set_checked():
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
-        
+
         data[collection][int(listitem_index)]["checked"] = checked
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
-        
+
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
+
 
 @jstd_bp.route("/api/set_info", methods=["PUT"])
 def set_info():
@@ -98,18 +118,18 @@ def set_info():
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
-        
+
         data[collection][int(listitem_index)]["title"] = title
         data[collection][int(listitem_index)]["datetime"] = datetime
         data[collection][int(listitem_index)]["content"] = content
 
-
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
-        
+
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
+
 
 @jstd_bp.route("/api/make_new", methods=["POST"])
 def make_new():
@@ -120,7 +140,7 @@ def make_new():
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
-        
+
         data[collection].append(
             {
                 "title": "Title",
@@ -137,6 +157,7 @@ def make_new():
     except Exception as e:
         return str(e), 500
 
+
 @jstd_bp.route("/api/delete_item", methods=["DELETE"])
 def delete_item():
     try:
@@ -147,22 +168,23 @@ def delete_item():
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
-        
+
         data[collection].pop(int(listitem_index))
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
-        
+
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
+
 
 @jstd_bp.route("/api/new_collection", methods=["POST"])
 def new_collection():
     try:
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
-        
+
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         name = "".join(random.choices(chars, k=5))
 
@@ -170,10 +192,11 @@ def new_collection():
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
-        
+
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
+
 
 @jstd_bp.route("/api/rename_collection", methods=["PUT"])
 def rename_collection():
@@ -185,15 +208,16 @@ def rename_collection():
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
-        
+
         data[new_name] = data.pop(old_name)
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
-        
+
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
+
 
 @jstd_bp.route("/api/delete_collection", methods=["DELETE"])
 def delete_collection():
@@ -204,15 +228,16 @@ def delete_collection():
 
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
             data = json.load(jf)
-        
+
         data.pop(collection)
 
         with open(os.path.join(BASE_DIR, "data", "list.json"), "w") as jf:
             json.dump(data, jf, indent=4)
-        
+
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
+
 
 if __name__ == "__main__":
     jstd_bp.run(port=1000, debug=True)

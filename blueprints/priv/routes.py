@@ -6,7 +6,9 @@ import re
 
 from decorators import login_required
 
-priv_bp = Blueprint("priv_bp", __name__, template_folder="templates", static_folder="static")
+priv_bp = Blueprint(
+    "priv_bp", __name__, template_folder="templates", static_folder="static"
+)
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -28,6 +30,7 @@ ical_data = read_data_file("ical.json")
 first_ical_path = "/" + ical_data["path_first"]
 second_ical_path = "/" + ical_data["path_second"]
 
+
 @priv_bp.route(first_ical_path)
 def first_schedule_ical():
     ICAL_URL = ical_data["url_first"]
@@ -48,7 +51,7 @@ def first_schedule_ical():
         "SCHK": "Scheikunde",
         "WISB": "Wiskunde B",
         "LO": "Gym",
-        "MEN": "Mentoruur"
+        "MEN": "Mentoruur",
     }
 
     for line in ics_content.splitlines():
@@ -67,7 +70,15 @@ def first_schedule_ical():
                 if not subjectAbbreviation:
                     subjectAbbreviation = classGroup
 
-                new_line = "SUMMARY:" + subjectAbbreviation + " (" + classroom + " - " + teacher + ")"
+                new_line = (
+                    "SUMMARY:"
+                    + subjectAbbreviation
+                    + " ("
+                    + classroom
+                    + " - "
+                    + teacher
+                    + ")"
+                )
             else:
                 new_line = line.capitalize()
 
@@ -80,8 +91,9 @@ def first_schedule_ical():
     return Response(
         new_ics_content,
         mimetype="text/calendar",
-        headers={"Content-Disposition": "attachment; filename=modified.ics"}
+        headers={"Content-Disposition": "attachment; filename=modified.ics"},
     )
+
 
 @priv_bp.route(second_ical_path)
 def second_schedule_ical():
@@ -100,7 +112,7 @@ def second_schedule_ical():
         "SCHK": "Scheikunde",
         "WISB": "Wiskunde B",
         "IN": "Informatica",
-        "MEN": "Mentoruur"
+        "MEN": "Mentoruur",
     }
 
     for line in ics_content.splitlines():
@@ -119,7 +131,15 @@ def second_schedule_ical():
                 if not subjectAbbreviation:
                     subjectAbbreviation = classGroup
 
-                new_line = "SUMMARY:" + subjectAbbreviation + " (" + classroom + " - " + teacher + ")"
+                new_line = (
+                    "SUMMARY:"
+                    + subjectAbbreviation
+                    + " ("
+                    + classroom
+                    + " - "
+                    + teacher
+                    + ")"
+                )
             else:
                 new_line = line.capitalize()
 
@@ -132,5 +152,5 @@ def second_schedule_ical():
     return Response(
         new_ics_content,
         mimetype="text/calendar",
-        headers={"Content-Disposition": "attachment; filename=modified.ics"}
+        headers={"Content-Disposition": "attachment; filename=modified.ics"},
     )

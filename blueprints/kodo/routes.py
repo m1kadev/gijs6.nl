@@ -24,7 +24,7 @@ def kodo_new():
 
     with open(os.path.join(BASE_DIR, "highscore.txt"), "r") as f:
         old = f.read().strip()
-    
+
     try:
         if int(new) > int(old):
             with open(os.path.join(BASE_DIR, "highscore.txt"), "w") as file:

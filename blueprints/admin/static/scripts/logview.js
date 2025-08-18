@@ -1,13 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
     function updateTable() {
-        let methods = Array.from(document.querySelectorAll("#method-filter input[type='checkbox']:checked")).map((box) => box.value);
-        let statuses = Array.from(document.querySelectorAll("#status-filter input[type='checkbox']:checked")).map((box) => box.value);
+        let methods = Array.from(
+            document.querySelectorAll(
+                "#method-filter input[type='checkbox']:checked"
+            )
+        ).map((box) => box.value);
+        let statuses = Array.from(
+            document.querySelectorAll(
+                "#status-filter input[type='checkbox']:checked"
+            )
+        ).map((box) => box.value);
 
         let path = document.querySelector("#path-filter input").value;
 
         const lognumInput = document.getElementById("lognum-input");
 
-        let url = `/admin/api/logview/listall?log_num=${lognumInput.value}&path=` + path;
+        let url =
+            `/admin/api/logview/listall?log_num=${lognumInput.value}&path=` +
+            path;
         if (methods.length > 0) {
             url += "&methods=" + methods.join(",");
         }
@@ -15,7 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
             url += "&statuses=" + statuses.join(",");
         }
 
-        statusMessage('Updating table... <i class="fa-solid fa-repeat"></i>', "success", 2000);
+        statusMessage(
+            'Updating table... <i class="fa-solid fa-repeat"></i>',
+            "success",
+            2000
+        );
 
         fetch(url)
             .then((response) => response.json())
@@ -48,9 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateTable();
 
-    document.querySelectorAll("#filters input, #lognum-input").forEach((inputElement) => {
-        inputElement.addEventListener("input", () => {
-            updateTable();
+    document
+        .querySelectorAll("#filters input, #lognum-input")
+        .forEach((inputElement) => {
+            inputElement.addEventListener("input", () => {
+                updateTable();
+            });
         });
-    });
 });

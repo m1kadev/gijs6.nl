@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         2: "green",
         3: "blue",
         4: "yellow",
-        5: "red",
+        5: "red"
     };
 
     try {
@@ -15,7 +15,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         const fetchData = async (urlitem) => {
             try {
-                const res = await fetch(urlitem.url, { method: urlitem.method });
+                const res = await fetch(urlitem.url, {
+                    method: urlitem.method
+                });
                 const statusCode = res.status;
 
                 const statusCodeFirstDigit = statusCode.toString().charAt(0);
@@ -54,7 +56,11 @@ function handleAction(button, endpoint) {
                 }, 750);
 
                 setTimeout(() => {
-                    statusMessage('Refreshing in 3 seconds... <i class="fa-solid fa-repeat"></i>', "success", 2000);
+                    statusMessage(
+                        'Refreshing in 3 seconds... <i class="fa-solid fa-repeat"></i>',
+                        "success",
+                        2000
+                    );
                     setTimeout(() => {
                         window.location.reload(true);
                     }, 3000);
