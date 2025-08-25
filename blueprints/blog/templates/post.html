@@ -7,7 +7,11 @@
 {% endblock %}
 
 {% block content %}
-    <a id="back-to-blog" href="/blog/"><i class="fa-solid fa-arrow-left"></i> Back to all posts</a>
+    {% if is_archived %}
+        <a id="back-to-blog" href="{{ url_for('blog_bp.archived_index') }}"><i class="fa-solid fa-arrow-left"></i> Back to archived posts</a>
+    {% else %}
+        <a id="back-to-blog" href="/blog/"><i class="fa-solid fa-arrow-left"></i> Back to all posts</a>
+    {% endif %}
     
     <div id="post-info">
         <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}">{{ first_commit.datetime }}</a> (UTC)</p>

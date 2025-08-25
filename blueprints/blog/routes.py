@@ -26,6 +26,8 @@ CACHED_POST_LIST = []
 CACHED_POSTS = {}
 CACHED_FEED = {}
 CACHED_LAST_MODIFIED = None
+CACHED_ARCHIVED_POST_LIST = []
+CACHED_ARCHIVED_POSTS = {}
 
 
 def generate_html(md_input):
@@ -57,13 +59,11 @@ def generate_html(md_input):
     return html_output
 
 
-def load_posts_into_cache():
-    global CACHED_POST_LIST, CACHED_POSTS, CACHED_FEED, CACHED_LAST_MODIFIED
-
+def load_posts_from_directory(posts_dir, url_prefix=""):
     post_list = []
+    posts_dict = {}
     posts_data = []
 
-    posts_dir = os.path.join(BASE_DIR, "posts")
     for post_file in os.listdir(posts_dir):
         if not post_file.endswith(".md"):
             continue
@@ -75,11 +75,18 @@ def load_posts_into_cache():
         extract = re.match(r"^---\n(.*?)\n---\n", file_content, re.DOTALL)
         post_data = yaml.safe_load(extract.group(1))
         slug = post_file.removesuffix(".md")
-        post_data["url"] = "/blog/" + slug
+        post_data["url"] = url_prefix + "/" + slug
 
         lines = (
             subprocess.check_output(
-                ["git", "log", "--format=%H %ct", "--", f"posts/{post_file}"],
+                [
+                    "git",
+                    "log",
+                    "--follow",
+                    "--format=%H %ct",
+                    "--",
+                    f"{os.path.relpath(posts_dir, BASE_DIR)}/{post_file}",
+                ],
                 text=True,
                 cwd=BASE_DIR,
             )
@@ -121,23 +128,19 @@ def load_posts_into_cache():
                 datetime.now(tz=timezone.utc).timestamp()
             )
 
-        # Strip frontmatter and generate HTML
         file_content_clean = re.sub(
             r"^---\s*\n.*?\n---\s*\n", "", file_content, flags=re.DOTALL
         )
         html_content = generate_html(file_content_clean)
 
-        # Cache per-post data
-        CACHED_POSTS[slug] = {
+        posts_dict[slug] = {
             "blog_content": html_content,
             **post_data,
             **post_info,
         }
 
-        # For index
         post_list.append(post_data)
 
-        # For RSS
         posts_data.append(
             {
                 "title": post_data.get("title", "Untitled"),
@@ -149,7 +152,33 @@ def load_posts_into_cache():
         )
 
     post_list.sort(key=lambda x: x["timestamp"], reverse=True)
+    return post_list, posts_dict, posts_data
+
+
+def load_posts_into_cache():
+    global \
+        CACHED_POST_LIST, \
+        CACHED_POSTS, \
+        CACHED_FEED, \
+        CACHED_LAST_MODIFIED, \
+        CACHED_ARCHIVED_POST_LIST, \
+        CACHED_ARCHIVED_POSTS
+
+    posts_dir = os.path.join(BASE_DIR, "posts")
+    post_list, posts_dict, posts_data = load_posts_from_directory(posts_dir, "/blog")
     CACHED_POST_LIST = post_list
+    CACHED_POSTS = posts_dict
+
+    archived_dir = os.path.join(BASE_DIR, "archived")
+    if os.path.exists(archived_dir):
+        archived_list, archived_dict, _ = load_posts_from_directory(
+            archived_dir, "/blog/archived"
+        )
+        CACHED_ARCHIVED_POST_LIST = archived_list
+        CACHED_ARCHIVED_POSTS = archived_dict
+    else:
+        CACHED_ARCHIVED_POST_LIST = []
+        CACHED_ARCHIVED_POSTS = {}
 
     feed = FeedGenerator()
     feed.title("Gijs6 - Blog")
@@ -189,6 +218,19 @@ def blog_post(slug):
     if not post:
         return redirect(url_for("blog_bp.blog_index"))
     return render_template("post.html", **post)
+
+
+@blog_bp.route("/archived")
+def archived_index():
+    return render_template("archived_index.html", post_list=CACHED_ARCHIVED_POST_LIST)
+
+
+@blog_bp.route("/archived/<string:slug>")
+def archived_post(slug):
+    post = CACHED_ARCHIVED_POSTS.get(slug)
+    if not post:
+        return redirect(url_for("blog_bp.archived_index"))
+    return render_template("post.html", is_archived=True, **post)
 
 
 def make_feed_response(feed_type="rss"):
