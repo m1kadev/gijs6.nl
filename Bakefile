@@ -1,0 +1,9 @@
+#!/bin/bash
+
+serve() {
+  .venv/bin/python main.py
+}
+
+deploy() {
+    ssh pya "/home/gijs3/.local/bin/python /home/gijs3/web/deploy.py"    
+}
