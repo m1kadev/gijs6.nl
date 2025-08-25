@@ -69,7 +69,7 @@
             <tbody>
                 {% for commit in commits %}
                     <tr>
-                        <td>{{ commit.datetime }}</td>
+                        <td><time datetime="{{ commit.datetime_iso }}">{{ commit.datetime }}</time></td>
                         <td class="text-left">{{ commit.message }}</td>
                         <td>{{ commit.hash }}</td>
                     </tr>

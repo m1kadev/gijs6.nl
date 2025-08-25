@@ -7,7 +7,7 @@ from flask import (
     request,
     session,
 )
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
 import locale
@@ -56,6 +56,26 @@ for bp, prefix in load_blueprints():
     except Exception as e:
         print(f"An error occurred while trying to load {bp} as a blueprint: {e}")
 
+# Filters
+
+
+@app.template_filter("dt_fmt")
+def format_datetime(value, fmt="%Y-%m-%d %H:%M:%S"):
+    if not value:
+        return ""
+    try:
+        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S%z").strftime(fmt)
+    except ValueError:
+        return value
+
+
+@app.template_filter("dt_iso")
+def isoformat(value, fmt="%Y-%m-%dT%H:%M:%S%z"):
+    if not value:
+        return None
+    return datetime.strptime(value, fmt).isoformat()
+
+
 # Files
 
 
@@ -74,7 +94,7 @@ def securitytxt():
 
 @app.route("/security.txt")
 def securitytxtredirect():
-    return redirect(url_for("securitytxt")), 301
+    return redirect(url_for("securitytxt"), code=301)
 
 
 @app.route("/robots")
@@ -110,15 +130,15 @@ def get_commit_and_deploy_date():
             ["git", "log", "-1", "--pretty=format:%ct"], cwd=BASE_DIR
         ).strip()
     )
-    latest_commit_date = datetime.fromtimestamp(latest_commit_timestamp).strftime(
-        "%d-%m-%Y at %H:%M:%S"
-    )
+    latest_commit_dt = datetime.fromtimestamp(latest_commit_timestamp, tz=timezone.utc)
+    latest_commit_date = latest_commit_dt.strftime("%d-%m-%Y at %H:%M:%S")
 
     comdepdata = {
         "latest_deploy_date": latest_deploy_date,
         "latest_commit_hash": latest_commit_hash,
         "latest_commit_hash_long": latest_commit_hash_long,
         "latest_commit_date": latest_commit_date,
+        "latest_commit_date_iso": latest_commit_dt.isoformat(),
     }
 
     return comdepdata
@@ -144,7 +164,8 @@ def home():
         print("No graphdatafull found.")
 
     graphdata = graphdatafull["data"]
-    last_updated = graphdatafull["last_updated"]
+    last_updated = graphdatafull.get("last_updated", "")
+    last_updated_iso = graphdatafull.get("last_updated_iso", "")
 
     try:
         with open(
@@ -158,7 +179,11 @@ def home():
     headers = [str(h).zfill(2) for h in headers]
 
     return render_template(
-        "home.html", graphdata=graphdata, headers=headers, last_updated=last_updated
+        "home.html",
+        graphdata=graphdata,
+        headers=headers,
+        last_updated=last_updated,
+        last_updated_iso=last_updated_iso,
     )
 
 

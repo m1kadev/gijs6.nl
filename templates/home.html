@@ -7,13 +7,13 @@
 {% endblock %}
 
 {% block content %}
-    <div id="pagetitle">
+    <section id="pagetitle">
         <h1>Hello! I'm Gijs! <i class="fa-solid fa-face-smile"></i></h1>
-        <span>Welcome! This is my little space on the web. I sometimes write some code.</span>
-        <span>Almost all the code I write is open-source, and I have collected some of my projects on the <a href="/projects">projects</a> page</span>
-    </div>
+        <p>Welcome! This is my little space on the web. I sometimes write some code.</p>
+        <p>Almost all the code I write is open-source, and I have collected some of my projects on the <a href="/projects">projects</a> page</p>
+    </section>
 
-    <div id="commitfreqcontainer">
+    <section id="commitfreqcontainer">
         <div id="commitfreq">
             {% for headeritem in headers %}
                 <div class="extra-info week num" style="grid-area: 1 / {{ loop.index + 1 }} / 2 / {{ loop.index + 2 }}">{{ headeritem }}</div>
@@ -31,13 +31,13 @@
                 <div data-message="{{ cell.message }}" style="grid-area: {{ cell.grid_area }}; background: light-dark({{ cell.lightcolor }}, {{ cell.darkcolor }})" class="cell"></div>
             {% endfor %}
         </div>
-    </div>
+    </section>
 
-    <div id="under-the-graph">
+    <section id="under-the-graph">
         <p class="annotation">
             The heatmap above shows the <strong>number of lines changed</strong> (added + deleted) in all Git commits I've made over the past 52 weeks, across <a href="https://github.com/Gijs6?tab=repositories" target="_blank">my own repositories</a>, the repositories of <a href="https://git.dupunkto.org" target="_blank">{du}punkto</a>, and repo's from my work projects.
         </p>
 
-        <p class="annotation">Last updated {{ last_updated }} UTC.</p>
-    </div>
+        <p class="annotation">Last updated <time datetime="{{ last_updated_iso }}">{{ last_updated }}</time> UTC.</p>
+    </section>
 {% endblock %}

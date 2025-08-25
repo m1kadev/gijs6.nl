@@ -1,11 +1,10 @@
 from flask import (
     Blueprint,
     render_template,
-    redirect,
-    url_for,
     Response,
     request,
     make_response,
+    abort,
 )
 from datetime import datetime, timezone
 from feedgen.feed import FeedGenerator
@@ -15,6 +14,7 @@ import commonmark
 import yaml
 import pytz
 import re
+import hashlib
 
 blog_bp = Blueprint(
     "blog_bp", __name__, template_folder="templates", static_folder="static"
@@ -98,22 +98,21 @@ def load_posts_from_directory(posts_dir, url_prefix=""):
             last_commit = lines[0].split()
             first_commit_ts = int(first_commit[1])
             last_commit_ts = int(last_commit[1])
-            post_data["date"] = datetime.fromtimestamp(first_commit_ts).strftime(
-                "%d-%m-%Y"
-            )
+            first_commit_dt = datetime.fromtimestamp(first_commit_ts, tz=timezone.utc)
+            last_commit_dt = datetime.fromtimestamp(last_commit_ts, tz=timezone.utc)
+            post_data["date"] = first_commit_dt.strftime("%d-%m-%Y")
+            post_data["date_iso"] = first_commit_dt.isoformat()
             post_data["timestamp"] = first_commit_ts
             post_info = {
                 "latest_commit": {
                     "hash": last_commit[0],
-                    "datetime": datetime.fromtimestamp(last_commit_ts).strftime(
-                        "%d-%m-%Y at %H:%M:%S"
-                    ),
+                    "datetime": last_commit_dt.strftime("%d-%m-%Y at %H:%M:%S"),
+                    "datetime_iso": last_commit_dt.isoformat(),
                 },
                 "first_commit": {
                     "hash": first_commit[0],
-                    "datetime": datetime.fromtimestamp(first_commit_ts).strftime(
-                        "%d-%m-%Y at %H:%M:%S"
-                    ),
+                    "datetime": first_commit_dt.strftime("%d-%m-%Y at %H:%M:%S"),
+                    "datetime_iso": first_commit_dt.isoformat(),
                 },
                 "multiple_edit": last_commit[0] != first_commit[0],
             }
@@ -216,7 +215,7 @@ def blog_index():
 def blog_post(slug):
     post = CACHED_POSTS.get(slug)
     if not post:
-        return redirect(url_for("blog_bp.blog_index"))
+        abort(404)
     return render_template("post.html", **post)
 
 
@@ -229,7 +228,7 @@ def archived_index():
 def archived_post(slug):
     post = CACHED_ARCHIVED_POSTS.get(slug)
     if not post:
-        return redirect(url_for("blog_bp.archived_index"))
+        abort(404)
     return render_template("post.html", is_archived=True, **post)
 
 
@@ -237,6 +236,7 @@ def make_feed_response(feed_type="rss"):
     data = CACHED_FEED[feed_type]
     last_modified = CACHED_LAST_MODIFIED
 
+    # Handle If-Modified-Since header
     if_modified_since = request.headers.get("If-Modified-Since")
     if if_modified_since:
         try:
@@ -248,12 +248,27 @@ def make_feed_response(feed_type="rss"):
         except Exception:
             pass
 
+    # Generate content hash for ETag
+    content_hash = hashlib.sha256(data.encode("utf-8")).hexdigest()[:16]
+    etag_value = f'W/"{feed_type}-{content_hash}"'
+
+    # Handle If-None-Match header (ETag)
+    if_none_match = request.headers.get("If-None-Match")
+    if if_none_match and etag_value in if_none_match:
+        return Response(status=304)
+
     response = make_response(data)
-    response.headers["Content-Type"] = "application/xml; charset=utf-8"
+    content_type = (
+        "application/rss+xml; charset=utf-8"
+        if feed_type == "rss"
+        else "application/atom+xml; charset=utf-8"
+    )
+    response.headers["Content-Type"] = content_type
     response.headers["Last-Modified"] = last_modified.strftime(
         "%a, %d %b %Y %H:%M:%S GMT"
     )
     response.headers["Cache-Control"] = "public, max-age=3600"
+    response.headers["ETag"] = etag_value
     return response
 
 

@@ -7,3 +7,8 @@ serve() {
 deploy() {
     ssh pya "/home/gijs3/.local/bin/python /home/gijs3/web/deploy.py"    
 }
+
+format() {
+    ruff format .
+    prettier --write "**/*.{css,js}"
+}

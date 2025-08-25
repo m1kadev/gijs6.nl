@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from werkzeug.security import check_password_hash
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 from collections import defaultdict
 import os
 import json
@@ -31,9 +31,9 @@ def homepage_graph_api():
             try:
                 data = request.get_json()
                 if not data:
-                    return "Invalid JSON data", 405
+                    return "Invalid JSON data", 400
             except Exception as e:
-                return f"Error reading JSON: {e}", 404
+                return f"Error reading JSON: {e}", 400
 
             headers = ["" for _ in range(52)]
             weeknumindex = defaultdict(int)
@@ -138,9 +138,11 @@ def homepage_graph_api():
                 cell["lightcolor"] = value_to_color(value, "light")
                 cell["darkcolor"] = value_to_color(value, "dark")
 
+            now_utc = datetime.now(tz=timezone.utc)
             saved_data = {
                 "data": tabledata,
-                "last_updated": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+                "last_updated": now_utc.strftime("%d-%m-%Y %H:%M:%S"),
+                "last_updated_iso": now_utc.isoformat(),
             }
 
             with open(

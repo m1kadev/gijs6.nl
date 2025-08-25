@@ -14,9 +14,9 @@
     {% endif %}
     
     <div id="post-info">
-        <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}">{{ first_commit.datetime }}</a> (UTC)</p>
+        <p>Made on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ first_commit.hash }}"><time datetime="{{ first_commit.datetime_iso }}">{{ first_commit.datetime }}</time></a> (UTC)</p>
         {% if multiple_edit %}
-            <p>Last edited on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit.hash }}">{{ latest_commit.datetime }}</a> (UTC)</p>
+            <p>Last edited on <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit.hash }}"><time datetime="{{ latest_commit.datetime_iso }}">{{ latest_commit.datetime }}</time></a> (UTC)</p>
         {% endif %}
     </div>
     

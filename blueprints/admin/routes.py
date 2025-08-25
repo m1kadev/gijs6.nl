@@ -59,12 +59,15 @@ def dashboard():
 
     commits = []
     for line in result.strip().split("\n"):
-        short_hash, message, datetime = line.split("|", 3)
+        short_hash, message, datetime_iso = line.split("|", 3)
+        # Parse ISO datetime and format for human reading
+        dt = datetime.fromisoformat(datetime_iso.strip().replace("Z", "+00:00"))
         commits.append(
             {
                 "hash": short_hash.strip(),
                 "message": message.strip(),
-                "datetime": datetime.strip(),
+                "datetime": dt.strftime("%d %b %Y at %H:%M:%S"),
+                "datetime_iso": datetime_iso.strip(),
             }
         )
     return render_template(
