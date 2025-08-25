@@ -54,7 +54,7 @@ for bp, prefix in load_blueprints():
     try:
         app.register_blueprint(bp, url_prefix=prefix)
     except Exception as e:
-        print(f"An error occured while trying to load {bp} as a blueprint: {e}")
+        print(f"An error occurred while trying to load {bp} as a blueprint: {e}")
 
 # Files
 
