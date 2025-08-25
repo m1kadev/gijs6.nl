@@ -104,12 +104,9 @@ def robots():
 
 
 def get_commit_and_deploy_date():
-    try:
-        with open(os.path.join(BASE_DIR, "data", "last_deploy.txt"), "r") as f:
-            latest_deploy_date = f.read().strip()
-    except FileNotFoundError:
-        latest_deploy_date = "unknown"
-        print("No latest deploy date found.")
+    # Set deploy date to current time (when app starts)
+    deploy_dt = datetime.now(tz=timezone.utc)
+    latest_deploy_date = deploy_dt.strftime("%d-%m-%Y at %H:%M:%S")
 
     latest_commit_hash = (
         subprocess.check_output(
@@ -135,6 +132,7 @@ def get_commit_and_deploy_date():
 
     comdepdata = {
         "latest_deploy_date": latest_deploy_date,
+        "latest_deploy_date_iso": deploy_dt.isoformat(),
         "latest_commit_hash": latest_commit_hash,
         "latest_commit_hash_long": latest_commit_hash_long,
         "latest_commit_date": latest_commit_date,
