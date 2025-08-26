@@ -4,10 +4,12 @@ from flask import (
     Response,
     request,
     make_response,
+    url_for,
     abort,
 )
 from datetime import datetime, timezone
 from feedgen.feed import FeedGenerator
+from copy import deepcopy
 import subprocess
 import os
 import commonmark
@@ -180,13 +182,28 @@ def load_posts_into_cache():
         CACHED_ARCHIVED_POSTS = {}
 
     feed = FeedGenerator()
-    feed.title("Gijs6 - Blog")
+    feed.title("Gijs6's blog")
     feed.id("https://www.gijs6.nl/blog")
-    feed.link(href="https://www.gijs6.nl/blog/rss.xml", rel="self")
-    feed.link(href="https://www.gijs6.nl/blog", rel="alternate")
-    feed.description("My own blog")
-    feed.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")
+    feed.link(
+        href="https://www.gijs6.nl/blog",
+        rel="alternate",
+        title="View the web-variant of the blog",
+    )
+    feed.description("A big mess of my thoughs")
+    feed.author(
+        name="Gijs ten Berg - Gijs6",
+        email="gijs6@dupunkto.org",
+        uri="https://www.gijs6.nl/",
+    )
     feed.language("en")
+    feed.lastBuildDate(datetime.now(pytz.UTC))
+    feed.managingEditor("gijs6@dupunkto.org (Gijs ten Berg)")
+    feed.webMaster("gijs6@dupunkto.org (Gijs ten Berg)")
+    feed.copyright(
+        "No rights reserved. All original content is licensed under The Unlicense."
+    )
+    feed.icon("https://www.gijs6.nl/static/favs/new_fav.ico")
+    feed.logo("https://www.gijs6.nl/static/favs/new_fav.ico")
 
     posts_data.sort(key=lambda x: x["pub_date"])
     for post in posts_data:
@@ -199,10 +216,31 @@ def load_posts_into_cache():
         entry.updated(post["updated_date"])
         entry.author(name="Gijs ten Berg - Gijs6", email="gijs6@dupunkto.org")
 
-    CACHED_FEED["rss"] = feed.rss_str(pretty=True)
-    CACHED_FEED["atom"] = feed.atom_str(pretty=True)
+    # RSS version
+    rss_feed = deepcopy(feed)
+    rss_feed.link(href="https://www.gijs6.nl/blog/rss.xml", rel="self")
+    rss_feed.link(
+        href="https://www.gijs6.nl/blog/atom.xml",
+        rel="alternate",
+        type="application/atom+xml",
+    )
+    # Weird bug
+    rss_feed.link(href="https://www.gijs6.nl/blog", rel="alternate")
+    CACHED_FEED["rss"] = rss_feed.rss_str(pretty=True)
+
+    # Atom version
+    atom_feed = deepcopy(feed)
+    atom_feed.link(href="https://www.gijs6.nl/blog/atom.xml", rel="self")
+    atom_feed.link(
+        href="https://www.gijs6.nl/blog/rss.xml",
+        rel="alternate",
+        type="application/rss+xml",
+    )
+    CACHED_FEED["atom"] = atom_feed.atom_str(pretty=True)
+
     CACHED_LAST_MODIFIED = max(
-        (post["updated_date"] for post in posts_data), default=datetime.now(pytz.UTC)
+        (post["updated_date"] for post in posts_data),
+        default=datetime.now(pytz.UTC),
     )
 
 

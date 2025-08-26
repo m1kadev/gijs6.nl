@@ -1,5 +1,9 @@
 import os
 import importlib
+import logging
+import traceback
+
+logger = logging.getLogger(__name__)
 
 
 def load_blueprints():
@@ -21,6 +25,7 @@ def load_blueprints():
                             bp = getattr(module, attr)
                             blueprints.append((bp, url_prefix))
                 except Exception as e:
-                    print(f"An error occurred while trying to load {module_path}: {e}")
+                    print(f"Failed to load blueprint from {module_path}: {e}")
+                    print(traceback.format_exc())
 
     return blueprints
