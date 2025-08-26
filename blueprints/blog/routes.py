@@ -249,7 +249,7 @@ def make_feed_response(feed_type="rss"):
             pass
 
     # Generate content hash for ETag
-    content_hash = hashlib.sha256(data.encode("utf-8")).hexdigest()[:16]
+    content_hash = hashlib.sha256(data).hexdigest()[:16]
     etag_value = f'W/"{feed_type}-{content_hash}"'
 
     # Handle If-None-Match header (ETag)
@@ -259,9 +259,9 @@ def make_feed_response(feed_type="rss"):
 
     response = make_response(data)
     content_type = (
-        "application/rss+xml; charset=utf-8"
+        "application/xml; charset=utf-8"
         if feed_type == "rss"
-        else "application/atom+xml; charset=utf-8"
+        else "application/xml; charset=utf-8"
     )
     response.headers["Content-Type"] = content_type
     response.headers["Last-Modified"] = last_modified.strftime(
