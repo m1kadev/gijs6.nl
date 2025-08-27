@@ -5,10 +5,16 @@ serve() {
 }
 
 deploy() {
-    ssh pya "/home/gijs3/.local/bin/python /home/gijs3/web/deploy.py"    
+  ssh pya "/home/gijs3/.local/bin/python /home/gijs3/web/deploy.py"    
+}
+
+force_deploy() {
+  source .env
+  curl -X POST "https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/reload/" -H "Authorization: Token $API_TOKEN"
 }
 
 format() {
-    ruff format .
-    prettier --write "**/*.{css,js}"
+  ruff format . # Python
+  prettier --write "**/*.{css,js}" # CSS/JS
+  djlint . --reformat # Jinja
 }
