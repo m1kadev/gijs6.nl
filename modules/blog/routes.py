@@ -19,7 +19,7 @@ import re
 import hashlib
 
 blog_bp = Blueprint(
-    "blog_bp", __name__, template_folder="templates", static_folder="static"
+    "blog_bp", __name__, template_folder="blog_templates", static_folder="blog_static"
 )
 
 BASE_DIR = os.path.dirname(__file__)

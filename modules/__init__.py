@@ -1,20 +1,16 @@
 import os
 import importlib
-import logging
-import traceback
-
-logger = logging.getLogger(__name__)
 
 
-def load_blueprints():
-    blueprints = []
+def load_modules():
+    modules = []
     base_path = os.path.dirname(__file__)
 
     for file_item in os.scandir(base_path):
         if file_item.is_dir():
             routes_path = os.path.join(file_item.path, "routes.py")
             if os.path.isfile(routes_path):
-                module_path = f"blueprints.{file_item.name}.routes"
+                module_path = f"modules.{file_item.name}.routes"
                 try:
                     module = importlib.import_module(module_path)
 
@@ -23,9 +19,8 @@ def load_blueprints():
                     for attr in dir(module):
                         if attr.endswith("_bp"):
                             bp = getattr(module, attr)
-                            blueprints.append((bp, url_prefix))
+                            modules.append((bp, url_prefix))
                 except Exception as e:
-                    print(f"Failed to load blueprint from {module_path}: {e}")
-                    print(traceback.format_exc())
+                    print(f"Failed to load module from {module_path}: {e}")
 
-    return blueprints
+    return modules

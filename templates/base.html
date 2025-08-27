@@ -1,80 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% extends "skeleton.html" %}
 
-        <meta name="author" content="gijs6" />
-        <meta name="description" content="A big mess of fun pages, interesting projects, my own thoughts and opinions and more." />
+{% block extra_headers %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const darkButton = document.getElementById("theme-dark");
+        const lightButton = document.getElementById("theme-light");
+        const systemButton = document.getElementById("theme-system");
 
-        <title>{% block title %}{% endblock %} - Gijs6</title>
+        const currentTheme = localStorage.getItem("theme") || "system";
+        document.documentElement.setAttribute("data-theme", currentTheme);
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/new_fav.ico') }}" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
+        darkButton.addEventListener("click", () => {
+            document.documentElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+        });
 
-        <link rel="alternate" type="application/rss+xml" title="Blog - RSS" href="/blog/rss.xml" />
-        <link rel="alternate" type="application/atom+xml" title="Blog - Atom" href="/blog/atom.xml" />
+        lightButton.addEventListener("click", () => {
+            document.documentElement.setAttribute("data-theme", "light");
+            localStorage.setItem("theme", "light");
+        });
 
-        <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const darkButton = document.getElementById("theme-dark");
-                const lightButton = document.getElementById("theme-light");
-                const systemButton = document.getElementById("theme-system");
+        systemButton.addEventListener("click", () => {
+            document.documentElement.setAttribute("data-theme", "system");
+            localStorage.setItem("theme", "system");
+        });
+    });
+</script>
+{% endblock %}
 
-                const currentTheme = localStorage.getItem("theme") || "system"; // If there is a theme saved in the local storage, use it, else just use the system theme
-                document.documentElement.setAttribute("data-theme", currentTheme);
+{% block body %}
+<header>
+    <span id="logo">Gijs<sup>6</sup></span>
+    <a href="/" class="menu-item{% if request.path == '/' %} active{% endif %}">/home</a>
+    <a href="/blog" class="menu-item{% if 'blog' in request.path %} active{% endif %}">/blog</a>
+    <a href="/projects" class="menu-item{% if request.path == '/projects' %} active{% endif %}">/projects</a>
+    <a href="/lib" class="menu-item{% if request.path == '/lib' %} active{% endif %}">/library</a>
+    <a href="/code" class="menu-item{% if request.path == '/code' %} active{% endif %}">/code</a>
+    <a href="/colophon" class="menu-item{% if request.path == '/colophon' %} active{% endif %}">/colophon</a>
+    <a href="/school" class="menu-item">/school</a>
+    <a href="/contact" class="menu-item">/contact</a>
+</header>
 
-                darkButton.addEventListener("click", () => {
-                    document.documentElement.setAttribute("data-theme", "dark");
-                    localStorage.setItem("theme", "dark");
-                });
+<main>{% block content %}{% endblock %}</main>
 
-                lightButton.addEventListener("click", () => {
-                    document.documentElement.setAttribute("data-theme", "light");
-                    localStorage.setItem("theme", "light");
-                });
+<footer>
+    <p id="madeby">Made by Gijs</p>
+    {% block extra_footer %}{% endblock %}
+    <p>Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (committed on <time datetime="{{ latest_commit_date_iso }}">{{ latest_commit_date }}</time> UTC)</p>
+    <p>Last deployed on <time datetime="{{ latest_deploy_date_iso }}">{{ latest_deploy_date }}</time> UTC</p>
+    <p>Content and code are <strong>public domain</strong></p>
+    <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnywhere</a></p>
+    <p>View the <a href="https://github.com/Gijs6/gijs6.nl" target="_blank">source code on GitHub</a></p>
 
-                systemButton.addEventListener("click", () => {
-                    document.documentElement.setAttribute("data-theme", "system");
-                    localStorage.setItem("theme", "system");
-                });
-            });
-        </script>
-
-        {% block extra_headers %}{% endblock %}
-    </head>
-    <body>
-        <header>
-            <span id="logo">Gijs<sup>6</sup></span>
-            <a href="/" class="menu-item{% if request.path == '/' %} active{% endif %}">/home</a>
-            <a href="/blog" class="menu-item{% if 'blog' in request.path %} active{% endif %}">/blog</a>
-            <a href="/projects" class="menu-item{% if request.path == '/projects' %} active{% endif %}">/projects</a>
-            <a href="/lib" class="menu-item{% if request.path == '/lib' %} active{% endif %}">/library</a>
-            <a href="/code" class="menu-item{% if request.path == '/code' %} active{% endif %}">/code</a>
-            <a href="/colophon" class="menu-item{% if request.path == '/colophon' %} active{% endif %}">/colophon</a>
-            <a href="/school" class="menu-item">/school</a>
-            <a href="/contact" class="menu-item">/contact</a>
-        </header>
-
-        <main>{% block content %}{% endblock %}</main>
-
-        <footer>
-            <p id="madeby">Made by Gijs</p>
-            {% block extra_footer %}{% endblock %}
-            <p>Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (committed on <time datetime="{{ latest_commit_date_iso }}">{{ latest_commit_date }}</time> UTC)</p>
-            <p>Last deployed on <time datetime="{{ latest_deploy_date_iso }}">{{ latest_deploy_date }}</time> UTC</p>
-            <p>Content and code are <strong>public domain</strong></p>
-            <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnywhere</a></p>
-            <p>View the <a href="https://github.com/Gijs6/gijs6.nl" target="_blank">source code on GitHub</a></p>
-
-            <button class="theme-toggle" id="theme-dark"><i class="fa-solid fa-moon"></i> Dark</button>
-            <button class="theme-toggle" id="theme-light"><i class="fa-solid fa-sun"></i> Light</button>
-            <button class="theme-toggle" id="theme-system"><i class="fa-solid fa-circle-half-stroke"></i> System</button>
-        </footer>
-        <script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"></script>
-    </body>
-</html>
+    <button class="theme-toggle" id="theme-dark"><i class="fa-solid fa-moon"></i> Dark</button>
+    <button class="theme-toggle" id="theme-light"><i class="fa-solid fa-sun"></i> Light</button>
+    <button class="theme-toggle" id="theme-system"><i class="fa-solid fa-circle-half-stroke"></i> System</button>
+</footer>
+{% endblock %}

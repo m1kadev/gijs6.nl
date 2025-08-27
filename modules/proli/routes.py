@@ -1,75 +1,26 @@
-from flask import (
-    Blueprint,
-    render_template,
-    jsonify,
-    request,
-    session,
-    redirect,
-    url_for,
-)
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask import Blueprint, render_template, jsonify, request
 from datetime import datetime, timezone
 import json
 import os
-import string
 import random
 
-jstd_bp = Blueprint(
-    "jstd_bp", __name__, template_folder="templates", static_folder="static"
+from decorators import login_required
+
+proli_bp = Blueprint(
+    "proli_bp", __name__, template_folder="proli_templates", static_folder="proli_static"
 )
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
-try:
-    with open(os.path.join(BASE_DIR, "password.txt"), "r") as f:
-        PASSWORD_HASH = f.read().strip()
-except FileNotFoundError:
-    if __name__ == "__main__":
-        password = "".join(
-            random.choices(
-                string.ascii_letters + string.digits, k=random.randint(25, 45)
-            )
-        )
-        # Only in development. If this would be executed on production that would be very very bad...
-        print(
-            f"\033[91mThere is no password registred for the JSTD. You can use the password '{password}'.\033[0m"
-        )
-        PASSWORD_HASH = generate_password_hash(password)
-    else:
-        raise FileNotFoundError
+@proli_bp.route("/")
+@login_required
+def proli_index():
+    return render_template("proli_main.html")
 
 
-@jstd_bp.before_request
-def login_check():
-    if "login" not in request.path and "static" not in request.path:
-        if not session.get("jstd_logged_in"):
-            return redirect(url_for("jstd_bp.login"))
-
-
-@jstd_bp.route("/login", methods=["GET", "POST"])
-def login():
-    if not session.get("jstd_logged_in"):
-        if request.method == "POST":
-            password = request.form.get("password")
-            if check_password_hash(PASSWORD_HASH, password):
-                session["jstd_logged_in"] = True
-                session.permanent = True
-
-                return redirect(url_for("jstd_bp.jstd_index"))
-            else:
-                return render_template("login_jstd.html", error="WRONG LOL")
-
-        return render_template("login_jstd.html")
-    return redirect(url_for("jstd_bp.jstd_index"))
-
-
-@jstd_bp.route("/")
-def jstd_index():
-    return render_template("main.html")
-
-
-@jstd_bp.route("/api/list_all", methods=["GET"])
+@proli_bp.route("/api/list_all", methods=["GET"])
+@login_required
 def list_all():
     try:
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
@@ -82,7 +33,8 @@ def list_all():
         return str(e), 500
 
 
-@jstd_bp.route("/api/set_checked", methods=["PUT"])
+@proli_bp.route("/api/set_checked", methods=["PUT"])
+@login_required
 def set_checked():
     try:
         req_data = request.get_json()
@@ -104,7 +56,8 @@ def set_checked():
         return str(e), 500
 
 
-@jstd_bp.route("/api/set_info", methods=["PUT"])
+@proli_bp.route("/api/set_info", methods=["PUT"])
+@login_required
 def set_info():
     try:
         req_data = request.get_json()
@@ -131,7 +84,8 @@ def set_info():
         return str(e), 500
 
 
-@jstd_bp.route("/api/make_new", methods=["POST"])
+@proli_bp.route("/api/make_new", methods=["POST"])
+@login_required
 def make_new():
     try:
         req_data = request.get_json()
@@ -158,7 +112,8 @@ def make_new():
         return str(e), 500
 
 
-@jstd_bp.route("/api/delete_item", methods=["DELETE"])
+@proli_bp.route("/api/delete_item", methods=["DELETE"])
+@login_required
 def delete_item():
     try:
         req_data = request.get_json()
@@ -179,7 +134,8 @@ def delete_item():
         return str(e), 500
 
 
-@jstd_bp.route("/api/new_collection", methods=["POST"])
+@proli_bp.route("/api/new_collection", methods=["POST"])
+@login_required
 def new_collection():
     try:
         with open(os.path.join(BASE_DIR, "data", "list.json")) as jf:
@@ -198,7 +154,8 @@ def new_collection():
         return str(e), 500
 
 
-@jstd_bp.route("/api/rename_collection", methods=["PUT"])
+@proli_bp.route("/api/rename_collection", methods=["PUT"])
+@login_required
 def rename_collection():
     try:
         req_data = request.get_json()
@@ -219,7 +176,8 @@ def rename_collection():
         return str(e), 500
 
 
-@jstd_bp.route("/api/delete_collection", methods=["DELETE"])
+@proli_bp.route("/api/delete_collection", methods=["DELETE"])
+@login_required
 def delete_collection():
     try:
         req_data = request.get_json()
@@ -240,4 +198,4 @@ def delete_collection():
 
 
 if __name__ == "__main__":
-    jstd_bp.run(port=1000, debug=True)
+    proli_bp.run(port=1000, debug=True)

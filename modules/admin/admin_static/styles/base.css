@@ -1,22 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: inherit;
-}
 :root {
-    --black: #0f212e;
-    --whiteblue: #d1e3f0;
-    --white: #eaf2ef;
-    --gray: #6b6d76;
-    --darkblue: #28587b;
-    --lightblue: #0f95b0;
-    --yellow: #ffa630;
-    --red: #e65039;
-    --green: #06c749;
-
     --back: #181c20;
 }
 
@@ -29,15 +12,12 @@ body {
 }
 
 header {
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
     gap: 20px;
     margin-bottom: 20px;
 }
 
 header a {
-    color: inherit;
     text-decoration: none;
     font-weight: 700;
 }
@@ -51,14 +31,7 @@ header a:hover {
     font-size: 1.5em;
 }
 
-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
 .menu-item {
-    padding: 5px 10px;
     border-right: #adb5bd solid 2px;
 }
 
@@ -129,11 +102,3 @@ button {
     }
 }
 
-a {
-    color: inherit;
-    text-decoration-color: var(--lightblue);
-}
-
-a:hover {
-    color: var(--lightblue);
-}
