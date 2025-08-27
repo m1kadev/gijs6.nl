@@ -21,7 +21,10 @@ locale.setlocale(locale.LC_TIME, "en_US.UTF-8")
 
 
 admin_module = Blueprint(
-    "admin_module", __name__, template_folder="admin_templates", static_folder="admin_static"
+    "admin_module",
+    __name__,
+    template_folder="admin_templates",
+    static_folder="admin_static",
 )
 
 BASE_DIR = os.path.dirname(__file__)

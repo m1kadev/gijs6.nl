@@ -7,7 +7,10 @@ import random
 from decorators import login_required
 
 proli_module = Blueprint(
-    "proli_module", __name__, template_folder="proli_templates", static_folder="proli_static"
+    "proli_module",
+    __name__,
+    template_folder="proli_templates",
+    static_folder="proli_static",
 )
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))

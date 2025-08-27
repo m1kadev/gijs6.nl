@@ -7,7 +7,10 @@ import re
 from decorators import login_required
 
 priv_module = Blueprint(
-    "priv_module", __name__, template_folder="priv_templates", static_folder="priv_static"
+    "priv_module",
+    __name__,
+    template_folder="priv_templates",
+    static_folder="priv_static",
 )
 
 BASE_DIR = os.path.dirname(__file__)

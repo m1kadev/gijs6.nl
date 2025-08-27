@@ -54,7 +54,10 @@ for module_instance, prefix in load_modules():
     try:
         app.register_blueprint(module_instance, url_prefix=prefix)
     except Exception as e:
-        print(f"An error occurred while trying to load {module_instance} as a module: {e}")
+        print(
+            f"An error occurred while trying to load {module_instance} as a module: {e}"
+        )
+
 
 # Filters
 
