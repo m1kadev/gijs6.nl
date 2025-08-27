@@ -162,6 +162,7 @@ a {
     color: inherit;
     font-weight: 800;
     text-decoration: #888 underline 1px;
+    width: fit-content;
 }
 
 a:hover {
