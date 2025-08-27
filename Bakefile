@@ -14,7 +14,9 @@ force_deploy() {
 }
 
 format() {
-  ruff format . # Python
-  prettier --write "**/*.{css,js}" # CSS/JS
-  djlint . --reformat # Jinja
+  ruff format .
+  prettier --write "**/*.{css,js}"
+  prettier --write "**/*.json"
+  markdownlint --fix "**/*.md"
+  djlint . --reformat
 }
