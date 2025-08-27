@@ -5,17 +5,13 @@ serve() {
 }
 
 deploy() {
-  ssh pya "/home/gijs3/web/deploy.sh"
+  ssh pya "chmod +x /home/gijs3/web/deploy.sh && /home/gijs3/web/deploy.sh"
 }
 
 force_deploy() {
-  ssh pya "chmod +x /home/gijs3/web/deploy.sh && /home/gijs3/web/deploy.sh"
+  deploy
   source .env
   curl -X POST "https://eu.pythonanywhere.com/api/v0/user/gijs3/webapps/www.gijs6.nl/reload/" -H "Authorization: Token $API_TOKEN"
-}
-
-fix_deploy() {
-  ssh pya "chmod +x /home/gijs3/web/deploy.sh"
 }
 
 format() {
