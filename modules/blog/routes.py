@@ -36,14 +36,13 @@ CACHED_ARCHIVED_POSTS = {}
 
 
 def generate_html(md_input):
-    pattern = r"%ref%(.*?)%ref%"
+    pattern = r"\(-(.+?)\|<(.+?)>-\)"
     refs = []
     ref_number = 0
 
     def parse_refs(match):
         nonlocal ref_number
-        content = match.group(1)
-        title, url = content.split("-#-")
+        title, url = match.group(1), match.group(2)
         ref_number += 1
         refs.append({"title": title, "url": url, "number": ref_number})
         return f"<a class='ref-inline' href='#ref-url-{ref_number}'>[{ref_number}]</a>"

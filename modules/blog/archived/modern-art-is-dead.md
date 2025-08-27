@@ -2,7 +2,9 @@
 title: Modern art is dead
 ---
 
+<!-- markdownlint-disable MD026 -->
 # Modern art is dead ...
+<!-- markdownlint-enable MD026 -->
 
 ... and it has been since the 1970s. When I say "dead", I simply mean that modern art isn't being made anymore (but "modern art isn't being made anymore" is a worse title).  
 **Modern art isn't art that is made recently.** Modern art is a collection of different art movements between the 1860s and the 1970s.  
