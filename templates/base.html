@@ -1,7 +1,6 @@
 {% extends "skeleton.html" %}
-
 {% block extra_headers %}
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", () => {
         const darkButton = document.getElementById("theme-dark");
         const lightButton = document.getElementById("theme-light");
@@ -25,35 +24,55 @@
             localStorage.setItem("theme", "system");
         });
     });
-</script>
+    </script>
 {% endblock %}
-
 {% block body %}
-<header>
-    <span id="logo">Gijs<sup>6</sup></span>
-    <a href="/" class="menu-item{% if request.path == '/' %} active{% endif %}">/home</a>
-    <a href="/blog" class="menu-item{% if 'blog' in request.path %} active{% endif %}">/blog</a>
-    <a href="/projects" class="menu-item{% if request.path == '/projects' %} active{% endif %}">/projects</a>
-    <a href="/lib" class="menu-item{% if request.path == '/lib' %} active{% endif %}">/library</a>
-    <a href="/code" class="menu-item{% if request.path == '/code' %} active{% endif %}">/code</a>
-    <a href="/colophon" class="menu-item{% if request.path == '/colophon' %} active{% endif %}">/colophon</a>
-    <a href="/school" class="menu-item">/school</a>
-    <a href="/contact" class="menu-item">/contact</a>
-</header>
-
-<main>{% block content %}{% endblock %}</main>
-
-<footer>
-    <p id="madeby">Made by Gijs</p>
-    {% block extra_footer %}{% endblock %}
-    <p>Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (committed on <time datetime="{{ latest_commit_date_iso }}">{{ latest_commit_date }}</time> UTC)</p>
-    <p>Last deployed on <time datetime="{{ latest_deploy_date_iso }}">{{ latest_deploy_date }}</time> UTC</p>
-    <p>Content and code are <strong>public domain</strong></p>
-    <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnywhere</a></p>
-    <p>View the <a href="https://github.com/Gijs6/gijs6.nl" target="_blank">source code on GitHub</a></p>
-
-    <button class="theme-toggle" id="theme-dark"><i class="fa-solid fa-moon"></i> Dark</button>
-    <button class="theme-toggle" id="theme-light"><i class="fa-solid fa-sun"></i> Light</button>
-    <button class="theme-toggle" id="theme-system"><i class="fa-solid fa-circle-half-stroke"></i> System</button>
-</footer>
+    <header>
+        <span id="logo">Gijs<sup>6</sup></span>
+        <a href="/"
+           class="menu-item{% if request.path == '/' %} active{% endif %}">/home</a>
+        <a href="/blog"
+           class="menu-item{% if 'blog' in request.path %} active{% endif %}">/blog</a>
+        <a href="/projects"
+           class="menu-item{% if request.path == '/projects' %} active{% endif %}">/projects</a>
+        <a href="/lib"
+           class="menu-item{% if request.path == '/lib' %} active{% endif %}">/library</a>
+        <a href="/code"
+           class="menu-item{% if request.path == '/code' %} active{% endif %}">/code</a>
+        <a href="/colophon"
+           class="menu-item{% if request.path == '/colophon' %} active{% endif %}">/colophon</a>
+        <a href="/school" class="menu-item">/school</a>
+        <a href="/contact" class="menu-item">/contact</a>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p id="madeby">Made by Gijs</p>
+        {% block extra_footer %}{% endblock %}
+        <p>
+            Version from commit <a href="https://github.com/Gijs6/gijs6.nl/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (committed on <time datetime="{{ latest_commit_date_iso }}">{{ latest_commit_date }}</time> UTC)
+        </p>
+        <p>
+            Last deployed on <time datetime="{{ latest_deploy_date_iso }}">{{ latest_deploy_date }}</time> UTC
+        </p>
+        <p>
+            Content and code are <strong>public domain</strong>
+        </p>
+        <p>
+            Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnywhere</a>
+        </p>
+        <p>
+            View the <a href="https://github.com/Gijs6/gijs6.nl" target="_blank">source code on GitHub</a>
+        </p>
+        <button class="theme-toggle" id="theme-dark">
+            <i class="fa-solid fa-moon"></i> Dark
+        </button>
+        <button class="theme-toggle" id="theme-light">
+            <i class="fa-solid fa-sun"></i> Light
+        </button>
+        <button class="theme-toggle" id="theme-system">
+            <i class="fa-solid fa-circle-half-stroke"></i> System
+        </button>
+    </footer>
 {% endblock %}

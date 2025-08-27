@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
-    <link rel="icon" type="image/x-icon" href="{{ fav }}">
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Log in</title>
+        <link rel="icon" type="image/x-icon" href="{{ fav }}">
+        <style>
         :root {
             color-scheme: light dark;
         }
@@ -91,19 +91,19 @@
         #homelink {
             margin-top: 1rem;
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-    <h1>Log in</h1>
-    <form method="POST" action="/login?next={{ next_page }}">
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Log in</button>
-    </form>
-    <p id="homelink">Or just go to the <a href="/" style="font-weight: 800;">home page</a>...</p>
-    {% if error %}
-        <p id="err">{{ error }}</p>
-    {% endif %}
-    </div>
-</body>
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Log in</h1>
+            <form method="POST" action="/login?next={{ next_page }}">
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Log in</button>
+            </form>
+            <p id="homelink">
+                Or just go to the <a href="/" style="font-weight: 800;">home page</a>...
+            </p>
+            {% if error %}<p id="err">{{ error }}</p>{% endif %}
+        </div>
+    </body>
 </html>

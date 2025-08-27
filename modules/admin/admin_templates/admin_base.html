@@ -1,50 +1,51 @@
 {% extends "skeleton.html" %}
-
-{% block title %}{% block page_title %}Home{% endblock %} - Admin{% endblock %}
-
-{% block extra_headers %}
-<link rel="stylesheet" href="{{ url_for('admin_module.static', filename='styles/base.css') }}">
-<link rel="icon" href="{{ url_for('admin_module.static', filename='favs/admin.ico') }}">
-
-<script>
-function statusMessage(message, type, sleep) {
-    const container = document.getElementById("status")
-
-    const messageElement = document.createElement("div")
-    messageElement.className = "status-item status-" + type;
-    messageElement.innerHTML = message;
-
-    container.appendChild(messageElement);
-
-    setTimeout(() => {
-        messageElement.style.animation = "500ms fadeout forwards"
-        setTimeout(() => {
-            container.removeChild(messageElement);
-        }, 500);
-    }, sleep);
-}
-</script>
-
-{% block page_extra_headers %}{% endblock %}
+{% block title %}
+    {% block page_title %}Home{% endblock %}
+    - Admin
 {% endblock %}
+{% block extra_headers %}
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/base.css') }}">
+    <link rel="icon"
+          href="{{ url_for('admin_module.static', filename='favs/admin.ico') }}">
+    <script>
+    function statusMessage(message, type, sleep) {
+        const container = document.getElementById("status")
 
+        const messageElement = document.createElement("div")
+        messageElement.className = "status-item status-" + type;
+        messageElement.innerHTML = message;
+
+        container.appendChild(messageElement);
+
+        setTimeout(() => {
+            messageElement.style.animation = "500ms fadeout forwards"
+            setTimeout(() => {
+                container.removeChild(messageElement);
+            }, 500);
+        }, sleep);
+    }
+    </script>
+    {% block page_extra_headers %}{% endblock %}
+{% endblock %}
 {% block body %}
-<header>
-    <a href="/admin/" id="header-logo">Admin</a>
-    <nav>
-        <a href="/admin/" class="menu-item{% if request.path == '/admin/' %} active{% endif %}">Dashboard <i class="fa-solid fa-table-list"></i></a>
-        <a href="/admin/lib" class="menu-item{% if request.path == '/admin/lib' %} active{% endif %}">LibEditor <i class="fa-solid fa-gears"></i></a>
-        <a href="/admin/log" class="menu-item{% if request.path == '/admin/log' %} active{% endif %}">LogView <i class="fa-solid fa-eye"></i></a>
-    </nav>
-    <nav class="second-nav">
-        <a href="/priv/grade" class="menu-item">GradeCheck <i class="fa-solid fa-arrow-up-9-1"></i></a>
-        <a href="/proli/" class="menu-item">Proli <i class="fa-solid fa-check"></i></a>
-    </nav>
-</header>
-
-<main>
-    <div id="status"></div>
-
-    {% block content %}{% endblock %}
-</main>
+    <header>
+        <a href="/admin/" id="header-logo">Admin</a>
+        <nav>
+            <a href="/admin/"
+               class="menu-item{% if request.path == '/admin/' %} active{% endif %}">Dashboard <i class="fa-solid fa-table-list"></i></a>
+            <a href="/admin/lib"
+               class="menu-item{% if request.path == '/admin/lib' %} active{% endif %}">LibEditor <i class="fa-solid fa-gears"></i></a>
+            <a href="/admin/log"
+               class="menu-item{% if request.path == '/admin/log' %} active{% endif %}">LogView <i class="fa-solid fa-eye"></i></a>
+        </nav>
+        <nav class="second-nav">
+            <a href="/priv/grade" class="menu-item">GradeCheck <i class="fa-solid fa-arrow-up-9-1"></i></a>
+            <a href="/proli/" class="menu-item">Proli <i class="fa-solid fa-check"></i></a>
+        </nav>
+    </header>
+    <main>
+        <div id="status"></div>
+        {% block content %}{% endblock %}
+    </main>
 {% endblock %}

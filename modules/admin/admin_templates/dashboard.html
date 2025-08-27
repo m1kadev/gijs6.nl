@@ -1,16 +1,14 @@
 {% extends "admin_base.html" %}
-
 {% block title %}Dashboard{% endblock %}
-
-{% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('admin_module.static', filename='styles/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('admin_module.static', filename='styles/table.css') }}">
+{% block page_extra_headers %}
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/dashboard.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/table.css') }}">
     <script src="{{ url_for('admin_module.static', filename='scripts/dashboard.js') }}"></script>
 {% endblock %}
-
 {% block content %}
     <h1>Dashboard</h1>
-
     <div id="blocks-container">
         {% for title, version in version_info.items() %}
             <div class="block block-version block-version-{{ title }}">
@@ -26,7 +24,6 @@
             <button class="button site-action" onclick="softreload(this)">
                 <i class="fa-solid fa-rotate"></i> Soft reload
             </button>
-
             <button class="button site-action" onclick="forcereload(this)">
                 <i class="fa-solid fa-rotate"></i> Force reload
             </button>
@@ -35,14 +32,11 @@
             <button class="button site-action" onclick="redeploy(this)">
                 <i class="fa-solid fa-download"></i> Redeploy
             </button>
-        
             <button class="button site-action" onclick="disable(this)">
                 <i class="fa-solid fa-ban"></i> Disable
             </button>
         </div>
     </div>
-
-
     <div id="tables-container">
         <table id="urls">
             <thead>
@@ -51,12 +45,9 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            
             <tbody>
             </tbody>
-
         </table>
-
         <table id="commits">
             <thead>
                 <tr>
@@ -65,17 +56,17 @@
                     <th>Hash</th>
                 </tr>
             </thead>
-            
             <tbody>
                 {% for commit in commits %}
                     <tr>
-                        <td><time datetime="{{ commit.datetime_iso }}">{{ commit.datetime }}</time></td>
+                        <td>
+                            <time datetime="{{ commit.datetime_iso }}">{{ commit.datetime }}</time>
+                        </td>
                         <td class="text-left">{{ commit.message }}</td>
                         <td>{{ commit.hash }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
-
         </table>
     </div>
 {% endblock %}

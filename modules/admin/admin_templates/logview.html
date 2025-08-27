@@ -1,42 +1,75 @@
 {% extends "admin_base.html" %}
-
 {% block title %}LogView{% endblock %}
-
-{% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('admin_module.static', filename='styles/logview.css') }}">
-    <link rel="stylesheet" href="{{ url_for('admin_module.static', filename='styles/table.css') }}">
+{% block page_extra_headers %}
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/logview.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/table.css') }}">
     <script src="{{ url_for('admin_module.static', filename='scripts/logview.js') }}"></script>
 {% endblock %}
-
 {% block content %}
     <h1>LogView</h1>
-
     <div id="lognum-filter">
         <h2>Lognum</h2>
         <input type="number" id="lognum-input" min="0" max="9" step="1" value="0">
     </div>
-
     <div id="filters">
         <div id="method-filter">
             <h2>Method</h2>
             <div>
-                <label><input type="checkbox" value="GET">GET</label>
-                <label><input type="checkbox" value="POST">POST</label>
-                <label><input type="checkbox" value="PUT">PUT</label>
-                <label><input type="checkbox" value="DELETE">DELETE</label>
-                <label><input type="checkbox" value="PATCH">PATCH</label>
-                <label><input type="checkbox" value="HEAD">HEAD</label>
-                <label><input type="checkbox" value="OPTIONS">OPTIONS</label>   
+                <label>
+                    <input type="checkbox" value="GET">
+                    GET
+                </label>
+                <label>
+                    <input type="checkbox" value="POST">
+                    POST
+                </label>
+                <label>
+                    <input type="checkbox" value="PUT">
+                    PUT
+                </label>
+                <label>
+                    <input type="checkbox" value="DELETE">
+                    DELETE
+                </label>
+                <label>
+                    <input type="checkbox" value="PATCH">
+                    PATCH
+                </label>
+                <label>
+                    <input type="checkbox" value="HEAD">
+                    HEAD
+                </label>
+                <label>
+                    <input type="checkbox" value="OPTIONS">
+                    OPTIONS
+                </label>
             </div>
         </div>
         <div id="status-filter">
             <h2>Status</h2>
             <div>
-                <label><input type="checkbox" value="1">1xx</label>
-                <label><input type="checkbox" value="2">2xx</label>
-                <label><input type="checkbox" value="3">3xx</label>
-                <label><input type="checkbox" value="4">4xx</label>
-                <label><input type="checkbox" value="5">5xx</label>
+                <label>
+                    <input type="checkbox" value="1">
+                    1xx
+                </label>
+                <label>
+                    <input type="checkbox" value="2">
+                    2xx
+                </label>
+                <label>
+                    <input type="checkbox" value="3">
+                    3xx
+                </label>
+                <label>
+                    <input type="checkbox" value="4">
+                    4xx
+                </label>
+                <label>
+                    <input type="checkbox" value="5">
+                    5xx
+                </label>
             </div>
         </div>
         <div id="path-filter">
@@ -44,7 +77,6 @@
             <input type="search" />
         </div>
     </div>
-
     <table>
         <thead>
             <tr>
@@ -60,9 +92,7 @@
                 <th>Response time</th>
             </tr>
         </thead>
-        
         <tbody>
         </tbody>
-
     </table>
 {% endblock %}
