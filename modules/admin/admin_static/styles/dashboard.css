@@ -86,12 +86,13 @@
 
 #tables-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(500px, auto));
+    grid-template-columns: auto auto;
     gap: 4em;
 }
 
 #tables-container > * {
     height: fit-content;
+    width: fit-content;
 }
 
 .marked {

@@ -1,46 +1,5 @@
-
-:root {
-    --back: #181c20;
-}
-
-body {
-    background: var(--back);
-    color: var(--white);
-    font-family: "Source Code Pro", monospace;
-    padding: 30px;
-    font-size: clamp(0.8em, 2.5vw, 1.15em);
-}
-
-header {
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-header a {
-    text-decoration: none;
-    font-weight: 700;
-}
-
-header a:hover {
-    color: var(--lightblue);
-}
-
-#header-logo {
-    font-weight: 800;
-    font-size: 1.5em;
-}
-
-.menu-item {
-    border-right: #adb5bd solid 2px;
-}
-
-.menu-item.active {
-    color: var(--lightblue);
-}
-
-.menu-item:last-child {
-    border-right: none;
+.second-nav {
+    margin-left: auto;
 }
 
 main {
@@ -101,4 +60,3 @@ button {
         opacity: 0;
     }
 }
-
