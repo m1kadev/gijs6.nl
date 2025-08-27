@@ -20,8 +20,8 @@ from decorators import login_required
 locale.setlocale(locale.LC_TIME, "en_US.UTF-8")
 
 
-admin_bp = Blueprint(
-    "admin_bp", __name__, template_folder="admin_templates", static_folder="admin_static"
+admin_module = Blueprint(
+    "admin_module", __name__, template_folder="admin_templates", static_folder="admin_static"
 )
 
 BASE_DIR = os.path.dirname(__file__)
@@ -40,7 +40,7 @@ token = os.getenv("API_TOKEN")
 # Dashboard
 
 
-@admin_bp.route("/")
+@admin_module.route("/")
 @login_required
 def dashboard():
     os_info = platform.platform()
@@ -75,7 +75,7 @@ def dashboard():
     )
 
 
-@admin_bp.route("/api/dashboard/softreload", methods=["POST"])
+@admin_module.route("/api/dashboard/softreload", methods=["POST"])
 @login_required
 def dashboard_softreload():
     try:
@@ -87,7 +87,7 @@ def dashboard_softreload():
         return str(e), 500
 
 
-@admin_bp.route("/api/dashboard/forcereload", methods=["POST"])
+@admin_module.route("/api/dashboard/forcereload", methods=["POST"])
 @login_required
 def dashboard_forcereload():
     try:
@@ -103,7 +103,7 @@ def dashboard_forcereload():
         return str(e), 500
 
 
-@admin_bp.route("/api/dashboard/redeploy", methods=["POST"])
+@admin_module.route("/api/dashboard/redeploy", methods=["POST"])
 @login_required
 def dashboard_redeploy():
     try:
@@ -115,7 +115,7 @@ def dashboard_redeploy():
         return str(e), 500
 
 
-@admin_bp.route("/api/dashboard/disable", methods=["POST"])
+@admin_module.route("/api/dashboard/disable", methods=["POST"])
 @login_required
 def dashboard_disable():
     try:
@@ -130,7 +130,7 @@ def dashboard_disable():
         return str(e), 500
 
 
-@admin_bp.route("/api/dashboard/list_urls")
+@admin_module.route("/api/dashboard/list_urls")
 @login_required
 def dashboard_list_urls():
     urls = []
@@ -158,13 +158,13 @@ def dashboard_list_urls():
 # Libeditor
 
 
-@admin_bp.route("/lib")
+@admin_module.route("/lib")
 @login_required
 def libeditor():
     return render_template("libeditor.html")
 
 
-@admin_bp.route("/api/libeditor/list_all", methods=["GET"])
+@admin_module.route("/api/libeditor/list_all", methods=["GET"])
 @login_required
 def libeditor_list_all():
     try:
@@ -176,7 +176,7 @@ def libeditor_list_all():
         return str(e), 500
 
 
-@admin_bp.route("/api/libeditor/set_info", methods=["PUT"])
+@admin_module.route("/api/libeditor/set_info", methods=["PUT"])
 @login_required
 def libeditor_set_info():
     try:
@@ -203,7 +203,7 @@ def libeditor_set_info():
         return str(e), 500
 
 
-@admin_bp.route("/api/libeditor/make_new", methods=["POST"])
+@admin_module.route("/api/libeditor/make_new", methods=["POST"])
 @login_required
 def libeditor_make_new():
     try:
@@ -226,7 +226,7 @@ def libeditor_make_new():
         return str(e), 500
 
 
-@admin_bp.route("/api/libeditor/delete_item", methods=["DELETE"])
+@admin_module.route("/api/libeditor/delete_item", methods=["DELETE"])
 @login_required
 def libeditor_delete_item():
     try:
@@ -262,13 +262,13 @@ http_method_colors = {
 }
 
 
-@admin_bp.route("/log")
+@admin_module.route("/log")
 @login_required
 def logview():
     return render_template("logview.html")
 
 
-@admin_bp.route("/api/logview/listall")
+@admin_module.route("/api/logview/listall")
 @login_required
 def logview_listall():
     try:

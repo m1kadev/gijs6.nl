@@ -6,20 +6,20 @@ import random
 
 from decorators import login_required
 
-proli_bp = Blueprint(
-    "proli_bp", __name__, template_folder="proli_templates", static_folder="proli_static"
+proli_module = Blueprint(
+    "proli_module", __name__, template_folder="proli_templates", static_folder="proli_static"
 )
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
-@proli_bp.route("/")
+@proli_module.route("/")
 @login_required
 def proli_index():
     return render_template("proli_main.html")
 
 
-@proli_bp.route("/api/list_all", methods=["GET"])
+@proli_module.route("/api/list_all", methods=["GET"])
 @login_required
 def list_all():
     try:
@@ -33,7 +33,7 @@ def list_all():
         return str(e), 500
 
 
-@proli_bp.route("/api/set_checked", methods=["PUT"])
+@proli_module.route("/api/set_checked", methods=["PUT"])
 @login_required
 def set_checked():
     try:
@@ -56,7 +56,7 @@ def set_checked():
         return str(e), 500
 
 
-@proli_bp.route("/api/set_info", methods=["PUT"])
+@proli_module.route("/api/set_info", methods=["PUT"])
 @login_required
 def set_info():
     try:
@@ -84,7 +84,7 @@ def set_info():
         return str(e), 500
 
 
-@proli_bp.route("/api/make_new", methods=["POST"])
+@proli_module.route("/api/make_new", methods=["POST"])
 @login_required
 def make_new():
     try:
@@ -112,7 +112,7 @@ def make_new():
         return str(e), 500
 
 
-@proli_bp.route("/api/delete_item", methods=["DELETE"])
+@proli_module.route("/api/delete_item", methods=["DELETE"])
 @login_required
 def delete_item():
     try:
@@ -134,7 +134,7 @@ def delete_item():
         return str(e), 500
 
 
-@proli_bp.route("/api/new_collection", methods=["POST"])
+@proli_module.route("/api/new_collection", methods=["POST"])
 @login_required
 def new_collection():
     try:
@@ -154,7 +154,7 @@ def new_collection():
         return str(e), 500
 
 
-@proli_bp.route("/api/rename_collection", methods=["PUT"])
+@proli_module.route("/api/rename_collection", methods=["PUT"])
 @login_required
 def rename_collection():
     try:
@@ -176,7 +176,7 @@ def rename_collection():
         return str(e), 500
 
 
-@proli_bp.route("/api/delete_collection", methods=["DELETE"])
+@proli_module.route("/api/delete_collection", methods=["DELETE"])
 @login_required
 def delete_collection():
     try:
@@ -195,7 +195,3 @@ def delete_collection():
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return str(e), 500
-
-
-if __name__ == "__main__":
-    proli_bp.run(port=1000, debug=True)

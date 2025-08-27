@@ -8,11 +8,11 @@ def login_required(func):
         if not session.get("logged_in"):
             # So my bookmarks for proli, grade and admin are not just the login fav
             if "proli" in request.path:
-                fav = url_for("proli_bp.static", filename="fav.ico")
+                fav = url_for("proli_module.static", filename="fav.ico")
             elif "grade" in request.path:
-                fav = url_for("priv_bp.static", filename="favs/grade.ico")
+                fav = url_for("priv_module.static", filename="favs/grade.ico")
             elif "admin" in request.path:
-                fav = url_for("admin_bp.static", filename="favs/admin.ico")
+                fav = url_for("admin_module.static", filename="favs/admin.ico")
             else:
                 fav = url_for("static", filename="favs/login.ico")
 

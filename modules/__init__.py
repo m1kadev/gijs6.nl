@@ -17,9 +17,9 @@ def load_modules():
                     url_prefix = getattr(module, "URL_PREFIX", f"/{file_item.name}")
 
                     for attr in dir(module):
-                        if attr.endswith("_bp"):
-                            bp = getattr(module, attr)
-                            modules.append((bp, url_prefix))
+                        if attr.endswith("_module"):
+                            module_instance = getattr(module, attr)
+                            modules.append((module_instance, url_prefix))
                 except Exception as e:
                     print(f"Failed to load module from {module_path}: {e}")
 

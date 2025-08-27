@@ -6,8 +6,8 @@ import re
 
 from decorators import login_required
 
-priv_bp = Blueprint(
-    "priv_bp", __name__, template_folder="priv_templates", static_folder="priv_static"
+priv_module = Blueprint(
+    "priv_module", __name__, template_folder="priv_templates", static_folder="priv_static"
 )
 
 BASE_DIR = os.path.dirname(__file__)
@@ -19,7 +19,7 @@ def read_data_file(file_name):
         return json.load(f)
 
 
-@priv_bp.route("/grade")
+@priv_module.route("/grade")
 @login_required
 def grade_check():
     data = read_data_file("grade.json")
@@ -31,7 +31,7 @@ first_ical_path = "/" + ical_data["path_first"]
 second_ical_path = "/" + ical_data["path_second"]
 
 
-@priv_bp.route(first_ical_path)
+@priv_module.route(first_ical_path)
 def first_schedule_ical():
     ICAL_URL = ical_data["url_first"]
     response = requests.get(ICAL_URL)
@@ -95,7 +95,7 @@ def first_schedule_ical():
     )
 
 
-@priv_bp.route(second_ical_path)
+@priv_module.route(second_ical_path)
 def second_schedule_ical():
     ICAL_URL = ical_data["url_second"]
     response = requests.get(ICAL_URL)

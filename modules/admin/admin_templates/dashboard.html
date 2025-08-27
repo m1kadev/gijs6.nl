@@ -3,9 +3,9 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('admin_bp.static', filename='styles/table.css') }}">
-    <script src="{{ url_for('admin_bp.static', filename='scripts/dashboard.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('admin_module.static', filename='styles/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin_module.static', filename='styles/table.css') }}">
+    <script src="{{ url_for('admin_module.static', filename='scripts/dashboard.js') }}"></script>
 {% endblock %}
 
 {% block content %}

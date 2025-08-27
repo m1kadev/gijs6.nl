@@ -5,7 +5,7 @@ from collections import defaultdict
 import os
 import json
 
-api_bp = Blueprint("api_bp", __name__)
+api_module = Blueprint("api_module", __name__)
 
 project_dir = os.path.dirname(__file__)
 
@@ -22,7 +22,7 @@ except Exception:
     print("No auth hash found.")
 
 
-@api_bp.route("/homegraphupdate", methods=["POST"])
+@api_module.route("/homegraphupdate", methods=["POST"])
 def homepage_graph_api():
     if AUTH_HASH:
         if not check_password_hash(AUTH_HASH, request.headers.get("auth")):

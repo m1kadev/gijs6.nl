@@ -18,8 +18,8 @@ import pytz
 import re
 import hashlib
 
-blog_bp = Blueprint(
-    "blog_bp", __name__, template_folder="blog_templates", static_folder="blog_static"
+blog_module = Blueprint(
+    "blog_module", __name__, template_folder="blog_templates", static_folder="blog_static"
 )
 
 BASE_DIR = os.path.dirname(__file__)
@@ -244,12 +244,12 @@ def load_posts_into_cache():
     )
 
 
-@blog_bp.route("/")
+@blog_module.route("/")
 def blog_index():
     return render_template("index.html", post_list=CACHED_POST_LIST)
 
 
-@blog_bp.route("/<string:slug>")
+@blog_module.route("/<string:slug>")
 def blog_post(slug):
     post = CACHED_POSTS.get(slug)
     if not post:
@@ -257,12 +257,12 @@ def blog_post(slug):
     return render_template("post.html", **post)
 
 
-@blog_bp.route("/archived")
+@blog_module.route("/archived")
 def archived_index():
     return render_template("archived_index.html", post_list=CACHED_ARCHIVED_POST_LIST)
 
 
-@blog_bp.route("/archived/<string:slug>")
+@blog_module.route("/archived/<string:slug>")
 def archived_post(slug):
     post = CACHED_ARCHIVED_POSTS.get(slug)
     if not post:
@@ -310,12 +310,12 @@ def make_feed_response(feed_type="rss"):
     return response
 
 
-@blog_bp.route("/rss.xml")
+@blog_module.route("/rss.xml")
 def rss():
     return make_feed_response("rss")
 
 
-@blog_bp.route("/atom.xml")
+@blog_module.route("/atom.xml")
 def atom():
     return make_feed_response("atom")
 

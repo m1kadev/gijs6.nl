@@ -1,7 +1,7 @@
 from flask import Blueprint, Response, request
 import os
 
-kodo_bp = Blueprint("kodo_bp", __name__)
+kodo_module = Blueprint("kodo_module", __name__)
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(__file__)
 # This is the API to store the kodo (https://git.dupunkto.org/~dupunkto/kodo) highscore
 
 
-@kodo_bp.route("/get")
+@kodo_module.route("/get")
 def kodo_get():
     with open(os.path.join(BASE_DIR, "highscore.txt"), "r") as f:
         data = f.read().strip()
@@ -18,7 +18,7 @@ def kodo_get():
     return resp
 
 
-@kodo_bp.route("/new")
+@kodo_module.route("/new")
 def kodo_new():
     new = request.args.get("s")
 
