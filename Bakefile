@@ -5,6 +5,7 @@ serve() {
 }
 
 deploy() {
+  git push
   ssh pya "chmod +x /home/gijs3/web/deploy.sh && /home/gijs3/web/deploy.sh"
 }
 
