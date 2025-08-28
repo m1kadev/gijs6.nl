@@ -75,7 +75,7 @@ main code,
 pre:has(code) {
     overflow: scroll;
     border-radius: 0.5em;
-    background: light-dark(#dfe3d6, #201c29);
+    background: #201c29;
     padding: 1em;
 }
 

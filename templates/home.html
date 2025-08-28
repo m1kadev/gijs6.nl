@@ -30,7 +30,7 @@
             {% for cell in graphdata %}
                 <div data-message="{{ cell.message }}"
                      style="grid-area: {{ cell.grid_area }};
-                            background: light-dark({{ cell.lightcolor }}, {{ cell.darkcolor }})"
+                            background: {{ cell.darkcolor }}"
                      class="cell"></div>
             {% endfor %}
         </div>

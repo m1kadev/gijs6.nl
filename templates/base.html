@@ -1,30 +1,5 @@
 {% extends "skeleton.html" %}
 {% block extra_headers %}
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const darkButton = document.getElementById("theme-dark");
-        const lightButton = document.getElementById("theme-light");
-        const systemButton = document.getElementById("theme-system");
-
-        const currentTheme = localStorage.getItem("theme") || "system";
-        document.documentElement.setAttribute("data-theme", currentTheme);
-
-        darkButton.addEventListener("click", () => {
-            document.documentElement.setAttribute("data-theme", "dark");
-            localStorage.setItem("theme", "dark");
-        });
-
-        lightButton.addEventListener("click", () => {
-            document.documentElement.setAttribute("data-theme", "light");
-            localStorage.setItem("theme", "light");
-        });
-
-        systemButton.addEventListener("click", () => {
-            document.documentElement.setAttribute("data-theme", "system");
-            localStorage.setItem("theme", "system");
-        });
-    });
-    </script>
     {% block page_extra_headers %}{% endblock %}
 {% endblock %}
 {% block body %}
@@ -66,14 +41,5 @@
         <p>
             View the <a href="https://github.com/Gijs6/gijs6.nl" target="_blank">source code on GitHub</a>
         </p>
-        <button class="theme-toggle" id="theme-dark">
-            <i class="fa-solid fa-moon"></i> Dark
-        </button>
-        <button class="theme-toggle" id="theme-light">
-            <i class="fa-solid fa-sun"></i> Light
-        </button>
-        <button class="theme-toggle" id="theme-system">
-            <i class="fa-solid fa-circle-half-stroke"></i> System
-        </button>
     </footer>
 {% endblock %}
