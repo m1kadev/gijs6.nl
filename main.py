@@ -148,6 +148,38 @@ def get_commit_and_deploy_date():
 comdepdata = get_commit_and_deploy_date()
 
 
+# Security headers
+@app.after_request
+def add_security_headers(response):
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://kit.fontawesome.com https://cdn.jsdelivr.net //instant.page; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com https://kit.fontawesome.com; "
+        "img-src 'self' data:; "
+        "connect-src 'self'; "
+        "frame-ancestors 'none'; "
+        "base-uri 'self'; "
+        "form-action 'self'"
+    )
+
+    response.headers["Strict-Transport-Security"] = (
+        "max-age=31536000; includeSubDomains"
+    )
+
+    response.headers["X-Frame-Options"] = "DENY"
+
+    response.headers["X-Content-Type-Options"] = "nosniff"
+
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+
+    response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+
+    return response
+
+
 @app.context_processor
 def inject_comdepdata():
     return comdepdata

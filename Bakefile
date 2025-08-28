@@ -18,6 +18,6 @@ format() {
   ruff format .
   prettier --write "**/*.{css,js}"
   prettier --write "**/*.json"
-  markdownlint --fix "**/*.md"
   djlint . --reformat
+  markdownlint --fix "**/*.md" || true
 }

@@ -6,6 +6,7 @@
         <meta name="author" content="gijs6" />
         <meta name="description"
               content="A big mess of fun pages, interesting projects, my own thoughts and opinions and more." />
+        <meta name="robots" content="index, follow" />
         <title>
             {% block title %}{% endblock %}
         - Gijs6</title>
@@ -16,8 +17,10 @@
               href="{{ url_for('static', filename='favs/new_fav.ico') }}" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://kit.fontawesome.com" />
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
               rel="stylesheet" />
+        <link rel="dns-prefetch" href="//instant.page" />
         <link rel="alternate"
               type="application/rss+xml"
               title="Blog - RSS"
@@ -27,7 +30,8 @@
               title="Blog - Atom"
               href="/blog/atom.xml" />
         <script src="https://kit.fontawesome.com/4a94c21782.js"
-                crossorigin="anonymous"></script>
+                crossorigin="anonymous"
+                integrity="sha384-7WgGvA9xvg8X9vvO7P9r1vB8s6T9dXgvZk7Z5Y1u1s3pYJVNQ8wFUjC8RvLnSmyP"></script>
         {% block extra_headers %}{% endblock %}
     </head>
     <body>
