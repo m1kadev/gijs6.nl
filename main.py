@@ -237,12 +237,6 @@ def login():
         return render_template("login.html")
     return redirect("/")
 
-
-@app.route("/code")
-def code():
-    return render_template("code.html")
-
-
 @app.route("/lib")
 def lib():
     try:
