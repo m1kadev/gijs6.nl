@@ -45,7 +45,7 @@ except FileNotFoundError:
         )
         PASSWORD_HASH = generate_password_hash(password)
     else:
-        raise FileNotFoundError
+        raise FileNotFoundError("Password file not found in production environment.")
 
 
 # Modules

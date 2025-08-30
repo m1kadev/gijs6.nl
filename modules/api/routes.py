@@ -4,7 +4,6 @@ from datetime import datetime, date, timedelta, timezone
 from collections import defaultdict
 import os
 import json
-from app import set_homepage_graph_data
 
 api_module = Blueprint("api_module", __name__)
 
@@ -16,7 +15,7 @@ while not os.path.isdir(os.path.join(project_dir, ".git")):
 project_dir = os.path.abspath(project_dir)
 
 try:
-    with open(os.path.join(project_dir, "auth.txt"), "r") as f:
+    with open(os.path.join(project_dir, "api_auth.txt"), "r") as f:
         AUTH_HASH = f.read().strip()
 except Exception:
     AUTH_HASH = None
@@ -145,6 +144,8 @@ def homepage_graph_api():
                 "last_updated": now_utc.strftime("%d-%m-%Y %H:%M:%S"),
                 "last_updated_iso": now_utc.isoformat(),
             }
+
+            from app import set_homepage_graph_data
 
             set_homepage_graph_data(
                 tabledata,
