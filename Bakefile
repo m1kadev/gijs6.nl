@@ -6,11 +6,11 @@ serve() {
 
 deploy() {
   git push
-  ssh pya "chmod +x /home/gijs3/web/deploy.sh && /home/gijs3/web/deploy.sh"
+  ssh pya "chmod +x /home/gijs3/gijs6.nl/deploy.sh && /home/gijs3/gijs6.nl/deploy.sh"
 }
 
 deploy_rsync() {
-  rsync -avz --exclude='.git' --exclude='__pycache__' --exclude='.venv' --exclude='.env' . pya:/home/gijs3/web/
+  rsync -avz --exclude='.git' --exclude='__pycache__' --exclude='.venv' --exclude='.env' . pya:/home/gijs3/gijs6.nl/
   ssh pya "touch /var/www/www_gijs6_nl_wsgi.py"
 }
 

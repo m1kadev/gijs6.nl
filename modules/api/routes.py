@@ -4,7 +4,7 @@ from datetime import datetime, date, timedelta, timezone
 from collections import defaultdict
 import os
 import json
-from main import set_homepage_graph_data
+from app import set_homepage_graph_data
 
 api_module = Blueprint("api_module", __name__)
 
