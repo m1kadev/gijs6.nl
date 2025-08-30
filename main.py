@@ -147,11 +147,52 @@ def get_commit_and_deploy_date():
 
 comdepdata = get_commit_and_deploy_date()
 
+homepage_graph_data = {
+    "graphdata": [],
+    "headers": [],
+    "last_updated": "",
+    "last_updated_iso": "",
+}
+
+
+def get_homepage_graph_data():
+    # Get homepage graph data from memory. If empty, try loading from disk.
+    if not homepage_graph_data["graphdata"]:
+        try:
+            with open(
+                os.path.join(BASE_DIR, "data", "homepagegraph", "graphdata.json"), "r"
+            ) as file:
+                graphdatafull = json.load(file)
+            homepage_graph_data["graphdata"] = graphdatafull["data"]
+            homepage_graph_data["last_updated"] = graphdatafull.get("last_updated", "")
+            homepage_graph_data["last_updated_iso"] = graphdatafull.get(
+                "last_updated_iso", ""
+            )
+        except FileNotFoundError:
+            homepage_graph_data["graphdata"] = []
+
+        try:
+            with open(
+                os.path.join(BASE_DIR, "data", "homepagegraph", "headers.json"), "r"
+            ) as file:
+                headers = json.load(file)
+            homepage_graph_data["headers"] = [str(h).zfill(2) for h in headers]
+        except FileNotFoundError:
+            homepage_graph_data["headers"] = []
+
+    return homepage_graph_data
+
+
+def set_homepage_graph_data(graphdata, headers, last_updated, last_updated_iso):
+    homepage_graph_data["graphdata"] = graphdata
+    homepage_graph_data["headers"] = [str(h).zfill(2) for h in headers]
+    homepage_graph_data["last_updated"] = last_updated
+    homepage_graph_data["last_updated_iso"] = last_updated_iso
+
 
 # Security headers
 @app.after_request
 def add_security_headers(response):
-
     response.headers["Strict-Transport-Security"] = (
         "max-age=31536000; includeSubDomains"
     )
@@ -176,36 +217,14 @@ def inject_comdepdata():
 
 @app.route("/")
 def home():
-    try:
-        with open(
-            os.path.join(BASE_DIR, "data", "homepagegraph", "graphdata.json"), "r"
-        ) as file:
-            graphdatafull = json.load(file)
-    except FileNotFoundError:
-        graphdatafull = {"data": [], "last_updated": ""}
-        print("No graphdatafull found.")
-
-    graphdata = graphdatafull["data"]
-    last_updated = graphdatafull.get("last_updated", "")
-    last_updated_iso = graphdatafull.get("last_updated_iso", "")
-
-    try:
-        with open(
-            os.path.join(BASE_DIR, "data", "homepagegraph", "headers.json"), "r"
-        ) as file:
-            headers = json.load(file)
-    except FileNotFoundError:
-        headers = []
-        print("No headers found.")
-
-    headers = [str(h).zfill(2) for h in headers]
+    data = get_homepage_graph_data()
 
     return render_template(
         "home.html",
-        graphdata=graphdata,
-        headers=headers,
-        last_updated=last_updated,
-        last_updated_iso=last_updated_iso,
+        graphdata=data["graphdata"],
+        headers=data["headers"],
+        last_updated=data["last_updated"],
+        last_updated_iso=data["last_updated_iso"],
     )
 
 
@@ -225,6 +244,7 @@ def login():
 
         return render_template("login.html")
     return redirect("/")
+
 
 @app.route("/lib")
 def lib():

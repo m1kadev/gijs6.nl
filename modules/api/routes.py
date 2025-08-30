@@ -4,6 +4,7 @@ from datetime import datetime, date, timedelta, timezone
 from collections import defaultdict
 import os
 import json
+from main import set_homepage_graph_data
 
 api_module = Blueprint("api_module", __name__)
 
@@ -144,6 +145,13 @@ def homepage_graph_api():
                 "last_updated": now_utc.strftime("%d-%m-%Y %H:%M:%S"),
                 "last_updated_iso": now_utc.isoformat(),
             }
+
+            set_homepage_graph_data(
+                tabledata,
+                headers,
+                saved_data["last_updated"],
+                saved_data["last_updated_iso"],
+            )
 
             with open(
                 os.path.join(project_dir, "data", "homepagegraph", "graphdata.json"),
