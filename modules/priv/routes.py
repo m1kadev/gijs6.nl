@@ -31,7 +31,6 @@ def grade_check():
 
 ical_data = read_data_file("ical.json")
 first_ical_path = "/" + ical_data["path_first"]
-second_ical_path = "/" + ical_data["path_second"]
 
 
 @priv_module.route(first_ical_path)
@@ -54,67 +53,6 @@ def first_schedule_ical():
         "SCHK": "Scheikunde",
         "WISB": "Wiskunde B",
         "LO": "Gym",
-        "MEN": "Mentoruur",
-    }
-
-    for line in ics_content.splitlines():
-        if "SUMMARY" in line:
-            isClass = re.match(pattern, line.strip().replace("SUMMARY:", ""))
-            if isClass:
-                classroom = isClass.group(1)
-                classGroup = isClass.group(2)
-                teacher = isClass.group(3)
-
-                subjectAbbreviation = ""
-
-                for abbreviation in subjects.keys():
-                    if abbreviation in classGroup:
-                        subjectAbbreviation = subjects[abbreviation]
-                if not subjectAbbreviation:
-                    subjectAbbreviation = classGroup
-
-                new_line = (
-                    "SUMMARY:"
-                    + subjectAbbreviation
-                    + " ("
-                    + classroom
-                    + " - "
-                    + teacher
-                    + ")"
-                )
-            else:
-                new_line = line.capitalize()
-
-        else:
-            new_line = line
-        modified_ics.append(new_line)
-
-    new_ics_content = "\n".join(modified_ics)
-
-    return Response(
-        new_ics_content,
-        mimetype="text/calendar",
-        headers={"Content-Disposition": "attachment; filename=modified.ics"},
-    )
-
-
-@priv_module.route(second_ical_path)
-def second_schedule_ical():
-    ICAL_URL = ical_data["url_second"]
-    response = requests.get(ICAL_URL)
-    response.raise_for_status()
-    ics_content = response.text
-    modified_ics = []
-    pattern = r"^(.+?) - (.+?) - (.+?)$"
-    subjects = {
-        "ENTL": "Engels",
-        "DUTL": "Duits",
-        "NAT": "Natuurkunde",
-        "NLT": "NLT",
-        "NETL": "Nederlands",
-        "SCHK": "Scheikunde",
-        "WISB": "Wiskunde B",
-        "IN": "Informatica",
         "MEN": "Mentoruur",
     }
 
