@@ -234,23 +234,6 @@ def list_processes():
         return str(e), 500
 
 
-# Environment variables
-
-
-@admin_module.route("/env")
-@login_required
-def env_variables():
-    return render_template("env_variables.html")
-
-
-@admin_module.route("/api/env/list")
-@login_required
-def list_env_variables():
-    try:
-        return jsonify(os.environ.items())
-    except Exception as e:
-        return str(e), 500
-
 
 status_code_dict = {status.value: status.phrase for status in http.HTTPStatus}
 
