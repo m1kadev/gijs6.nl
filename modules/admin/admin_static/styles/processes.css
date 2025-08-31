@@ -1,0 +1,55 @@
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.auto-refresh {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.process-table {
+    width: 100%;
+}
+
+.cpu-high {
+    color: #f44336;
+}
+.cpu-med {
+    color: #ff9800;
+}
+.cpu-low {
+    color: #4caf50;
+}
+
+.status-running {
+    color: #4caf50;
+}
+.status-sleeping {
+    color: #2196f3;
+}
+.status-stopped {
+    color: #f44336;
+}
+
+.refresh-indicator {
+    display: none;
+    color: var(--accent-color);
+}
+
+.refresh-indicator.active {
+    display: inline;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

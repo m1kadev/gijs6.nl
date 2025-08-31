@@ -1,0 +1,47 @@
+{% extends "admin_base.html" %}
+{% block page_title %}System info{% endblock %}
+{% block page_extra_headers %}
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/system_info.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>System information</h1>
+    <div class="system-stats">
+        <div class="stat-card">
+            <div class="stat-title">CPU usage</div>
+            <div class="stat-value">{{ "%.1f"|format(system_stats.cpu_percent) }}%</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ system_stats.cpu_percent }}%"></div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Memory usage</div>
+            <div class="stat-value">{{ "%.1f"|format(system_stats.memory_percent) }}%</div>
+            <div class="stat-detail">
+                {{ "%.1f"|format(system_stats.memory_used / 1024**3) }}GB / {{ "%.1f"|format(system_stats.memory_total / 1024**3) }}GB
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"
+                     style="width: {{ system_stats.memory_percent }}%"></div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Disk usage</div>
+            <div class="stat-value">{{ "%.1f"|format(system_stats.disk_percent) }}%</div>
+            <div class="stat-detail">
+                {{ "%.1f"|format(system_stats.disk_used / 1024**3) }}GB / {{ "%.1f"|format(system_stats.disk_total / 1024**3) }}GB
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ system_stats.disk_percent }}%"></div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Project size</div>
+            <div class="stat-value">{{ "%.1f"|format(system_stats.project_size / 1024**2) }} MB</div>
+            <div class="stat-detail">Directory: {{ project_dir }}</div>
+        </div>
+    </div>
+    <button class="refresh-btn" onclick="location.reload()">
+        <i class="fa-solid fa-refresh"></i>
+    </button>
+{% endblock %}

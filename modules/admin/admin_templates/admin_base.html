@@ -34,13 +34,17 @@
         <nav>
             <a href="/admin/"
                class="menu-item{% if request.path == '/admin/' %} active{% endif %}">Dashboard <i class="fa-solid fa-table-list"></i></a>
-            <a href="/admin/lib"
-               class="menu-item{% if request.path == '/admin/lib' %} active{% endif %}">LibEditor <i class="fa-solid fa-gears"></i></a>
+            <a href="/admin/system"
+               class="menu-item{% if request.path == '/admin/system' %} active{% endif %}">System <i class="fa-solid fa-microchip"></i></a>
+            <a href="/admin/processes"
+               class="menu-item{% if request.path == '/admin/processes' %} active{% endif %}">Processes <i class="fa-solid fa-list"></i></a>
+            <a href="/admin/env"
+               class="menu-item{% if request.path == '/admin/env' %} active{% endif %}">Environment <i class="fa-solid fa-code"></i></a>
             <a href="/admin/log"
-               class="menu-item{% if request.path == '/admin/log' %} active{% endif %}">LogView <i class="fa-solid fa-eye"></i></a>
+               class="menu-item{% if request.path == '/admin/log' %} active{% endif %}">Log view <i class="fa-solid fa-eye"></i></a>
         </nav>
         <nav class="second-nav">
-            <a href="/priv/grade" class="menu-item">GradeCheck <i class="fa-solid fa-arrow-up-9-1"></i></a>
+            <a href="/priv/grade" class="menu-item">Grade check <i class="fa-solid fa-arrow-up-9-1"></i></a>
             <a href="/proli/" class="menu-item">Proli <i class="fa-solid fa-check"></i></a>
         </nav>
     </header>

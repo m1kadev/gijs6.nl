@@ -4,7 +4,6 @@ from datetime import datetime
 from ua_parser import parse
 from dotenv import load_dotenv
 import os
-import json
 import jinja2
 import requests
 import re
@@ -13,6 +12,9 @@ import subprocess
 import http
 import locale
 import gzip
+import psutil
+import shutil
+
 
 
 from decorators import login_required
@@ -158,94 +160,91 @@ def dashboard_list_urls():
     return jsonify(urls)
 
 
-# Libeditor
+# System info
 
 
-@admin_module.route("/lib")
+@admin_module.route("/system")
 @login_required
-def libeditor():
-    return render_template("libeditor.html")
+def system_info():
+    cpu_percent = psutil.cpu_percent(interval=1)
+    memory = psutil.virtual_memory()
+    disk = psutil.disk_usage("/")
+
+    project_size = shutil.disk_usage(project_dir)
+
+    system_stats = {
+        "cpu_percent": cpu_percent,
+        "memory_used": memory.used,
+        "memory_total": memory.total,
+        "memory_percent": memory.percent,
+        "disk_used": disk.used,
+        "disk_total": disk.total,
+        "disk_percent": (disk.used / disk.total) * 100,
+        "project_size": project_size.used,
+    }
+
+    return render_template("system_info.html", system_stats=system_stats)
 
 
-@admin_module.route("/api/libeditor/list_all", methods=["GET"])
+@admin_module.route("/api/system/stats")
 @login_required
-def libeditor_list_all():
+def system_stats_api():
     try:
-        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
-            data = json.load(jf)
-
-        return jsonify(data)
+        stats = {
+            "cpu_percent": psutil.cpu_percent(interval=1),
+            "memory": psutil.virtual_memory()._asdict(),
+            "disk": psutil.disk_usage("/")._asdict(),
+            "network": psutil.net_io_counters()._asdict()
+            if psutil.net_io_counters()
+            else {},
+            "boot_time": psutil.boot_time(),
+        }
+        return jsonify(stats)
     except Exception as e:
         return str(e), 500
 
 
-@admin_module.route("/api/libeditor/set_info", methods=["PUT"])
+# Process monitor
+
+
+@admin_module.route("/processes")
 @login_required
-def libeditor_set_info():
+def process_monitor():
+    return render_template("processes.html")
+
+
+@admin_module.route("/api/processes/list")
+@login_required
+def list_processes():
     try:
-        data = request.get_json()
+        processes = []
+        for proc in psutil.process_iter(
+            ["pid", "name", "cpu_percent", "memory_percent", "status"]
+        ):
+            try:
+                processes.append(proc.info)
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
 
-        listitem_index = data.get("listitemIndex")
-
-        title = data.get("title")
-        url = data.get("url")
-        icon = data.get("icon")
-
-        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
-            data = json.load(jf)
-
-        data[int(listitem_index)]["title"] = title
-        data[int(listitem_index)]["link"] = url
-        data[int(listitem_index)]["icon"] = icon
-
-        with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
-            json.dump(data, jf, indent=4)
-
-        return jsonify({"status": "success"}), 200
+        processes.sort(key=lambda x: x.get("cpu_percent", 0), reverse=True)
+        return jsonify(processes[:50])
     except Exception as e:
         return str(e), 500
 
 
-@admin_module.route("/api/libeditor/make_new", methods=["POST"])
+# Environment variables
+
+@admin_module.route("/env")
 @login_required
-def libeditor_make_new():
-    try:
-        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
-            data = json.load(jf)
-
-        data.append(
-            {
-                "title": "TITLE",
-                "link": "URL",
-                "icon": "fa-solid fa-arrow-up-right-from-square",
-            }
-        )
-
-        with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
-            json.dump(data, jf, indent=4)
-
-        return jsonify({"status": "success"}), 200
-    except Exception as e:
-        return str(e), 500
+def env_variables():
+    return render_template("env_variables.html")
 
 
-@admin_module.route("/api/libeditor/delete_item", methods=["DELETE"])
+@admin_module.route("/api/env/list")
 @login_required
-def libeditor_delete_item():
+def list_env_variables():
     try:
-        data = request.get_json()
-
-        listitem_index = data.get("listitemIndex")
-
-        with open(os.path.join(project_dir, "data", "libdata.json")) as jf:
-            data = json.load(jf)
-
-        data.pop(int(listitem_index))
-
-        with open(os.path.join(project_dir, "data", "libdata.json"), "w") as jf:
-            json.dump(data, jf, indent=4)
-
-        return jsonify({"status": "success"}), 200
+        return jsonify(os.environ.items())
     except Exception as e:
         return str(e), 500
 

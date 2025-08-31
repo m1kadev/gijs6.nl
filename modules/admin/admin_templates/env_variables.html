@@ -1,0 +1,107 @@
+{% extends "admin_base.html" %}
+{% block page_title %}Environment variables{% endblock %}
+{% block page_extra_headers %}
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/env_variables.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>Environment variables</h1>
+    <div class="stats">
+        <span id="visibleCount">0</span> of <span id="totalCount">0</span> variables shown
+    </div>
+    <div class="search-container">
+        <input type="text"
+               class="search-input"
+               id="searchInput"
+               placeholder="Search environment variables..."
+               onkeyup="filterEnvVars()">
+        <i class="fa-solid fa-search search-icon"></i>
+    </div>
+    <div class="env-grid" id="envGrid">
+        <div class="env-item">
+            <div class="env-key">Loading...</div>
+            <div class="env-value">Please wait...</div>
+        </div>
+    </div>
+    <script>
+        let allEnvVars = {};
+        
+        function loadEnvVars() {
+            fetch('/admin/api/env/list')
+                .then(response => response.json())
+                .then(data => {
+                    allEnvVars = data;
+                    displayEnvVars(data);
+                    updateStats();
+                })
+                .catch(error => {
+                    document.getElementById('envGrid').innerHTML = 
+                        '<div class="env-item"><div class="env-key">Error</div><div class="env-value">Failed to load environment variables</div></div>';
+                    console.error('Error:', error);
+                });
+        }
+        
+        function displayEnvVars(envVars) {
+            const grid = document.getElementById('envGrid');
+            grid.innerHTML = '';
+            
+            const sortedKeys = Object.keys(envVars).sort();
+            
+            sortedKeys.forEach(key => {
+                const item = document.createElement('div');
+                item.className = 'env-item';
+                item.dataset.key = key.toLowerCase();
+                item.dataset.value = envVars[key].toLowerCase();
+                
+                const isHidden = envVars[key] === '***HIDDEN***';
+                
+                item.innerHTML = `
+                    <div class="env-key">${key}</div>
+                    <div class="env-value ${isHidden ? 'env-hidden' : ''}">
+                        ${envVars[key]}
+                        ${!isHidden ? `<button class="copy-btn" onclick="copyToClipboard('${envVars[key].replace(/'/g, "\\'")}')"><i class="fa-solid fa-copy"></i></button>` : ''}
+                    </div>
+                `;
+                
+                grid.appendChild(item);
+            });
+        }
+        
+        function filterEnvVars() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.env-item');
+            let visibleCount = 0;
+            
+            items.forEach(item => {
+                const key = item.dataset.key;
+                const value = item.dataset.value;
+                
+                if (key.includes(searchTerm) || value.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            
+            document.getElementById('visibleCount').textContent = visibleCount;
+        }
+        
+        function updateStats() {
+            const totalCount = Object.keys(allEnvVars).length;
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('visibleCount').textContent = totalCount;
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                statusMessage('Copied to clipboard!', 'success', 2000);
+            }).catch(err => {
+                statusMessage('Failed to copy', 'error', 2000);
+            });
+        }
+        
+        // Initial load
+        loadEnvVars();
+    </script>
+{% endblock %}

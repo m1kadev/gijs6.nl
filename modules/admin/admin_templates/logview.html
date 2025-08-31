@@ -1,5 +1,5 @@
 {% extends "admin_base.html" %}
-{% block title %}LogView{% endblock %}
+{% block title %}Log view{% endblock %}
 {% block page_extra_headers %}
     <link rel="stylesheet"
           href="{{ url_for('admin_module.static', filename='styles/logview.css') }}">
@@ -8,7 +8,7 @@
     <script src="{{ url_for('admin_module.static', filename='scripts/logview.js') }}"></script>
 {% endblock %}
 {% block content %}
-    <h1>LogView</h1>
+    <h1>Log view</h1>
     <div id="lognum-filter">
         <h2>Lognum</h2>
         <input type="number" id="lognum-input" min="0" max="9" step="1" value="0">

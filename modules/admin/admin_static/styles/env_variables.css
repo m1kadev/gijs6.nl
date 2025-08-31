@@ -1,0 +1,89 @@
+.search-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+.env-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.env-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    align-items: start;
+}
+
+.env-key {
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    color: var(--accent-color);
+    word-break: break-all;
+}
+
+.env-value {
+    font-family: "Courier New", monospace;
+    background: var(--bg-tertiary);
+    padding: 8px;
+    border-radius: 3px;
+    word-break: break-all;
+    position: relative;
+}
+
+.env-hidden {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 3px;
+    padding: 2px 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.copy-btn:hover {
+    opacity: 1;
+}
+
+.stats {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background: var(--bg-secondary);
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+.hidden {
+    display: none;
+}

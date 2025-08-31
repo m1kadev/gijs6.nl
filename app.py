@@ -147,13 +147,6 @@ def get_commit_and_deploy_date():
 
 comdepdata = get_commit_and_deploy_date()
 
-homepage_graph_data = {
-    "graphdata": [],
-    "headers": [],
-    "last_updated": "",
-    "last_updated_iso": "",
-}
-
 
 def get_homepage_graph_data():
     # Get homepage graph data from memory. If empty, try loading from disk.
@@ -188,6 +181,25 @@ def set_homepage_graph_data(graphdata, headers, last_updated, last_updated_iso):
     homepage_graph_data["headers"] = [str(h).zfill(2) for h in headers]
     homepage_graph_data["last_updated"] = last_updated
     homepage_graph_data["last_updated_iso"] = last_updated_iso
+
+
+def get_library_data():
+    try:
+        with open(os.path.join(BASE_DIR, "data", "libdata.json"), "r") as file:
+            loaded_data = json.load(file)
+        return loaded_data
+    except FileNotFoundError:
+        return []
+
+
+homepage_graph_data = {
+    "graphdata": [],
+    "headers": [],
+    "last_updated": "",
+    "last_updated_iso": "",
+}
+
+libdata = get_library_data()
 
 
 # Security headers
@@ -248,28 +260,6 @@ def login():
 
 @app.route("/lib")
 def lib():
-    try:
-        with open(os.path.join(BASE_DIR, "data", "libdata.json"), "r") as file:
-            libdata = json.load(file)
-    except FileNotFoundError:
-        libdata = [
-            {
-                "title": "Lorem Picsum",
-                "link": "https://picsum.photos",
-                "icon": "fa-solid fa-camera",
-            },
-            {
-                "title": "BiNaS online",
-                "link": "https://archive.org/details/BiNaSpdf/mode/1up",
-                "icon": "fa-solid fa-flask-vial",
-            },
-            {
-                "title": "Dimensions",
-                "link": "https://dimensions.com",
-                "icon": "fa-solid fa-up-right-and-down-left-from-center",
-            },
-        ]
-
     return render_template("lib.html", data=libdata)
 
 

@@ -1,0 +1,92 @@
+{% extends "admin_base.html" %}
+{% block page_title %}Process monitor{% endblock %}
+{% block page_extra_headers %}
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/table.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('admin_module.static', filename='styles/processes.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>Process monitor</h1>
+    <div class="controls">
+        <button class="button" onclick="refreshProcesses()">
+            <i class="fa-solid fa-refresh"></i> Refresh
+        </button>
+        <div class="auto-refresh">
+            <input type="checkbox" id="autoRefresh" onchange="toggleAutoRefresh()">
+            <label for="autoRefresh">Auto-refresh (5s)</label>
+        </div>
+        <span class="refresh-indicator" id="refreshIndicator">
+            <i class="fa-solid fa-spinner"></i>
+        </span>
+    </div>
+    <table class="process-table" id="processTable">
+        <thead>
+            <tr>
+                <th>PID</th>
+                <th>Name</th>
+                <th>CPU %</th>
+                <th>Memory %</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="processTableBody">
+            <tr>
+                <td colspan="5">Loading processes...</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        let autoRefreshInterval;
+        
+        function refreshProcesses() {
+            const indicator = document.getElementById('refreshIndicator');
+            const tbody = document.getElementById('processTableBody');
+            
+            indicator.classList.add('active');
+            
+            fetch('/admin/api/processes/list')
+                .then(response => response.json())
+                .then(data => {
+                    tbody.innerHTML = '';
+                    data.forEach(process => {
+                        const row = document.createElement('tr');
+                        
+                        const cpuClass = process.cpu_percent > 10 ? 'cpu-high' : 
+                                       process.cpu_percent > 5 ? 'cpu-med' : 'cpu-low';
+                        const statusClass = `status-${process.status.toLowerCase()}`;
+                        
+                        row.innerHTML = `
+                            <td>${process.pid}</td>
+                            <td>${process.name}</td>
+                            <td class="${cpuClass}">${(process.cpu_percent || 0).toFixed(1)}%</td>
+                            <td>${(process.memory_percent || 0).toFixed(1)}%</td>
+                            <td class="${statusClass}">${process.status}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    tbody.innerHTML = '<tr><td colspan="5">Error loading processes</td></tr>';
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    indicator.classList.remove('active');
+                });
+        }
+        
+        function toggleAutoRefresh() {
+            const checkbox = document.getElementById('autoRefresh');
+            
+            if (checkbox.checked) {
+                refreshProcesses();
+                autoRefreshInterval = setInterval(refreshProcesses, 5000);
+            } else {
+                clearInterval(autoRefreshInterval);
+            }
+        }
+        
+        // Initial load
+        refreshProcesses();
+    </script>
+{% endblock %}
