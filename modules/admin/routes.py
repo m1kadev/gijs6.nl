@@ -189,6 +189,7 @@ def system_info():
 @login_required
 def system_stats_api():
     try:
+        project_size = shutil.disk_usage(project_dir)
         stats = {
             "cpu_percent": psutil.cpu_percent(interval=1),
             "memory": psutil.virtual_memory()._asdict(),
@@ -197,6 +198,8 @@ def system_stats_api():
             if psutil.net_io_counters()
             else {},
             "boot_time": psutil.boot_time(),
+            "project_size": project_size.used,
+            "project_dir": project_dir,
         }
         return jsonify(stats)
     except Exception as e:

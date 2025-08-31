@@ -16,9 +16,6 @@
             <input type="checkbox" id="autoRefresh" onchange="toggleAutoRefresh()">
             <label for="autoRefresh">Auto-refresh (5s)</label>
         </div>
-        <span class="refresh-indicator" id="refreshIndicator">
-            <i class="fa-solid fa-spinner"></i>
-        </span>
     </div>
     <table class="process-table" id="processTable">
         <thead>
@@ -40,10 +37,7 @@
         let autoRefreshInterval;
         
         function refreshProcesses() {
-            const indicator = document.getElementById('refreshIndicator');
             const tbody = document.getElementById('processTableBody');
-            
-            indicator.classList.add('active');
             
             fetch('/admin/api/processes/list')
                 .then(response => response.json())
@@ -69,9 +63,6 @@
                 .catch(error => {
                     tbody.innerHTML = '<tr><td colspan="5">Error loading processes</td></tr>';
                     console.error('Error:', error);
-                })
-                .finally(() => {
-                    indicator.classList.remove('active');
                 });
         }
         

@@ -35,21 +35,3 @@
     color: var(--oc-red-6);
 }
 
-.refresh-indicator {
-    display: none;
-    color: var(--oc-blue-6);
-}
-
-.refresh-indicator.active {
-    display: inline;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}

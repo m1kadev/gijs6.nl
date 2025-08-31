@@ -6,7 +6,16 @@
 {% endblock %}
 {% block content %}
     <h1>System information</h1>
-    <div class="system-stats">
+    <div class="controls">
+        <button class="button" onclick="refreshSystemInfo()">
+            <i class="fa-solid fa-refresh"></i> Refresh
+        </button>
+        <div class="auto-refresh">
+            <input type="checkbox" id="autoRefresh" onchange="toggleAutoRefresh()">
+            <label for="autoRefresh">Auto-refresh (1s)</label>
+        </div>
+    </div>
+    <div class="system-stats" id="systemStats">
         <div class="stat-card">
             <div class="stat-title">CPU usage</div>
             <div class="stat-value">{{ "%.1f"|format(system_stats.cpu_percent) }}%</div>
@@ -41,7 +50,70 @@
             <div class="stat-detail">Directory: {{ project_dir }}</div>
         </div>
     </div>
-    <button class="refresh-btn" onclick="location.reload()">
-        <i class="fa-solid fa-refresh"></i>
-    </button>
+    <script>
+        let autoRefreshInterval;
+        
+        function refreshSystemInfo() {
+            const statsDiv = document.getElementById('systemStats');
+            
+            fetch('/admin/api/system/stats')
+                .then(response => response.json())
+                .then(data => {
+                    // Update system stats
+                    const diskPercent = (data.disk.used / data.disk.total) * 100;
+                    
+                    statsDiv.innerHTML = `
+                        <div class="stat-card">
+                            <div class="stat-title">CPU usage</div>
+                            <div class="stat-value">${data.cpu_percent.toFixed(1)}%</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${data.cpu_percent}%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Memory usage</div>
+                            <div class="stat-value">${data.memory.percent.toFixed(1)}%</div>
+                            <div class="stat-detail">
+                                ${(data.memory.used / 1024**3).toFixed(1)}GB / ${(data.memory.total / 1024**3).toFixed(1)}GB
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${data.memory.percent}%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Disk usage</div>
+                            <div class="stat-value">${diskPercent.toFixed(1)}%</div>
+                            <div class="stat-detail">
+                                ${(data.disk.used / 1024**3).toFixed(1)}GB / ${(data.disk.total / 1024**3).toFixed(1)}GB
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${diskPercent}%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Project size</div>
+                            <div class="stat-value">${(data.project_size / 1024**2).toFixed(1)} MB</div>
+                            <div class="stat-detail">Directory: ${data.project_dir}</div>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching system stats:', error);
+                });
+        }
+        
+        function toggleAutoRefresh() {
+            const checkbox = document.getElementById('autoRefresh');
+            
+            if (checkbox.checked) {
+                refreshSystemInfo();
+                autoRefreshInterval = setInterval(refreshSystemInfo, 1000);
+            } else {
+                clearInterval(autoRefreshInterval);
+            }
+        }
+        
+        // Initial load
+        refreshSystemInfo();
+    </script>
 {% endblock %}
