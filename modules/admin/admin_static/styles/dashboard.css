@@ -24,19 +24,19 @@
 }
 
 .block-version-Python {
-    background: #4584b6;
+    background: var(--oc-blue-6);
 }
 
 .block-version-Flask {
-    background: #218ea2;
+    background: var(--oc-cyan-6);
 }
 
 .block-version-Jinja {
-    background: #b41717;
+    background: var(--oc-red-7);
 }
 
 .block-version-os {
-    background: #454659;
+    background: var(--oc-gray-7);
 }
 
 .block-version-os .block-version-version {
@@ -73,15 +73,15 @@
 }
 
 .button.done {
-    background: var(--green);
-    border-color: var(--green);
-    color: var(--white);
+    background: var(--oc-green-6);
+    border-color: var(--oc-green-6);
+    color: var(--oc-gray-0);
 }
 
 .button.error {
-    background: var(--red);
-    border-color: var(--red);
-    color: var(--red);
+    background: var(--oc-red-6);
+    border-color: var(--oc-red-6);
+    color: var(--oc-gray-0);
 }
 
 #tables-container {
@@ -99,28 +99,28 @@
     font-weight: 700;
     padding: 5px 10px;
     display: inline-block;
-    color: var(--back);
+    color: black;
     border-radius: 5px;
 }
 
 .bg-green {
-    background: var(--green);
+    background: var(--oc-green-6);
 }
 
 .bg-blue {
-    background: var(--lightblue);
+    background: var(--oc-blue-6);
 }
 
 .bg-gray {
-    background: var(--gray);
-    color: var(--white);
+    background: var(--oc-gray-6);
+    color: var(--oc-gray-0);
 }
 
 .bg-yellow {
-    background: var(--yellow);
+    background: var(--oc-yellow-6);
 }
 
 .bg-red {
-    background: var(--red);
-    color: var(--white);
+    background: var(--oc-red-6);
+    color: var(--oc-gray-0);
 }

@@ -7,7 +7,7 @@ main article * {
 }
 
 main a {
-    color: var(--lightblue);
+    color: var(--oc-blue-6);
 }
 
 main {
@@ -18,7 +18,7 @@ main {
 #post-info {
     margin: 2em 0;
     padding: 0 0.5em;
-    border-left: 2px solid var(--lightblue);
+    border-left: 2px solid var(--oc-blue-6);
     font-size: 0.9em;
 }
 
@@ -38,12 +38,12 @@ main blockquote {
     margin: 0;
     padding: 0 1em;
     opacity: 0.8;
-    border-left: 0.25em solid var(--lightblue);
+    border-left: 0.25em solid var(--oc-blue-6);
 }
 
 main p code {
     padding-inline: 0.3em;
-    background-color: #777b805c;
+    background-color: var(--oc-gray-5);
     border-radius: 6px;
 }
 
@@ -64,18 +64,18 @@ main code,
 
 #back-to-blog {
     margin-block-end: 1.5em;
-    color: var(--front);
+    color: white;
     width: fit-content;
 }
 
 #back-to-blog i {
-    color: var(--lightblue);
+    color: var(--oc-blue-6);
 }
 
 pre:has(code) {
     overflow: scroll;
     border-radius: 0.5em;
-    background: #201c29;
+    background: var(--oc-gray-8);
     padding: 1em;
 }
 

@@ -2,30 +2,30 @@
     font-weight: 700;
     padding: 5px 10px;
     display: inline-block;
-    color: var(--back);
+    color: black;
     border-radius: 5px;
 }
 
 .bg-green {
-    background: var(--green);
+    background: var(--oc-green-6);
 }
 
 .bg-blue {
-    background: var(--lightblue);
+    background: var(--oc-blue-6);
 }
 
 .bg-gray {
-    background: var(--gray);
-    color: var(--white);
+    background: var(--oc-gray-6);
+    color: var(--oc-gray-0);
 }
 
 .bg-yellow {
-    background: var(--yellow);
+    background: var(--oc-yellow-6);
 }
 
 .bg-red {
-    background: var(--red);
-    color: var(--white);
+    background: var(--oc-red-6);
+    color: var(--oc-gray-0);
 }
 
 #filters {
@@ -46,16 +46,16 @@
 }
 
 #filters label {
-    border: 1px solid var(--gray);
+    border: 1px solid var(--oc-gray-6);
     padding: 5px 10px;
     border-radius: 50px;
     font-weight: 600;
 }
 
 #filters label:has(input[type="checkbox"]:checked) {
-    background: var(--green);
-    color: var(--back);
-    border-color: var(--green);
+    background: var(--oc-green-6);
+    color: black;
+    border-color: var(--oc-green-6);
 }
 
 #filters input[type="checkbox"] {
@@ -67,7 +67,7 @@
     border-radius: 100px;
     border: none;
     padding: 5px 10px;
-    background: var(--white);
+    background: var(--oc-gray-0);
 }
 
 #lognum-filter h2 {

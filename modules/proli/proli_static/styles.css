@@ -48,12 +48,12 @@ header {
 }
 
 .status-item.status-success {
-    background: #40c057;
+    background: var(--oc-green-6);
     color: white;
 }
 
 .status-item.status-error {
-    background: #f03e3e;
+    background: var(--oc-red-7);
     color: white;
 }
 
@@ -87,8 +87,8 @@ header {
     flex-direction: column;
     gap: 5px;
     box-shadow:
-        3px 3px 7px 2px #0000001a,
-        -1px -1px 1px 1px #0000001a;
+        3px 3px 7px 2px rgba(0, 0, 0, 0.1),
+        -1px -1px 1px 1px rgba(0, 0, 0, 0.1);
     padding: 20px;
     border-radius: 10px;
     flex-grow: 1;
@@ -109,12 +109,12 @@ header {
 
 .collection-delete {
     font-size: 0.8em;
-    color: #adb5bd;
+    color: var(--oc-gray-5);
     cursor: pointer;
 }
 
 .collection-delete:hover {
-    color: #f03e3e;
+    color: var(--oc-red-6);
 }
 
 .list-container {
@@ -126,7 +126,7 @@ header {
 
 .list-item {
     order: 1;
-    border: solid #dee2e6;
+    border: solid var(--oc-gray-3);
     border-width: 1px 0;
     padding: 10px 0;
     display: grid;
@@ -137,12 +137,12 @@ header {
 }
 
 .list-item.new-list-item {
-    background: #ffec99;
+    background: var(--oc-yellow-2);
 }
 
 .list-item-check {
     grid-area: 1 / 1 / 4 / 2;
-    border: 2px solid #adb5bd;
+    border: 2px solid var(--oc-gray-5);
     border-radius: 7.5px;
     font-size: 1.3em;
     align-self: center;
@@ -157,7 +157,7 @@ header {
 }
 
 .list-item-check:hover {
-    border-color: #40c057;
+    border-color: var(--oc-green-6);
 }
 
 .list-item-check i {
@@ -165,8 +165,8 @@ header {
 }
 
 .list-item-check.checked {
-    background: #40c057;
-    border-color: #40c057;
+    background: var(--oc-green-6);
+    border-color: var(--oc-green-6);
     height: 30px;
     width: 30px;
 }
@@ -185,7 +185,7 @@ header {
 .list-item-datetime {
     grid-area: 2 / 2 / 3 / 3;
     font-size: 0.8em;
-    color: #868e96;
+    color: var(--oc-gray-6);
 }
 
 .list-item-content {
@@ -199,12 +199,12 @@ header {
     font-size: 0.8em;
     align-self: center;
     justify-self: center;
-    color: #adb5bd;
+    color: var(--oc-gray-5);
     cursor: pointer;
 }
 
 .list-item-delete:hover {
-    color: #f03e3e;
+    color: var(--oc-red-6);
 }
 
 .list-item:has(.checked) {
@@ -214,7 +214,7 @@ header {
 
 .add-list-item {
     order: 3;
-    border: 1px solid #868e96;
+    border: 1px solid var(--oc-gray-6);
     width: fit-content;
     margin-top: 10px;
     padding: 5px 10px;
@@ -227,7 +227,7 @@ header {
 }
 
 .add-list-item:hover {
-    background: #f1f3f5;
+    background: var(--oc-gray-1);
     opacity: 0.8;
 }
 
@@ -244,12 +244,12 @@ header {
 }
 
 #add-collection:hover {
-    background: #f1f3f5;
+    background: var(--oc-gray-1);
     opacity: 0.8;
 }
 
 [contenteditable="true"]:focus {
-    outline: #228be6 solid 2px;
+    outline: var(--oc-blue-6) solid 2px;
 }
 
 @media (max-width: 600px) {

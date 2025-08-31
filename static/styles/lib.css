@@ -10,13 +10,13 @@
 
 .libitem {
     flex-direction: row-reverse;
-    border: 1px var(--front) solid;
+    border: 1px white solid;
     padding: 10px;
 }
 
 .libitem:hover {
-    background: var(--front);
-    color: var(--back);
+    background: white;
+    color: black;
 }
 
 .libitemtxt {

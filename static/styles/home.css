@@ -11,7 +11,7 @@
 }
 
 .extra-info.week {
-    color: #888;
+    color: var(--oc-gray-5);
     text-align: center;
 }
 
@@ -38,9 +38,9 @@
     min-width: max-content;
     z-index: 1000;
     padding: 0.5em;
-    background: var(--back);
-    color: var(--front);
-    border: 0.1em solid var(--front);
+    background: black;
+    color: white;
+    border: 0.1em solid white;
     border-radius: 1em;
     white-space: pre-line;
 }
@@ -51,7 +51,7 @@
 
 #under-the-graph {
     font-size: 0.9em;
-    color: #888;
+    color: var(--oc-gray-5);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

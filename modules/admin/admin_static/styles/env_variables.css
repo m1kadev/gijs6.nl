@@ -6,10 +6,10 @@
 .search-input {
     width: 100%;
     padding: 10px 40px 10px 15px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--oc-gray-4);
     border-radius: 5px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
+    background: var(--oc-gray-0);
+    color: var(--oc-gray-9);
     font-size: 16px;
 }
 
@@ -18,7 +18,7 @@
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-secondary);
+    color: var(--oc-gray-6);
 }
 
 .env-grid {
@@ -27,8 +27,8 @@
 }
 
 .env-item {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: var(--oc-gray-0);
+    border: 1px solid var(--oc-gray-4);
     border-radius: 5px;
     padding: 15px;
     display: grid;
@@ -40,13 +40,13 @@
 .env-key {
     font-family: "Courier New", monospace;
     font-weight: bold;
-    color: var(--accent-color);
+    color: var(--oc-blue-6);
     word-break: break-all;
 }
 
 .env-value {
     font-family: "Courier New", monospace;
-    background: var(--bg-tertiary);
+    background: var(--oc-gray-2);
     padding: 8px;
     border-radius: 3px;
     word-break: break-all;
@@ -54,7 +54,7 @@
 }
 
 .env-hidden {
-    color: var(--text-secondary);
+    color: var(--oc-gray-6);
     font-style: italic;
 }
 
@@ -62,7 +62,7 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    background: var(--accent-color);
+    background: var(--oc-blue-6);
     border: none;
     border-radius: 3px;
     padding: 2px 5px;
@@ -79,9 +79,9 @@
 .stats {
     margin-bottom: 20px;
     padding: 10px 15px;
-    background: var(--bg-secondary);
+    background: var(--oc-gray-0);
     border-radius: 5px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--oc-gray-4);
 }
 
 .hidden {

@@ -16,7 +16,6 @@ import psutil
 import shutil
 
 
-
 from decorators import login_required
 
 locale.setlocale(locale.LC_TIME, "en_US.UTF-8")
@@ -233,6 +232,7 @@ def list_processes():
 
 
 # Environment variables
+
 
 @admin_module.route("/env")
 @login_required

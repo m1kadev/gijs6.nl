@@ -16,28 +16,28 @@
 }
 
 .cpu-high {
-    color: #f44336;
+    color: var(--oc-red-6);
 }
 .cpu-med {
-    color: #ff9800;
+    color: var(--oc-orange-6);
 }
 .cpu-low {
-    color: #4caf50;
+    color: var(--oc-green-6);
 }
 
 .status-running {
-    color: #4caf50;
+    color: var(--oc-green-6);
 }
 .status-sleeping {
-    color: #2196f3;
+    color: var(--oc-blue-6);
 }
 .status-stopped {
-    color: #f44336;
+    color: var(--oc-red-6);
 }
 
 .refresh-indicator {
     display: none;
-    color: var(--accent-color);
+    color: var(--oc-blue-6);
 }
 
 .refresh-indicator.active {

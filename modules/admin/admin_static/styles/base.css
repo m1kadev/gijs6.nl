@@ -9,10 +9,10 @@ main {
 }
 
 button {
-    border: 1px solid #cecece;
-    background: #cecece;
+    border: 1px solid var(--oc-gray-4);
+    background: var(--oc-gray-4);
     padding: 10px 15px;
-    color: black;
+    color: var(--oc-gray-9);
     font-weight: 600;
     cursor: pointer;
 }
@@ -34,12 +34,12 @@ button {
 }
 
 .status-item.status-success {
-    background: #40c057;
+    background: var(--oc-green-6);
     color: white;
 }
 
 .status-item.status-error {
-    background: #f03e3e;
+    background: var(--oc-red-7);
     color: white;
 }
 

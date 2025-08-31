@@ -1,13 +1,13 @@
 :root {
-    --black: #0f212e;
-    --whiteblue: #d1e3f0;
-    --white: #eaf2ef;
-    --gray: #6b6d76;
-    --darkblue: #28587b;
-    --lightblue: #0f95b0;
-    --yellow: #ffa630;
-    --red: #e65039;
-    --green: #06c749;
+    --black: var(--oc-gray-9);
+    --whiteblue: var(--oc-blue-1);
+    --white: var(--oc-gray-0);
+    --gray: var(--oc-gray-6);
+    --darkblue: var(--oc-blue-8);
+    --lightblue: var(--oc-blue-6);
+    --yellow: var(--oc-yellow-6);
+    --red: var(--oc-red-6);
+    --green: var(--oc-green-6);
 
     color-scheme: dark;
     --front: white;
@@ -22,9 +22,9 @@
 }
 
 body {
-    background-color: var(--back);
+    background-color: black;
     min-height: 100vh;
-    color: var(--front);
+    color: white;
     font-family: "Source Code Pro", sans-serif;
     display: flex;
     flex-direction: column;
@@ -64,8 +64,8 @@ header nav {
 
 .menu-item:hover,
 .menu-item.active {
-    background: var(--front);
-    color: var(--back);
+    background: white;
+    color: black;
     font-weight: 600;
 }
 
@@ -74,27 +74,27 @@ main {
     margin: 25px 0;
     border-style: dotted;
     border-width: 2px 0px;
-    border-color: #808080;
+    border-color: var(--oc-gray-5);
     flex-grow: 1;
     align-content: center;
 }
 
 footer {
     font-size: 0.8em;
-    color: #808080;
+    color: var(--oc-gray-5);
 }
 
 #extra-footer {
     font-size: 1.1em;
     font-weight: 600;
-    color: var(--front);
+    color: white;
     margin-block-end: 1em;
 }
 
 #madeby {
     font-size: 1.3em;
     font-weight: 800;
-    color: var(--front);
+    color: white;
     margin-block-end: 1em;
 }
 
@@ -116,12 +116,12 @@ i {
 a {
     color: inherit;
     font-weight: 800;
-    text-decoration: #888 underline 1px;
+    text-decoration: var(--oc-gray-5) underline 1px;
     width: fit-content;
 }
 
 a:hover {
-    text-decoration-color: var(--lightblue);
+    text-decoration-color: var(--oc-blue-6);
 }
 
 h1 {
@@ -153,5 +153,5 @@ ol {
 
 .annotation {
     font-size: 10px;
-    color: #888;
+    color: var(--oc-gray-5);
 }

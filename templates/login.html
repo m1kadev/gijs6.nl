@@ -5,20 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Log in</title>
         <link rel="icon" type="image/x-icon" href="{{ fav }}">
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='styles/skeleton.css') }}" />
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='styles/colors.css') }}" />
         <style>
-        :root {
-            color-scheme: dark;
-            --foreground: #fff;
-            --background: #000;
-        }
-
-        body {
-            justify-items: center;
-            padding: clamp(25px, 2.5%, 50px);
-            margin: 0;
-            font-family: monospace;
-            color: var(--foreground);
-        }
         .container {
             max-width: clamp(750px, 50%, 1500px);
             margin: 0 auto;
@@ -46,7 +37,7 @@
 
         input[type="password"] {
             padding: 0.5rem;
-            border: 0.15rem solid var(--foreground);
+            border: 0.15rem solid white;
             border-radius: 10px;
             flex-grow: 1;
             font-size: 1.25rem;
@@ -56,22 +47,21 @@
 
         button {
             padding: 0.5rem;
-            background-color: var(--foreground);
-            color: var(--background);
-            border: 0.15rem solid var(--foreground);
+            background-color: white;
+            color: black;
+            border: 0.15rem solid white;
             border-radius: 10px;
-            transition: 250ms all ease;
             font-size: 1.25em;
             font-family: monospace;
         }
 
         button:hover {
             background-color: transparent;
-            color: var(--foreground);
+            color: white;
         }
 
         #err {
-            color: red;
+            color: var(--oc-red-6);
             font-weight: 800;
             margin-top: 1rem;
         }
