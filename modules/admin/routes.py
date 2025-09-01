@@ -234,7 +234,6 @@ def list_processes():
         return str(e), 500
 
 
-
 status_code_dict = {status.value: status.phrase for status in http.HTTPStatus}
 
 http_status_colors = {"1": "blue", "2": "green", "3": "blue", "4": "yellow", "5": "red"}
