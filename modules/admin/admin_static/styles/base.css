@@ -1,3 +1,8 @@
+body {
+    max-width: unset !important;
+    width: min(100vw, 1500px);
+}
+
 .second-nav {
     margin-left: auto;
 }

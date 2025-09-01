@@ -24,6 +24,7 @@ th {
     padding: 10px;
     vertical-align: middle;
     text-align: center;
+    max-width: 30em;
 }
 
 td:last-child,
