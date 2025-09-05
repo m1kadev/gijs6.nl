@@ -106,6 +106,11 @@ def robots():
     return send_from_directory("static", "txts/robots.txt", mimetype="text/plain")
 
 
+@app.route("/me.jpg")
+def me_jpg():
+    return send_from_directory("static", "permanent/hubble.jpg", mimetype="image/jpeg")
+
+
 def get_commit_and_deploy_date():
     # Set deploy date to current time (when app starts)
     deploy_dt = datetime.now(tz=timezone.utc)
