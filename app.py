@@ -107,7 +107,8 @@ def robots():
 
 
 @app.route("/me.jpg")
-def me_jpg():
+@app.route("/me.jpeg")
+def me_jepg():
     return send_from_directory("static", "permanent/hubble.jpg", mimetype="image/jpeg")
 
 
