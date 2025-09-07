@@ -80,7 +80,7 @@ def homepage_graph_api():
                     )
 
                     repo_list_formatted = "\n".join(
-                        f"{key}: {value}" for key, value in repo_list_sorted
+                        f"{key.lower()}: {value}" for key, value in repo_list_sorted
                     )
 
                     formatted_date = thiscelldate.strftime("%d-%m-%Y")
