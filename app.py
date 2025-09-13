@@ -15,6 +15,7 @@ import os
 import random
 import string
 import subprocess
+import requests
 
 # Modules
 from modules import load_modules
@@ -100,10 +101,76 @@ def securitytxtredirect():
     return redirect(url_for("securitytxt"), code=301)
 
 
+DARKVISITORS_ACCESS_TOKEN = os.getenv("DARKVISITORS_ACCESS_TOKEN")
+ROBOTS_TXT_PATH = os.path.join(BASE_DIR, "static", "txts", "robots.txt")
+ROBOTS_BACKUP_PATH = os.path.join(BASE_DIR, "static", "txts", "robots_backup.txt")
+
+last_fetch = None
+FETCH_INTERVAL = 86400
+
+
+def fetch_darkvisitors_robots():
+    global last_fetch
+
+    url = "https://api.darkvisitors.com/robots-txts"
+    payload = {
+        "agent_types": [
+            "AI Data Scraper",
+            "AI Search Crawler",
+            "Scraper",
+            "SEO Crawler",
+            "Undocumented AI Agent",
+            "Uncategorized",
+            "AI Agent",
+            "AI Assistant",
+            "Headless Agent",
+            "Intelligence Gatherer",
+            "Search Engine Crawler",
+        ],
+        "disallow": "/",
+    }
+    headers = {
+        "Authorization": f"Bearer {DARKVISITORS_ACCESS_TOKEN}",
+        "Content-Type": "application/json",
+    }
+
+    response = requests.post(url, json=payload, headers=headers, timeout=10)
+    response.raise_for_status()
+
+    os.makedirs(os.path.dirname(ROBOTS_TXT_PATH), exist_ok=True)
+    with open(ROBOTS_TXT_PATH, "w") as f:
+        f.write(response.text)
+
+    last_fetch = datetime.now()
+
+
 @app.route("/robots")
 @app.route("/robots.txt")
 def robots():
-    return send_from_directory("static", "txts/robots.txt", mimetype="text/plain")
+    now = datetime.now()
+
+    need_update = (
+        last_fetch is None or (now - last_fetch).total_seconds() > FETCH_INTERVAL
+    )
+
+    if need_update:
+        try:
+            fetch_darkvisitors_robots()
+        except Exception:
+            return send_from_directory(
+                os.path.dirname(ROBOTS_BACKUP_PATH),
+                "robots_backup.txt",
+                mimetype="text/plain",
+            )
+
+    if os.path.exists(ROBOTS_TXT_PATH):
+        return send_from_directory(
+            os.path.dirname(ROBOTS_TXT_PATH), "robots.txt", mimetype="text/plain"
+        )
+
+    return send_from_directory(
+        os.path.dirname(ROBOTS_BACKUP_PATH), "robots_backup.txt", mimetype="text/plain"
+    )
 
 
 @app.route("/me.jpg")
