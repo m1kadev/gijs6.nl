@@ -179,5 +179,10 @@
         "title": "The Forest",
         "link": "https://theforest.link/",
         "icon": "fa-solid fa-tree"
+    },
+    {
+        "title": "Jerry And Marge Go Large",
+        "link": "https://highline.huffingtonpost.com/articles/en/lotto-winners",
+        "icon": "fa-solid fa-money-bills"
     }
 ]
