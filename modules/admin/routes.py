@@ -364,3 +364,53 @@ def logview_listall():
         return jsonify(finallog)
     except Exception as e:
         return str(e), 500
+
+
+@admin_module.route("/api/logview/all", methods=["GET"])
+@login_required
+def logview_all():
+    try:
+        logs = []
+        log_dir = "/var/log"
+        log_files = [
+            f for f in os.listdir(log_dir) if f.startswith("www.gijs6.nl.access.log")
+        ]
+
+        pattern = re.compile(
+            r"(?P<ip>\d+\.\d+\.\d+\.\d+)\s+- - "
+            r"\[(?P<datetime>[^\]]+)\] "
+            r'"(?P<method>\w+) (?P<path>[^ ]+) (?P<protocol>[^"]+)" '
+            r"(?P<status_code>\d+) (?P<size>\d+) "
+            r'"(?P<referrer>[^"]*)" '
+            r'"(?P<user_agent>[^"]*)" '
+            r'"(?P<alt_ip>[^"]+)" '
+            r"response-time=(?P<response_time>[\d\.]+)"
+        )
+
+        for fname in sorted(log_files):
+            path = os.path.join(log_dir, fname)
+            if fname.endswith(".gz"):
+                opener = gzip.open
+                mode = "rt"
+            else:
+                opener = open
+                mode = "r"
+
+            with opener(path, mode, encoding="utf-8") as f:
+                for line in f:
+                    match = pattern.match(line)
+                    if match:
+                        log_dict = match.groupdict()
+                        log_dict["status"] = (
+                            f"{log_dict['status_code']} "
+                            f"{status_code_dict.get(int(log_dict['status_code']), 'UNKNOWN')}"
+                        )
+                        log_dict["datetime"] = datetime.strptime(
+                            log_dict["datetime"], "%d/%b/%Y:%H:%M:%S %z"
+                        ).isoformat()
+                        logs.append(log_dict)
+
+        return jsonify(logs)
+
+    except Exception as e:
+        return str(e), 500
