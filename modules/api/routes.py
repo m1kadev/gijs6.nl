@@ -102,24 +102,18 @@ def homepage_graph_api():
 
             min_value = 0
             max_value = int(max(item["value"] for item in tabledata))
+            max_color = "#06C749"
+            min_color = "#011207"
+            zero_color = "#000000"
+            min_color_rgb = [int(min_color[i : i + 2], 16) for i in (1, 3, 5)]
+            max_color_rgb = [int(max_color[i : i + 2], 16) for i in (1, 3, 5)]
 
-            def value_to_color(value, theme):
-                max_color = "#06C749"
-                if theme == "light":
-                    min_color = "#E8FAEE"
-                    zero_color = "#FFFFFF"
-                else:
-                    min_color = "#011207"
-                    zero_color = "#000000"
+            for cell in tabledata:
+                value = cell["value"]
                 if value and value != 0:
-                    value = int(value)
                     normalized_value = max(
                         0, min(1, (value - min_value) / (max_value - min_value))
                     )
-
-                    min_color_rgb = [int(min_color[i : i + 2], 16) for i in (1, 3, 5)]
-                    max_color_rgb = [int(max_color[i : i + 2], 16) for i in (1, 3, 5)]
-
                     interpolated_color = [
                         int(
                             min_color_rgb[i]
@@ -127,16 +121,9 @@ def homepage_graph_api():
                         )
                         for i in range(3)
                     ]
-
-                    hex_color = "#" + "".join(f"{x:02X}" for x in interpolated_color)
-                    return hex_color
+                    cell["color"] = "#" + "".join(f"{x:02X}" for x in interpolated_color)
                 else:
-                    return zero_color
-
-            for cell in tabledata:
-                value = cell["value"]
-                cell["lightcolor"] = value_to_color(value, "light")
-                cell["darkcolor"] = value_to_color(value, "dark")
+                    cell["color"] = zero_color
 
             now_utc = datetime.now(tz=timezone.utc)
             saved_data = {
