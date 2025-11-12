@@ -1,14 +1,15 @@
 # gijs6.nl
 
-My personal site with some random stuff I built :D
+My personal site with random stuff I built :D
 
-Flask + Jinja is just amazing. Has my blog, a todo app (ProLi), grade calculator thing, and probably some other random experiments.
+Static site generator with Python + Jinja. Has my blog, projects page, and whatever else I feel like adding.
 
-## Run it
+## Dev
 
 ```bash
 pip install -r requirements.txt
-python app.py
+npm install
+bake serve
 ```
 
-Then visit `localhost:7000` and there you go!
+Then visit `localhost:8000` :)

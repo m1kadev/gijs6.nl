@@ -1,0 +1,14 @@
+body {
+    main {
+        nav {
+            float: right;
+            padding: 0 0 10px 10px;
+
+            @media (max-width: 750px) {
+                float: none;
+                text-align: end;
+                padding: 0 0 10px 0;
+            }
+        }
+    }
+}

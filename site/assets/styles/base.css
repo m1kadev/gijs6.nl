@@ -1,0 +1,105 @@
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    font-family: "Inter", "Ubuntu", "Roboto", "Helvetica", "Noto", sans-serif;
+    padding: 25px;
+    display: grid;
+    grid-template-areas: "sidebar main" "footer footer";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 25px;
+    width: fit-content;
+
+    @media (max-width: 750px) {
+        grid-template-areas: "sidebar" "main" "footer";
+        grid-template-rows: auto 1fr auto;
+        grid-template-columns: 1fr;
+    }
+
+    > header {
+        grid-area: sidebar;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
+        @media (max-width: 750px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        > strong {
+            font-weight: 900;
+            font-size: 2em;
+
+            > sup {
+                color: var(--oc-green-8);
+
+                &:hover {
+                    color: var(--oc-orange-8);
+                }
+            }
+        }
+
+        > nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+
+            @media (max-width: 750px) {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-content: center;
+            }
+
+            > a {
+                width: fit-content;
+                text-decoration-color: var(--oc-green-8);
+
+                &:not(.active):hover {
+                    background: var(--oc-green-8);
+                }
+
+                &.active {
+                    text-decoration-color: var(--oc-orange-8);
+                }
+            }
+        }
+    }
+
+    > main {
+        grid-area: main;
+        max-width: 800px;
+
+        > *:first-child,
+        > article *:first-child {
+            margin-block-start: 0;
+        }
+    }
+
+    > footer {
+        grid-area: footer;
+    }
+}
+
+a {
+    color: currentColor;
+    text-decoration: underline solid var(--oc-orange-8);
+    text-decoration-thickness: 2px;
+
+    &:hover {
+        background: var(--oc-orange-8);
+        padding: 4px;
+        margin: -4px;
+        text-decoration: none;
+    }
+
+    &:only-child {
+        padding: 4px;
+
+        &:hover {
+            margin: 0;
+        }
+    }
+}

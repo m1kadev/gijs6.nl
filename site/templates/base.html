@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="description"
+              content="a big mess of fun pages, interesting projects, my own thoughts and opinions and more.">
+        <meta name="author" content="Gijs">
+
+        <title>{%- block title -%}{%- endblock title -%} - Gijs6</title>
+
+        <link rel="canonical"
+              href="https://gijs6.nl{% if canonical_path %}{{ canonical_path }}{% else %}/{% endif %}">
+
+        <link rel="icon" href="/favicon.ico">
+
+        <link rel="stylesheet" href="/assets/styles/skeleton.css">
+        <link rel="stylesheet" href="/assets/styles/base.css">
+        <link rel="stylesheet" href="/assets/styles/colors.css">
+        {% block additional_stylesheets %}
+        {% endblock additional_stylesheets %}
+
+        <link rel="alternate"
+              type="application/rss+xml"
+              title="blog - rss"
+              href="/blog/rss.xml">
+        <link rel="alternate"
+              type="application/atom+xml"
+              title="blog - atom"
+              href="/blog/atom.xml">
+    </head>
+    <body>
+        <header>
+            <strong>Gijs<sup>6</sup></strong>
+            <nav>
+                <a href="/"{% if active_page == 'home' %} class="active"{% endif %}>/home</a>
+                <a href="/blog/"{% if active_page == 'blog' %} class="active"{% endif %}>/blog</a>
+                <a href="/projects"
+                   {% if active_page == 'projects' %}class="active"{% endif %}>/projects</a>
+                <a href="/bookmarks"
+                   {% if active_page == 'bookmarks' %}class="active"{% endif %}>/bookmarks</a>
+                <a href="/colophon"
+                   {% if active_page == 'colophon' %}class="active"{% endif %}>/colophon</a>
+                <a href="https://school.gijs6.nl">/school</a>
+                <a href="mailto:gijs6@dupunkto.org">/contact</a>
+            </nav>
+        </header>
+
+        <main>
+            {% block content %}
+            {% endblock content %}
+        </main>
+
+        <footer>
+            <p>made by Gijs</p>
+            <p>copying is an act of love. love is not subject to law.</p>
+            <p>
+                <a href="https://github.com/Gijs6/gijs6.nl">source code on GitHub</a>
+            </p>
+        </footer>
+    </body>
+</html>

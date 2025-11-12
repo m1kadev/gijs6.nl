@@ -1,0 +1,7 @@
+{
+    "name": "gijs6.nl",
+    "description": "a big mess of fun pages, interesting projects, my own thoughts and opinions and more",
+    "devDependencies": {
+        "lightningcss-cli": "^1.30.2"
+    }
+}

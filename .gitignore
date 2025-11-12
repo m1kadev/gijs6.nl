@@ -1,6 +1,7 @@
-.venv
-.env
-__pycache__
+build
+build-dev
 
-password.txt
-api_auth.txt
+__pycache__
+.ruff_cache
+
+node_modules
