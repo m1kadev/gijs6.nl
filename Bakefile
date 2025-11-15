@@ -1,11 +1,11 @@
 #!/bin/bash
 
 serve() {
-  .venv/bin/python build.py serve
+  .venv/bin/python engine.py serve
 }
 
 build() {
-  .venv/bin/python build.py build
+  .venv/bin/python engine.py build
   find build -name '*.css' -exec sh -c 'npx lightningcss --browserslist --bundle --minify "$1" -o "$1"' _ {} \;
   npx prettier --write --ignore-path /dev/null "build/**/*.{css,js,xml,html}"
 }

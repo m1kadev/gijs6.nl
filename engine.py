@@ -302,7 +302,7 @@ class BuildHandler(FileSystemEventHandler):
             return
         self.last_build = now
 
-        if os.path.basename(event.src_path) == "build.py":
+        if os.path.basename(event.src_path) == "engine.py":
             print(
                 f"\n{Fore.YELLOW}Build script changed! Restarting...{Style.RESET_ALL}\n"
             )
@@ -451,7 +451,7 @@ def serve(port=8000):
     )
     print(f"{Fore.CYAN}Serving from: {Style.BRIGHT}{BUILD_DEV_DIR}/{Style.RESET_ALL}")
     print(
-        f"{Fore.MAGENTA}Watching: {Style.BRIGHT}{SITE_DIR}/{Style.RESET_ALL} and build.py"
+        f"{Fore.MAGENTA}Watching: {Style.BRIGHT}{SITE_DIR}/{Style.RESET_ALL} and engine.py"
     )
     print(f"\n{Fore.YELLOW}Press Ctrl+C to stop{Style.RESET_ALL}\n")
 
