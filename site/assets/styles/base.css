@@ -1,10 +1,13 @@
 :root {
     color-scheme: light dark;
+
+    --color-primary: var(--oc-green-8);
+    --color-accent: var(--oc-orange-8);
 }
 
 body {
     font-family: "Inter", "Ubuntu", "Roboto", "Helvetica", "Noto", sans-serif;
-    padding: 25px;
+    padding: 40px 25px 15px 25px;
     display: grid;
     grid-template-areas: "sidebar main" "footer footer";
     grid-template-columns: auto 1fr;
@@ -34,10 +37,10 @@ body {
             font-size: 2em;
 
             > sup {
-                color: var(--oc-green-8);
+                color: var(--color-primary);
 
                 &:hover {
-                    color: var(--oc-orange-8);
+                    color: var(--color-accent);
                 }
             }
         }
@@ -55,14 +58,14 @@ body {
 
             > a {
                 width: fit-content;
-                text-decoration-color: var(--oc-green-8);
+                text-decoration-color: var(--color-primary);
 
                 &:not(.active):hover {
-                    background: var(--oc-green-8);
+                    background: var(--color-primary);
                 }
 
                 &.active {
-                    text-decoration-color: var(--oc-orange-8);
+                    text-decoration-color: var(--color-accent);
                 }
             }
         }
@@ -71,10 +74,19 @@ body {
     > main {
         grid-area: main;
         max-width: 800px;
+        padding-top: 10px;
 
         > *:first-child,
         > article *:first-child {
             margin-block-start: 0;
+        }
+
+        a:only-child {
+            padding: 4px;
+
+            &:hover {
+                margin: 0;
+            }
         }
     }
 
@@ -85,21 +97,13 @@ body {
 
 a {
     color: currentColor;
-    text-decoration: underline solid var(--oc-orange-8);
+    text-decoration: underline solid var(--color-accent);
     text-decoration-thickness: 2px;
 
     &:hover {
-        background: var(--oc-orange-8);
+        background: var(--color-accent);
         padding: 4px;
         margin: -4px;
         text-decoration: none;
-    }
-
-    &:only-child {
-        padding: 4px;
-
-        &:hover {
-            margin: 0;
-        }
     }
 }
