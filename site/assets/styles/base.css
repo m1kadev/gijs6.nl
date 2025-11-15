@@ -9,7 +9,7 @@ body {
     grid-template-areas: "sidebar main" "footer footer";
     grid-template-columns: auto 1fr;
     grid-template-rows: 1fr auto;
-    gap: 25px;
+    gap: 25px 40px;
     width: fit-content;
 
     @media (max-width: 750px) {
