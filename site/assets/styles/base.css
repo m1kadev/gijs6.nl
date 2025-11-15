@@ -39,10 +39,13 @@ body {
 
             > sup {
                 color: var(--color-primary);
+            }
 
-                &:hover {
-                    color: var(--color-accent);
-                }
+            &:hover > sup {
+                color: var(--color-accent);
+                text-shadow:
+                    3px 3px 25px var(--color-accent),
+                    -3px -3px 25px var(--color-accent);
             }
         }
 
