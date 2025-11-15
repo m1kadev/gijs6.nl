@@ -22,7 +22,7 @@ And this brings us to an even bigger problem: how schools completely miss the po
 
 ## School ruins art
 
-From my experience, art class in school is where they teach what counts as "real art." Instead of encouraging students to find meaning in their own experiences, schools don't let students explore what art can be. Classical music is "sophisticated," but the song that made you cry at 3 AM isn't worth discussing. Oil paintings are "serious art," but that meme you and your friends laugh at is just "internet culture."
+From my experience, art class in school is where they teach what counts as "real art." Instead of encouraging students to find meaning in their own experiences and explore what art can be, schools restrict that exploration. Classical music is "sophisticated," but the song that made you cry at 3 AM isn't worth discussing. Oil paintings are "serious art," but that meme you and your friends laugh at is just "internet culture."
 
 The worst part? Schools teach students that there are "correct" interpretations of artworks. It feels like they have the "right" interpretation of every artwork ever made, and theirs is the only correct one. No room for personal interpretation, no space for students to find their own meaning in the chaos. No consideration that maybe this painting speaks to *your* feelings or thoughts. School treats art as if every artwork can be categorized by a few principles, and that's how it should be memorized.
 
