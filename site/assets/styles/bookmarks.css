@@ -10,6 +10,11 @@ body {
             display: grid;
             grid-template-rows: masonry;
             grid-template-columns: repeat(2, 1fr);
+            gap: 0 20px;
+
+            @media (max-width: 750px) {
+                grid-template-columns: 1fr;
+            }
         }
     }
 }
