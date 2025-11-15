@@ -1,8 +1,8 @@
 {
-    "printWidth": 120,
+    "printWidth": 999999,
     "tabWidth": 4,
     "useTabs": false,
     "trailingComma": "none",
-    "htmlWhitespaceSensitivity": "strict",
+    "htmlWhitespaceSensitivity": "css",
     "plugins": ["@prettier/plugin-xml"]
 }

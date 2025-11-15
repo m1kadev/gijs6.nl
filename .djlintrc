@@ -2,7 +2,7 @@
     "indent": 4,
     "format_css": true,
     "format_js": true,
-    "max_line_length": 120,
+    "max_line_length": 999999,
     "preserve_blank_lines": true,
     "preserve_leading_space": false,
     "profile": "jinja",
