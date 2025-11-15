@@ -1,13 +1,16 @@
-import os
 import sys
-import shutil
-import re
 import subprocess
+import argparse
+
+import os
+import shutil
+import tempfile
+
+import re
+from datetime import datetime, timezone
+
 import time
 import threading
-import tempfile
-import argparse
-from datetime import datetime, timezone
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -47,7 +50,7 @@ def parse_front_matter(content):
 
 
 def warn(message):
-    print(f"{Fore.YELLOW}⚠ {message}{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}WARNING: {message}{Style.RESET_ALL}")
 
 
 def infer_page_metadata(rel_path):
@@ -305,8 +308,10 @@ class BuildHandler(FileSystemEventHandler):
             )
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
+        rel_path = os.path.relpath(event.src_path)
+        timestamp = datetime.now().strftime("%H:%M:%S")
         print(
-            f"\n{Fore.YELLOW}Rebuilding! {Style.BRIGHT}{os.path.basename(event.src_path)} changed.{Style.RESET_ALL}\n"
+            f"\n{Fore.BLUE}[{timestamp}]{Style.RESET_ALL} {Fore.YELLOW}File changed:{Style.RESET_ALL} {rel_path}\n"
         )
         self.build_func()
 
@@ -316,6 +321,43 @@ class BuildHTTPServer(SimpleHTTPRequestHandler):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=self.directory, **kwargs)
+
+    def log_message(self, format, *args):
+        request_line = args[0]
+        parts = request_line.split()
+
+        if len(parts) >= 2:
+            method = parts[0]
+            path = parts[1]
+        else:
+            method = ""
+            path = request_line
+
+        if method == "GET":
+            method_color = Fore.CYAN
+        elif method == "POST":
+            method_color = Fore.YELLOW
+        elif method == "PUT":
+            method_color = Fore.MAGENTA
+        elif method == "DELETE":
+            method_color = Fore.RED
+        else:
+            method_color = Fore.WHITE
+
+        status = args[1] if len(args) > 1 else "000"
+        if status.startswith("2"):
+            status_color = Fore.GREEN
+        elif status.startswith("3"):
+            status_color = Fore.CYAN
+        elif status.startswith("4"):
+            status_color = Fore.YELLOW
+        else:
+            status_color = Fore.RED
+
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        print(
+            f"{Fore.BLUE}[{timestamp}]{Style.RESET_ALL}  {method_color}{Style.BRIGHT}{method}{Style.RESET_ALL}  {Fore.WHITE}{path}{Style.RESET_ALL}  {status_color}{status}{Style.RESET_ALL}"
+        )
 
     def do_GET(self):
         path = self.translate_path(self.path)
@@ -355,6 +397,7 @@ def build(output_dir=None):
     if output_dir is None:
         output_dir = BUILD_DIR
 
+    start_time = time.time()
     print(f"{Fore.CYAN}=> Building site <={Style.RESET_ALL}")
 
     temp_build_dir = tempfile.mkdtemp()
@@ -365,22 +408,29 @@ def build(output_dir=None):
         shutil.copy2("CNAME", os.path.join(temp_build_dir, "CNAME"))
 
     print("> Blog... ", end="", flush=True)
+    blog_start = time.time()
     posts = process_blog(temp_build_dir, template_env, md_processor)
-    print(f"{Fore.GREEN}{len(posts)} posts!{Style.RESET_ALL}")
+    blog_time = time.time() - blog_start
+    print(f"{Fore.GREEN}{len(posts)} posts ({blog_time * 1000:.0f}ms){Style.RESET_ALL}")
 
     print("> Site files... ", end="", flush=True)
+    files_start = time.time()
     process_site_files(temp_build_dir, template_env, md_processor)
-    print(f"{Fore.GREEN}done!{Style.RESET_ALL}")
+    files_time = time.time() - files_start
+    print(f"{Fore.GREEN}done ({files_time * 1000:.0f}ms){Style.RESET_ALL}")
 
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
     shutil.move(temp_build_dir, output_dir)
 
-    print(f"{Fore.GREEN}Build complete!{Style.RESET_ALL}\n")
+    total_time = time.time() - start_time
+    print(
+        f"{Fore.GREEN}Build complete in {total_time * 1000:.0f}ms!{Style.RESET_ALL}\n"
+    )
 
 
 def serve(port=8000):
-    print(f"{Fore.BLUE}Server{Style.RESET_ALL}\n")
+    print(f"{Fore.BLUE}=== Development Server ==={Style.RESET_ALL}\n")
 
     build(output_dir=BUILD_DEV_DIR)
 
@@ -397,9 +447,13 @@ def serve(port=8000):
     threading.Thread(target=server.serve_forever, daemon=True).start()
 
     print(
-        f"{Fore.GREEN}Serving on {Style.BRIGHT}http://localhost:{port}{Style.RESET_ALL}"
+        f"{Fore.GREEN}Server running at {Style.BRIGHT}http://localhost:{port}{Style.RESET_ALL}"
     )
-    print(f"{Fore.MAGENTA}Watching for changes...{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}Serving from: {Style.BRIGHT}{BUILD_DEV_DIR}/{Style.RESET_ALL}")
+    print(
+        f"{Fore.MAGENTA}Watching: {Style.BRIGHT}{SITE_DIR}/{Style.RESET_ALL} and build.py"
+    )
+    print(f"\n{Fore.YELLOW}Press Ctrl+C to stop{Style.RESET_ALL}\n")
 
     try:
         while True:
