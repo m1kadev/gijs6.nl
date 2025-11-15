@@ -33,7 +33,7 @@ BLOG_DIR = "site/blog"
 SITE_URL = "https://gijs6.nl"
 SITE_TITLE = "Gijs6"
 SITE_DESCRIPTION = "a big mess of fun pages, interesting projects, my own thoughts and opinions and more."
-AUTHOR_NAME = "Gijs"
+AUTHOR_NAME = "Gijs6"
 AUTHOR_EMAIL = "gijs6@dupunkto.org"
 
 FRONT_MATTER_PATTERN = re.compile(r"^---\n(.*?)\n---", re.DOTALL)
@@ -161,7 +161,7 @@ def process_blog(build_dir, template_env, md_processor):
     fg.id(SITE_URL)
     fg.link(href=f"{SITE_URL}/blog", rel="alternate")
     fg.language("en")
-    fg.author(name=AUTHOR_NAME, email=AUTHOR_EMAIL)
+    fg.author(name=AUTHOR_NAME, email=AUTHOR_EMAIL, uri=SITE_URL)
 
     for post in posts:
         fe = fg.add_entry()
