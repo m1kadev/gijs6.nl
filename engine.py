@@ -20,6 +20,7 @@ from watchdog.events import FileSystemEventHandler
 from jinja2 import Environment, FileSystemLoader
 from markdown import Markdown
 import yaml
+import xml.etree.ElementTree as ET
 
 from feedgen.feed import FeedGenerator
 
@@ -289,6 +290,47 @@ def process_site_files(build_dir, template_env, md_processor):
                 shutil.copy2(filepath, output_path)
 
 
+def generate_sitemap(build_dir, posts):
+    urlset = ET.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
+
+    def add_url(loc, lastmod=None):
+        url = ET.SubElement(urlset, "url")
+        ET.SubElement(url, "loc").text = loc
+        if lastmod:
+            ET.SubElement(url, "lastmod").text = lastmod
+
+    add_url(f"{SITE_URL}/")
+    add_url(f"{SITE_URL}/blog/")
+
+    for post in posts:
+        lastmod = post["created"].strftime("%Y-%m-%d") if post.get("created") else None
+        add_url(f"{SITE_URL}/blog/{post['slug']}", lastmod=lastmod)
+
+    for root, _, files in os.walk(build_dir):
+        for filename in files:
+            if not filename.endswith(".html"):
+                continue
+            if filename in ["404.html", "index.html"]:
+                continue
+
+            filepath = os.path.join(root, filename)
+            rel_path = os.path.relpath(filepath, build_dir)
+
+            if rel_path.startswith("blog"):
+                continue
+
+            url_path = "/" + rel_path.replace("\\", "/").replace(".html", "")
+            add_url(f"{SITE_URL}{url_path}")
+
+    tree = ET.ElementTree(urlset)
+    ET.indent(tree, space="    ")
+    tree.write(
+        os.path.join(build_dir, "sitemap.xml"),
+        encoding="utf-8",
+        xml_declaration=True,
+    )
+
+
 class BuildHandler(FileSystemEventHandler):
     def __init__(self, build_func):
         self.build_func = build_func
@@ -418,6 +460,12 @@ def build(output_dir=None):
     process_site_files(temp_build_dir, template_env, md_processor)
     files_time = time.time() - files_start
     print(f"{Fore.GREEN}done ({files_time * 1000:.0f}ms){Style.RESET_ALL}")
+
+    print("> Sitemap... ", end="", flush=True)
+    sitemap_start = time.time()
+    generate_sitemap(temp_build_dir, posts)
+    sitemap_time = time.time() - sitemap_start
+    print(f"{Fore.GREEN}done ({sitemap_time * 1000:.0f}ms){Style.RESET_ALL}")
 
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
