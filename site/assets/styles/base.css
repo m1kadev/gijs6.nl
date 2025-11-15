@@ -72,6 +72,7 @@ body {
         grid-area: main;
         max-width: 800px;
         padding-top: 10px;
+        overflow: hidden;
 
         *:first-child {
             margin-block-start: 0;
@@ -102,4 +103,10 @@ a {
             1px 0px 0px 3px var(--item-color);
         text-decoration: none;
     }
+}
+
+code,
+pre,
+samp {
+    font-family: "Source Code Pro", "Menlo", "Consolas", "Monaco", "Liberation Mono", "Lucida Console", monospace;
 }
