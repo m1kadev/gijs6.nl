@@ -4,14 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <title>{%- block title -%}{%- endblock title -%} - Gijs6</title>
         <meta name="description"
               content="a big mess of fun pages, interesting projects, my own thoughts and opinions and more.">
-        <meta name="author" content="Gijs">
-
-        <title>{%- block title -%}{%- endblock title -%} - Gijs6</title>
-
-        <link rel="canonical"
-              href="https://gijs6.nl{% if canonical_path %}{{ canonical_path }}{% else %}/{% endif %}">
+        <meta name="author" content="Gijs6">
 
         <link rel="icon" href="/favicon.ico">
 
@@ -20,6 +16,16 @@
         <link rel="stylesheet" href="/assets/styles/colors.css">
         {% block additional_stylesheets %}
         {% endblock additional_stylesheets %}
+
+        <link rel="canonical"
+              href="https://gijs6.nl{% if canonical_path %}{{ canonical_path }}{% else %}/{% endif %}">
+              
+        <link rel="me" href="https://github.com/Gijs6">
+        <link rel="me" href="/contact">
+
+        <link rel="license" href="https://unlicense.org/">
+        <link rel="robots" href="/robots.txt">
+        <link rel="security" href="/.well-known/security.txt">
 
         <link rel="alternate"
               type="application/rss+xml"
