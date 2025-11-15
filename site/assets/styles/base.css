@@ -80,6 +80,10 @@ body {
 
     > footer {
         grid-area: footer;
+
+        > p {
+            margin-block: 0.5em;
+        }
     }
 }
 
