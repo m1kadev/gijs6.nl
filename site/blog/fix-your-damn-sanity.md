@@ -3,8 +3,6 @@ title: An OS to fix your damn sanity
 date: 2025-07-21
 ---
 
-# An OS to fix your damn sanity (and it's not fucking macOS)
-
 *This rant (sorry, I mean blog post) contains some strong language. Please don't take it personally.*
 
 <p id="os-message" style="display: none;"></p>

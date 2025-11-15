@@ -3,8 +3,6 @@ title: What is art?
 date: 2025-08-25
 ---
 
-# What is art?
-
 Defining what art is isn't easy. According to the dictionary on my desk, art is "the result of the ability to creatively express emotions and thoughts".  
 But that definition raises some questions. If you remove all traces of an artist from an artwork, is it still art? If you paint a canvas completely white, is that art? Is 4 minutes and 33 seconds of silence art? Is this blog art? Is simply everything humans create art, since you can't really make something without thinking about it?
 

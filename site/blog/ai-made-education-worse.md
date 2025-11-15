@@ -3,8 +3,6 @@ title: Education was bad; AI made it worse
 date: 2025-05-13
 ---
 
-# Education was bad; AI made it worse
-
 AI can be an awesome tool for writing. I use it myself more often than I like to admit, and it is used a lot in my school.  
 And that's a problem. School *should* be about teaching people important knowledge and skills, and maybe even more important, it should get people excited about learning. But if students just use AI to do their assignments, school clearly fails at that. And I completely understand that schools need to do something "against" using AI. But schools can't seem to do this right.
 

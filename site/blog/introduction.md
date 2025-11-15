@@ -3,8 +3,6 @@ title: Introduction
 date: 2025-04-06
 ---
 
-# Introduction
-
 Hello there! Welcome to this "blog" :D  
 
 But that word "blog" doesn't give you any information about what you can expect to find on this "frequently updated website"[1]; "blog" is a word without actually that much meaning to it.
@@ -13,7 +11,7 @@ I think a blog can be all of those, and it definitely shouldn't be a precisely d
 
 And I do not know the purpose of this blog, I just wanted to write some things, and I wanted a little place on the internet to store and show them, so here I am.
 
-*This is probably the worst welcome post in existence*
+This is probably the worst welcome post in existence.
 
 ## References
 

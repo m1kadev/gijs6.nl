@@ -9,8 +9,15 @@
 {% endblock additional_stylesheets %}
 
 {% block content %}
-    <nav>
-        <a href="/blog/">back to blog</a>
-    </nav>
-    <article>{{ post.content | safe }}</article>
+    <article>
+        <hgroup>
+            <h1>{{ post.title }}</h1>
+            {% if post.date %}
+                <p>
+                    <time datetime="{{ post.date_iso }}">{{ post.date }}</time>
+                </p>
+            {% endif %}
+        </hgroup>
+        {{ post.content | safe }}
+    </article>
 {% endblock content %}

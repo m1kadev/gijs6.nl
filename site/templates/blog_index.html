@@ -5,14 +5,16 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>blog</h1>
-    <p>things I write about</p>
+    <hgroup>
+        <h1>blog</h1>
+        <p>things I write about</p>
+    </hgroup>
 
     <ul>
         {% for post in posts %}
             <li>
+                {% if post.date %}<time datetime="{{ post.date_iso }}">{{ post.date }}</time>:{% endif %}
                 <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
-                {% if post.date %}<time datetime="{{ post.date_iso }}">{{ post.date }}</time>{% endif %}
             </li>
         {% endfor %}
     </ul>
