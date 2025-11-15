@@ -1,5 +1,5 @@
 ---
-title: Education was bad, AI made it worse
+title: Education was bad; AI made it worse
 date: 2025-05-13
 ---
 
