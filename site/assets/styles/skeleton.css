@@ -75,11 +75,14 @@ pre {
 ul,
 ol {
     padding-inline-start: 1.5em;
+
+    li {
+        margin-block: 0.5em;
+    }
 }
 
-ul li,
-ol li {
-    margin-block: 0.5em;
+table {
+    border-collapse: collapse;
 }
 
 button,

@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}
-    blog
+    Blog
 {% endblock title %}
 
 {% block content %}
     <hgroup>
-        <h1>blog</h1>
-        <p>things i write about</p>
+        <h1>Blog</h1>
+        <p>Things I write about</p>
     </hgroup>
 
     <ul>
         {% for post in posts %}
             <li>
-                {% if post.date %}<time datetime="{{ post.date_iso }}">{{ post.date }}</time>:{% endif %}
-                <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
+                {%- if post.date -%}<time datetime="{{ post.date_iso }}">{{ post.date }}</time>:{%- endif %} <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
             </li>
         {% endfor %}
     </ul>

@@ -36,7 +36,7 @@ BLOG_DIR = "site/blog"
 
 SITE_URL = "https://gijs6.nl"
 SITE_TITLE = "Gijs6"
-SITE_DESCRIPTION = "a big mess of fun pages, interesting projects, my own thoughts and opinions and more."
+SITE_DESCRIPTION = "A big mess of fun pages, interesting projects, my own thoughts and opinions and more."
 AUTHOR_NAME = "Gijs6"
 AUTHOR_EMAIL = "gijs6@dupunkto.org"
 
