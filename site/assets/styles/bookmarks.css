@@ -1,11 +1,5 @@
 body {
     > main {
-        > hgroup {
-            > p {
-                margin-block-end: 0;
-            }
-        }
-
         > div {
             display: grid;
             grid-template-rows: masonry;
