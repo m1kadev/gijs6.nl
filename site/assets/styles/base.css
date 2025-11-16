@@ -3,6 +3,10 @@
 
     --color-primary: var(--oc-green-8);
     --color-accent: var(--oc-orange-8);
+
+    @media print {
+        color-scheme: light;
+    }
 }
 
 body {
