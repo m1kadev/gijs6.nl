@@ -94,6 +94,10 @@ body {
 
         > p {
             margin-block: 0.5em;
+
+            > time {
+                font-weight: 700;
+            }
         }
     }
 }

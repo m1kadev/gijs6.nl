@@ -54,6 +54,51 @@ def warn(message):
     print(f"{Fore.YELLOW}WARNING: {message}{Style.RESET_ALL}")
 
 
+def get_git_commit_info():
+    try:
+        output = subprocess.check_output(
+            ["git", "log", "-1", "--format=%h %H %ct"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+        if output:
+            parts = output.split()
+            if len(parts) == 3:
+                short_hash = parts[0]
+                long_hash = parts[1]
+                commit_ts = int(parts[2])
+                commit_dt = datetime.fromtimestamp(commit_ts, tz=timezone.utc)
+                return {
+                    "hash": {"short": short_hash, "long": long_hash},
+                    "dt": {
+                        "date": {
+                            "long": commit_dt.strftime("%B %d, %Y"),
+                            "short": commit_dt.strftime("%Y-%m-%d"),
+                        },
+                        "time": commit_dt.strftime("%H:%M:%S"),
+                        "iso": commit_dt.isoformat(),
+                    },
+                }
+    except (subprocess.CalledProcessError, FileNotFoundError, ValueError):
+        pass
+    return None
+
+
+def get_data():
+    now = datetime.now(timezone.utc)
+    return {
+        "last_commit": get_git_commit_info(),
+        "now": {
+            "date": {
+                "long": now.strftime("%B %d, %Y"),
+                "short": now.strftime("%Y-%m-%d"),
+            },
+            "time": now.strftime("%H:%M:%S"),
+            "iso": now.isoformat(),
+        },
+    }
+
+
 def infer_page_metadata(rel_path):
     canonical_path = "/" + os.path.splitext(rel_path)[0]
 
@@ -66,7 +111,7 @@ def infer_page_metadata(rel_path):
         return active_page, canonical_path
 
 
-def process_blog(build_dir, template_env, md_processor):
+def process_blog(build_dir, template_env, md_processor, data):
     posts = []
     blog_slugs = set()
 
@@ -144,7 +189,7 @@ def process_blog(build_dir, template_env, md_processor):
     with open(os.path.join(blog_dir, "index.html"), "w", encoding="utf-8") as f:
         f.write(
             template_env.get_template("blog_index.html").render(
-                posts=posts, active_page="blog", canonical_path="/blog"
+                posts=posts, active_page="blog", canonical_path="/blog", data=data
             )
         )
 
@@ -156,6 +201,7 @@ def process_blog(build_dir, template_env, md_processor):
                     post=post,
                     active_page="blog",
                     canonical_path=f"/blog/{post['slug']}",
+                    data=data,
                 )
             )
 
@@ -185,7 +231,7 @@ def process_blog(build_dir, template_env, md_processor):
     return posts
 
 
-def process_site_files(build_dir, template_env, md_processor):
+def process_site_files(build_dir, template_env, md_processor, data):
     seen_outputs = {}
 
     for root, dirs, files in os.walk(SITE_DIR):
@@ -242,7 +288,7 @@ def process_site_files(build_dir, template_env, md_processor):
                         page_data["canonical_path"] = canonical_path
 
                     template = template_env.get_template(template_name)
-                    rendered = template.render(page=page_data)
+                    rendered = template.render(page=page_data, data=data)
 
                     with open(output_path, "w", encoding="utf-8") as f:
                         f.write(rendered)
@@ -268,7 +314,7 @@ def process_site_files(build_dir, template_env, md_processor):
                             page_data["canonical_path"] = canonical_path
 
                         template = template_env.get_template(template_name)
-                        rendered = template.render(page=page_data)
+                        rendered = template.render(page=page_data, data=data)
                     except Exception as e:
                         warn(f"Failed to render {filepath}: {e}")
                         continue
@@ -277,7 +323,9 @@ def process_site_files(build_dir, template_env, md_processor):
                         active_page, canonical_path = infer_page_metadata(rel_path)
                         template = template_env.from_string(content)
                         rendered = template.render(
-                            active_page=active_page, canonical_path=canonical_path
+                            active_page=active_page,
+                            canonical_path=canonical_path,
+                            data=data,
                         )
                     except Exception as e:
                         warn(f"Failed to render {filepath}: {e}")
@@ -351,7 +399,7 @@ class BuildHandler(FileSystemEventHandler):
             os.execv(sys.executable, [sys.executable] + sys.argv)
 
         rel_path = os.path.relpath(event.src_path)
-        timestamp = datetime.now().strftime("%H:%M:%S")
+        timestamp = datetime.now(timezone.utc).strftime("%H:%M:%S")
         print(
             f"\n{Fore.BLUE}[{timestamp}]{Style.RESET_ALL} {Fore.YELLOW}File changed:{Style.RESET_ALL} {rel_path}\n"
         )
@@ -396,7 +444,7 @@ class BuildHTTPServer(SimpleHTTPRequestHandler):
         else:
             status_color = Fore.RED
 
-        timestamp = datetime.now().strftime("%H:%M:%S")
+        timestamp = datetime.now(timezone.utc).strftime("%H:%M:%S")
         print(
             f"{Fore.BLUE}[{timestamp}]{Style.RESET_ALL}  {method_color}{Style.BRIGHT}{method}{Style.RESET_ALL}  {Fore.WHITE}{path}{Style.RESET_ALL}  {status_color}{status}{Style.RESET_ALL}"
         )
@@ -442,34 +490,40 @@ def build(output_dir=None):
     start_time = time.time()
     print(f"{Fore.CYAN}=> Building site <={Style.RESET_ALL}")
 
+    print("> Setting up environment... ", end="", flush=True)
+    setup_start = time.time()
     temp_build_dir = tempfile.mkdtemp()
     template_env = Environment(loader=FileSystemLoader([SITE_DIR, TEMPLATES_DIR]))
     md_processor = Markdown(extensions=["meta", "tables", "fenced_code"])
+    data = get_data()
+    setup_time = time.time() - setup_start
+    print(f"{Fore.GREEN}done ({setup_time * 1000:.0f}ms){Style.RESET_ALL}")
 
-    if os.path.exists("CNAME"):
-        shutil.copy2("CNAME", os.path.join(temp_build_dir, "CNAME"))
-
-    print("> Blog... ", end="", flush=True)
+    print("> Processing blog posts... ", end="", flush=True)
     blog_start = time.time()
-    posts = process_blog(temp_build_dir, template_env, md_processor)
+    posts = process_blog(temp_build_dir, template_env, md_processor, data)
     blog_time = time.time() - blog_start
     print(f"{Fore.GREEN}{len(posts)} posts ({blog_time * 1000:.0f}ms){Style.RESET_ALL}")
 
-    print("> Site files... ", end="", flush=True)
+    print("> Processing site files... ", end="", flush=True)
     files_start = time.time()
-    process_site_files(temp_build_dir, template_env, md_processor)
+    process_site_files(temp_build_dir, template_env, md_processor, data)
     files_time = time.time() - files_start
     print(f"{Fore.GREEN}done ({files_time * 1000:.0f}ms){Style.RESET_ALL}")
 
-    print("> Sitemap... ", end="", flush=True)
+    print("> Generating sitemap... ", end="", flush=True)
     sitemap_start = time.time()
     generate_sitemap(temp_build_dir, posts)
     sitemap_time = time.time() - sitemap_start
     print(f"{Fore.GREEN}done ({sitemap_time * 1000:.0f}ms){Style.RESET_ALL}")
 
+    print("> Finalizing build... ", end="", flush=True)
+    finalize_start = time.time()
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
     shutil.move(temp_build_dir, output_dir)
+    finalize_time = time.time() - finalize_start
+    print(f"{Fore.GREEN}done ({finalize_time * 1000:.0f}ms){Style.RESET_ALL}")
 
     total_time = time.time() - start_time
     print(
