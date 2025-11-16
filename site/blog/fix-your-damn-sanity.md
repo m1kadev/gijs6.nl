@@ -5,24 +5,6 @@ date: 2025-07-21
 
 *This rant (sorry, I mean blog post) contains some strong language. Please don't take it personally.*
 
-<p id="os-message" style="display: none;"></p>
-
-<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1/dist/ua-parser.min.js"></script>
-<script>
-    const parser = new UAParser();
-    const os = parser.getOS().name;
-
-    let message = "";
-
-    if (os === "Linux") {
-        message = "You're already on Linux. Good. You're one of the few sane ones. Stick around, maybe you'll enjoy the rant :)";
-    }
-
-    const el = document.getElementById("os-message");
-    el.innerHTML = "<strong>" + message + "</strong>";
-    el.style.display = "unset";
-</script>
-
 Let's just be honest for a second. If you're even a little techy, there's a point where you have to stop tolerating bullshit. And when it comes to operating systems, the amount of bullshit is fucking huge. So here's my take; honest, slightly ranty, and yes, probably what you needed to hear a really long time ago.
 
 Switch. If you are even slightly technical, just switch. Switch to Ubuntu, Debian, Arch (preferably), Gentoo, anything. Even if you aren't that technical, just switch to Mint or something. It is so fucking easy. I am definitely not the first person to tell you this, but just switch, dammit. Stop making excuses. Stop pretending it's fine. It's not.
