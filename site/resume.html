@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Resume
+{% endblock title %}
+
+{% block content %}
+    <h1>Resume</h1>
+
+    <hgroup>
+        <h2>Gijs ten Berg</h2>
+        <p>Full-stack developer & web designer</p>
+    </hgroup>
+
+    <section>
+        <h2>Skills</h2>
+        <p>I'm familiar with the usual web stack: HTML, CSS, and JavaScript. I mostly work in Python, using Flask and Jinja. I also know quite a bit of Elixir.</p>
+        <p>I'm comfortable working on the GNU/Linux command line and with Git for version control. I have experience with databases like PostgreSQL and SQLite, and I know a bit of Docker.</p>
+    </section>
+
+    <section>
+        <h2>Experience</h2>
+
+        <article>
+            <h3>Junior developer @ Qdentity</h3>
+            <p>
+                <time datetime="2025-07">July 2025</time> - current
+            </p>
+            <p>I work with Elixir, Phoenix LiveView, and Tailwind CSS. Most of my time goes into frontend development for various client projects.</p>
+        </article>
+
+        <article>
+            <h3>Member & co-maintainer @ {du}punkto</h3>
+            <p>
+                <time datetime="2024-11">November 2024</time> - current
+            </p>
+            <p>Three friends and I run this small collective together. We work on various open-source projects together.</p>
+        </article>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+
+        <article>
+            <h3>Lyceum Schravenlant</h3>
+            <p>
+                <time datetime="2021-09">September 2021</time> - <time datetime="2027-07">July 2027</time>
+            </p>
+            <p>I'm doing VWO with the NT/NG profile with NLT. I'm also a member of the medezeggenschapsraad (school council). I finished my English exams a year early.</p>
+        </article>
+
+        <article>
+            <p>I haven't figured out what I want to study yet. I'll get there eventually.</p>
+        </article>
+    </section>
+
+    <section>
+        <h2>Other interests</h2>
+        <ul>
+            <li>Natural sciences</li>
+            <li>Web servers and protocols</li>
+            <li>Self-hosting and networking</li>
+            <li>Free software</li>
+            <li>Contributing to the Dutch Wikipedia</li>
+            <li>Graphic design</li>
+            <li>Writing</li>
+        </ul>
+    </section>
+{% endblock content %}
