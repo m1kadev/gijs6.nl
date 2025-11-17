@@ -92,7 +92,7 @@ body {
     > footer {
         grid-area: footer;
         margin-top: 40px;
-        border-top: 1px solid gray;
+        border-top: 1px solid var(--oc-gray-6);
         padding-top: 5px;
 
         > p {
