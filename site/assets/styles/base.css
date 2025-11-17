@@ -91,6 +91,9 @@ body {
 
     > footer {
         grid-area: footer;
+        margin-top: 40px;
+        border-top: 1px solid gray;
+        padding-top: 5px;
 
         > p {
             margin-block: 0.5em;
